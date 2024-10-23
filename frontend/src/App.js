@@ -23,6 +23,7 @@ import UserProfiles from "./screens/admin/auth/UserProfiles";
 import Users from "./screens/admin/auth/Users";
 import Companies from "./screens/admin/auth/Companies";
 import Branches from "./screens/admin/auth/Branches";
+import Employees from "./screens/admin/auth/Employees";
 import { Layout, AuthLayout } from "./components";
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/admin/auth/users" element={<Users />} />
           <Route path='/admin/auth/companies' element={<Companies />} />
           <Route path='/admin/auth/branches' element={<Branches />} />
+          <Route path='/admin/auth/employees' element={<Employees />} />
         </Route>
       </Route>
 

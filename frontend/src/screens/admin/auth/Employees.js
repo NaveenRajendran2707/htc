@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
-import useHSNsHook from "../../../api/hsns";
+import usePermissionsHook from "../../../api/permissions";
+import useMenusHook from "../../../api/menus";
+import useUsersHook from "../../../api/users";
+import useEmployeesHook from "../../../api/employees";
 import {
-  Spinner,
-  ViewHSNs,
+  ViewEmployees,
+  ViewStates,
   Pagination,
-  FormHSNs,
+  FormEmployees,
   Message,
   Confirm,
 } from "../../../components";
@@ -18,7 +21,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 
-const HSNs = () => {
+const Employees = () => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -26,14 +29,16 @@ const HSNs = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {
-    getHSNs,
-    postHSN,
-    updateHSN,
-    deleteHSN,
-  } = useHSNsHook({
+  const { getEmployees, postEmployee, updateEmployee, deleteEmployee } = useEmployeesHook({
     page,
     q,
+  });
+
+  const { getPermissions } = usePermissionsHook({
+    limit: 1000000,
+  });
+  const { getMenus } = useMenusHook({
+    limit: 1000000,
   });
 
   const {
@@ -44,10 +49,15 @@ const HSNs = () => {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {},
+    defaultValues: {
+      confirmed: true,
+      blocked: false,
+    },
   });
 
-  const { data, isLoading, isError, error, refetch } = getHSNs;
+  const { data, isLoading, isError, error, refetch } = getEmployees;
+  const { data: permissionData } = getPermissions;
+  const { data: menuData } = getMenus;
 
   const {
     isLoading: isLoadingUpdate,
@@ -55,7 +65,7 @@ const HSNs = () => {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
     mutateAsync: mutateAsyncUpdate,
-  } = updateHSN;
+  } = updateEmployee;
 
   const {
     isLoading: isLoadingDelete,
@@ -63,7 +73,7 @@ const HSNs = () => {
     error: errorDelete,
     isSuccess: isSuccessDelete,
     mutateAsync: mutateAsyncDelete,
-  } = deleteHSN;
+  } = deleteEmployee;
 
   const {
     isLoading: isLoadingPost,
@@ -71,7 +81,7 @@ const HSNs = () => {
     error: errorPost,
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
-  } = postHSN;
+  } = postEmployee;
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -104,61 +114,99 @@ const HSNs = () => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          hSNCodeSerialNo: data.hSNCodeSerialNo,
-          hSNCode: data.hSNCode,
-          description: data.description,
+          department: data.department,
+          designation: data.designation,
+          name: data.name,
+          address1: data.address1,
+          address2: data.address2,
+          address3: data.address3,
+          city: data.city,
+          pincode: data.pincode,
+          state: data.state,
+          mobile: data.mobile,
+          pan: data.pan,
+          pf: data.pf,
+          esi: data.esi,
+          dob: data.dob,
+          salaryscheduletype: data.salaryscheduletype,
+          email: data.email,
+          confirmed: data.confirmed,
+          blocked: data.blocked,
+          password: data.password,
         })
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (hsn) => {
-    setId(hsn._id);
+  const viewHandler = (employee) => {
+    setId(employee._id);
     setView(true);
-    setValue("hSNCodeSerialNo", hsn.hSNCodeSerialNo);
-    setValue("hSNCode", hsn.hSNCode);
-    setValue("description", hsn.description);
+    setValue("department", employee.department);
+    setValue("designation", employee.designation);
+    setValue("name", employee.name);
+    setValue("address1", employee.address1);
+    setValue("address2", employee.address2);
+    setValue("address3", employee.address3);
+    setValue("city", employee.city);
+    setValue("pincode", employee.pincode);
+    setValue("state", employee.state);
+    setValue("mobile", employee.mobile);
+    setValue("pan", employee.pan);
+    setValue("pf", employee.pf);
+    setValue("esi", employee.esi);
+    setValue("dob", employee.dob);
+    setValue("salaryscheduletype", employee.salaryscheduletype);
+    setValue("email", employee.email);
+    setValue("confirmed", employee.confirmed);
+    setValue("blocked", employee.blocked);
   };
 
-  const editHandler = (hsn) => {
-    setId(hsn._id);
+  const editHandler = (employee) => {
+    setId(employee._id);
     setView(false);
     setEdit(true);
-    setValue("hSNCodeSerialNo", hsn.hSNCodeSerialNo);
-    setValue("hSNCode", hsn.hSNCode);
-    setValue("description", hsn.description);
+    setValue("department", employee.department);
+    setValue("designation", employee.designation);
+    setValue("name", employee.name);
+    setValue("address1", employee.address1);
+    setValue("address2", employee.address2);
+    setValue("address3", employee.address3);
+    setValue("city", employee.city);
+    setValue("pincode", employee.pincode);
+    setValue("state", employee.state);
+    setValue("mobile", employee.mobile);
+    setValue("pan", employee.pan);
+    setValue("pf", employee.pf);
+    setValue("esi", employee.esi);
+    setValue("dob", employee.dob);
+    setValue("salaryscheduletype", employee.salaryscheduletype);
+    setValue("email", employee.email);
+    setValue("confirmed", employee.confirmed);
+    setValue("blocked", employee.blocked);
   };
 
   return (
     <>
       <Helmet>
-        <title>HSNs | HTC</title>
-        <meta property="og:title" content="HSNs" key="title" />
+        <title>Employees | HTC</title>
+        <meta property="og:title" content="Employees" key="title" />
       </Helmet>
       {isSuccessDelete && (
-        <Message variant="success">
-          HSN has been deleted successfully.
-        </Message>
+        <Message variant="success">Employee has been deleted successfully.</Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
-        <Message variant="success">
-          HSN has been updated successfully.
-        </Message>
+        <Message variant="success">Employee has been updated successfully.</Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
-        <Message variant="success">
-          HSN has been Created successfully.
-        </Message>
+        <Message variant="success">Employee has been created successfully.</Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
 
-      {isLoading ? (
-        <Spinner />
-      ) : isError ? (
+      {isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <ViewHSNs
+        <ViewEmployees
           data={data}
           viewHandler={viewHandler}
           editHandler={editHandler}
@@ -166,14 +214,13 @@ const HSNs = () => {
           isLoadingDelete={isLoadingDelete}
           setQ={setQ}
           q={q}
-          searchHandler={searchHandler}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          searchHandler={searchHandler}
           setView={setView}
         />
       )}
-
-      <div className="ms-auto text-end">
+      <div className="my-3">
         <Pagination data={data} setPage={setPage} />
       </div>
 
@@ -192,23 +239,20 @@ const HSNs = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit HSN" : view ? "View HSN" : "Add HSN"}
+                {edit ? "Edit Employee" : view ? "View Employee" : "Add Employee"}
               </h3>
 
               <button
                 type="button"
                 className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-2"
                 aria-label="Close"
-                onClick={() => {
-                  setIsModalOpen(false);
-                  formCleanHandler();
-                }}
+                onClick={() => {setIsModalOpen(false); formCleanHandler()}}
               >
                 <span className="material-symbols-rounded">close</span>
               </button>
             </DialogTitle>
             <div className="flex-1 overflow-auto py-4 px-6">
-              <FormHSNs
+              <FormEmployees
                 edit={edit}
                 view={view}
                 formCleanHandler={formCleanHandler}
@@ -223,6 +267,8 @@ const HSNs = () => {
                 setIsModalOpen={setIsModalOpen}
                 watch={watch}
                 error={error}
+                permissionData={permissionData && permissionData.data}
+                menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}
               />
             </div>
@@ -234,4 +280,4 @@ const HSNs = () => {
   );
 };
 
-export default HSNs;
+export default Employees;

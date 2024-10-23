@@ -12,9 +12,11 @@
 // import Designation from '../../models/Designation.js'
 // import Unit from '../../models/Unit.js'
 // import UnitConversion from '../../models/UnitConversion.js'
-import ServiceType from '../../models/ServiceType.js'
-import GSTTax from '../../models/GSTTax.js'
-import HSN from '../../models/HSN.js'
+// import ServiceType from '../../models/ServiceType.js'
+// import GSTTax from '../../models/GSTTax.js'
+// import HSN from '../../models/HSN.js'
+import Employee from '../../models/Employee.js'
+
 import {  
   // users,
   // profile,
@@ -29,9 +31,10 @@ import {
   // designations,
   // units,
   // unitconversions,
-  servicetype,
-  gsttax,
-  hsn,
+  // servicetype,
+  // gsttax,
+  // hsn,
+  employees
 } from '../../../config/data.js'
 
 const secret = 'js'
@@ -56,19 +59,22 @@ export const seed = async (req, res) => {
     // await Designation.deleteMany({})
     // await Unit.deleteMany({})
     // await UnitConversion.deleteMany({})
-    await ServiceType.deleteMany({})
-    await GSTTax.deleteMany({})
-    await HSN.deleteMany({})
+    // await ServiceType.deleteMany({})
+    // await GSTTax.deleteMany({})
+    // await HSN.deleteMany({})
+    await Employee.deleteMany({})
 
+    // Create Employee
+    await Employee.create(employees)
 
-    // Create Service Type
-    await ServiceType.create(servicetype)
+    // // Create Service Type
+    // await ServiceType.create(servicetype)
 
-    // Create GST Tax
-    await GSTTax.create(gsttax)
+    // // Create GST Tax
+    // await GSTTax.create(gsttax)
     
-    // Create HSN
-    await HSN.create(hsn)    
+    // // Create HSN
+    // await HSN.create(hsn)    
 
     // Create Units
     // await Unit.create(units)

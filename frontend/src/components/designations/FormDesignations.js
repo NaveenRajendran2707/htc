@@ -43,7 +43,7 @@ const FormDesignations = ({
             label: "Designation Serial No",
             name: "designationSerialNo",
             placeholder: "Designation Serial No",
-            value: "STA"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value: "DES"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}
           {inputText({

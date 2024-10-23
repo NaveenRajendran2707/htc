@@ -1,12 +1,11 @@
-import User from '../../models/User.js'
+import Employee from '../../models/Employee.js'
 import Profile from '../../models/Profile.js'
 import UserRole from '../../models/UserRole.js'
-import Employee from '../../models/Employee.js'
 
-const schemaName = User
-const schemaNameString = 'User'
+const schemaName = Employee
+const schemaNameString = 'Employee'
 
-export const getUsers = async (req, res) => {
+export const getEmployees = async (req, res) => {
   try {
     const q = req.query && req.query.q
 
@@ -50,7 +49,7 @@ export const getUsers = async (req, res) => {
   }
 }
 
-export const postUser = async (req, res) => {
+export const postEmployee = async (req, res) => {
   try {
     const object = await schemaName.create(req.body)
 
@@ -80,7 +79,7 @@ export const postUser = async (req, res) => {
   }
 }
 
-export const getUserById = async (req, res) => {
+export const getEmployeeById = async (req, res) => {
   try {
     const { id } = req.params
     const objects = await schemaName
@@ -97,7 +96,7 @@ export const getUserById = async (req, res) => {
   }
 }
 
-export const putUser = async (req, res) => {
+export const putEmployee = async (req, res) => {
   try {
 
     console.log("req.body", req.body);
@@ -142,7 +141,7 @@ export const putUser = async (req, res) => {
   }
 }
 
-export const deleteUser = async (req, res) => {
+export const deleteEmployee = async (req, res) => {
   try {
     console.log(req.params)
     const { id } = req.params

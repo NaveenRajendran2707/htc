@@ -1,6 +1,12 @@
 import express from 'express'
 import { isAuth } from '../../utils/auth.js'
 import {
+  getEmployees,
+  postEmployee,
+  putEmployee,
+  deleteEmployee,
+} from '../controllers/auth/employees.js'
+import {
   getServiceTypes,
   postServiceType,
   putServiceType,
@@ -123,6 +129,17 @@ router.route('/api/auth/seed').get(seed)
 
 // user profiles
 router.route('/api/auth/user-profiles').get(isAuth, getUserProfiles)
+
+
+// employee
+router
+  .route('/api/auth/employees')
+  .get(isAuth, getEmployees)
+  .post(isAuth, postEmployee)
+router
+  .route('/api/auth/employees/:id')
+  .put(isAuth, putEmployee)
+  .delete(isAuth, deleteEmployee)
 
 
 // service type

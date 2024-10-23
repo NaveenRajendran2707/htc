@@ -435,31 +435,53 @@
 // ]
 
 
-const servicetype = [
+// const servicetype = [
+//   {
+//     serviceSerialNo: 'SER01',
+//     serviceName: 'S1',
+//     particular: 'With GST',
+//     fees: '500',
+//     status: 'Active',
+//   },
+// ]
+
+// const gsttax = [
+//   {
+//     gSTTaxSerialNo: 'GST01',
+//     gSTTax: '18%',    
+//   },
+// ]
+
+// const hsn = [
+//   {
+//     hSNCodeSerialNo: 'HSN01',
+//     hSNCode: '123456',
+//     description: 'MONDAY',
+//   },
+// ]
+
+const employees = [
   {
-    serviceSerialNo: 'SER01',
-    serviceName: 'S1',
-    particular: 'With GST',
-    fees: '500',
-    status: 'Active',
+    sequenceNumber: 1,
+    employeeID: 'EMP000001',
+    department: '67136bdb084cbb55eb19f982',
+    designation: '67138585388ddb02a7360ee6',
+    address1: '#3',
+    address2: 'Ramkrishna Street',
+    address3: 'Kodambakkam',
+    city: '6712a5b97896175f6aa5ff30',
+    pincode: '600010',
+    state: '67127d2842a1ca2065ce468d',
+    mobile: '9841290999',
+    pan: 'ALSER5454E',
+    pf: '23424234324234',
+    esi: '23423423423',
+    dob: '2024-10-24',
+    salaryscheduletype: 'Weekly',
+    user: '66cc220075d69b52d4a4292e',
   },
 ]
 
-const gsttax = [
-  {
-    gSTTaxSerialNo: 'GST01',
-    gSTTax: '18%',    
-  },
-]
+//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn }
 
-const hsn = [
-  {
-    hSNCodeSerialNo: 'HSN01',
-    hSNCode: '123456',
-    description: 'MONDAY',
-  },
-]
-
-// export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions }
-
-export { servicetype, gsttax, hsn }
+export { employees }

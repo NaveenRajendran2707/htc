@@ -1,5 +1,7 @@
 import ViewUsers from './users/ViewUsers'
 import FormUsers from './users/FormUsers'
+import ViewEmployees from './employees/ViewEmployees'
+import FormEmployees from './employees/FormEmployees'
 import ViewBranches from './branches/ViewBranches'
 import FormBranches from './branches/FormBranches'
 import ViewCompanies from './companies/ViewCompanies'
@@ -45,6 +47,8 @@ import Footer from './Footer'
 export {
   ViewUsers,
   FormUsers,
+  ViewEmployees,
+  FormEmployees,
   ViewBranches,
   FormBranches,
   ViewCompanies,
