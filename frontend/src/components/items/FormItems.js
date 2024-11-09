@@ -1,26 +1,19 @@
-import { useState } from "react";
-import { Message } from "../../components";
+import { Spinner, Message } from "..";
 import {
   inputHidden,
   inputCheckBox,
-  inputEmail,
   inputText,
-  staticInputSelect,
-  staticInputSelectState,
-  inputDate,
+  dynaimcInputSelectField,
 } from "../../utils/dynamicForm";
 
-// import { useState } from "react";
-
-export const FormBranches = ({
-  view,
+const FormItems = ({
   edit,
+  view,
   formCleanHandler,
   isLoading,
   register,
   isError,
   errors,
-  watch,
   isLoadingUpdate,
   isLoadingPost,
   handleSubmit,
@@ -28,31 +21,17 @@ export const FormBranches = ({
   error,
   setIsModalOpen,
   nextSequenceNumber,
-  company,
-  states,
-  cities,
+  branch,
+  group,
+  category,
+  uom,
+  hsn,
+  gst,
 }) => {
-  const [city, setCity] = useState([]);
-  const handleStateChange = (e) => {
-    const id = e.target.selectedOptions[0].dataset.id;
-    if (id !== "") {
-      const filteredCities = cities
-        .filter((item) => item?.state?._id === id)
-        .map((item) => ({ name: item.cityName }));
-      setCity(filteredCities);
-    } else {
-      setCity([]);
-    }
-  };
   return (
     <>
       {isLoading ? (
-        <div className="w-full top-0 left-0 z-[999]">
-          <div className="h-1 w-full bg-blue-100 overflow-hidden">
-            <span className="sr-only">Loading...</span>
-            <div className="animate-progress w-full h-full bg-blue-500 origin-left-right"></div>
-          </div>
-        </div>
+        <Spinner />
       ) : isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
@@ -69,182 +48,199 @@ export const FormBranches = ({
           {inputText({
             register,
             errors,
-            label: "Branch Serial No.",
-            name: "branchSerialNo",
-            placeholder: "Branch Serial No.",
+            label: "Item Serial No",
+            name: "itemSerialNo",
+            placeholder: "Item Serial No",
             value:
-              "BRN" +
+              "ITM" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
                 5,
                 "0"
               ),
-            readOnly: true,
+            readOnly: false,
           })}
-          {inputDate({
-            register,
-            errors,
-            label: "Registration Date",
-            name: "registrationDate",
-            placeholder: "11/11/2024",
-            readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "Company ID",
-            name: "companyID",
-            placeholder: "Company ID",
-            isRequired: false,
-            data:
-              company &&
-              company.map((item) => ({
-                name: item.companyID,
-                _id: item._id,
-              })),
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Branch ID",
-            name: "branchID",
-            placeholder: "TNCHN12345CO",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "User ID",
-            name: "user",
-            placeholder: "User ID",
-            readOnly: view,
-          })}
-          {inputText({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "Branch Name",
             name: "branchName",
             placeholder: "Branch Name",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Branch Short Name",
-            name: "branchShortName",
-            placeholder: "Branch Short Name",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "GSTIN Number",
-            name: "gSTINNumber",
-            placeholder: "GSTIN Number",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Address 1",
-            name: "address1",
-            placeholder: "House/Flat no, Building name",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Address 2",
-            name: "address2",
-            placeholder: "Street name/number",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Address 3",
-            name: "address3",
-            placeholder: "Block no. , Area Name",
-            readOnly: view,
-          })}
-          {staticInputSelectState({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
             isRequired: false,
-            data:
-              states &&
-              states.map((item) => ({
-                name: item.stateName,
-                _id: item._id,
-              })),
-            onChange: handleStateChange,
+            data: branch && branch,
+            value: "branchName",
             readOnly: view,
           })}
-          {staticInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
-            label: "City",
-            name: "city",
-            placeholder: "City",
+            label: "Group Name",
+            name: "groupName",
+            placeholder: "Group Name",
+            isRequired: true,
+            data: group && group,
+            value: "itemGroup",
+            readOnly: view,
+          })}
+          {dynaimcInputSelectField({
+            register,
+            errors,
+            label: "Product Category",
+            name: "productCategory",
+            placeholder: "Product Category",
+            isRequired: true,
+            data: category && category,
+            value: "brandName",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Name",
+            name: "name",
+            placeholder: "Name",
+            isRequired: true,
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Alias Name",
+            name: "aliasName",
+            placeholder: "Alias Name",
+            readOnly: view,
+          })}
+          {dynaimcInputSelectField({
+            register,
+            errors,
+            label: "Uom",
+            name: "uom",
+            placeholder: "Uom",
+            isRequired: true,
+            data: uom && uom,
+            value: "subUnit",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Cost",
+            name: "cost",
+            placeholder: "Cost",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "List Price",
+            name: "listPrice",
+            placeholder: "List Price",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Discount",
+            name: "discount",
+            placeholder: "Discount",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Margin Price",
+            name: "marginPrice",
+            placeholder: "Margin Price",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "MRP",
+            name: "MRP",
+            placeholder: "MRP",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Batch No",
+            name: "batchNo",
+            placeholder: "Batch No",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Expiry Date",
+            name: "expiryDate",
+            placeholder: "Expiry Date",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Free Gift Qty",
+            name: "freeGiftQty",
+            placeholder: "Free Gift Qty",
+            readOnly: view,
+          })}
+          {dynaimcInputSelectField({
+            register,
+            errors,
+            label: "HSN Code",
+            name: "HSNCode",
+            placeholder: "HSN Code",
             isRequired: false,
-            data: city && city,
+            data: hsn && hsn,
+            value: "hSNCode",
+            readOnly: view,
+          })}
+          {dynaimcInputSelectField({
+            register,
+            errors,
+            label: "GST Tax Rate",
+            name: "GSTTaxRate",
+            placeholder: "GST Tax Rate",
+            isRequired: false,
+            data: gst && gst,
+            value: "gSTTax",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Pin code",
-            name: "pincode",
-            placeholder: "600 078",
+            label: "Re-Order Qty",
+            name: "reOrderQty",
+            placeholder: "Re-Order Qty",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Mobile Number",
-            name: "mobileNumber",
-            placeholder: "9876543210",
+            label: "Opening Stock Qty",
+            name: "openingStockQty",
+            placeholder: "Opening Stock Qty",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Phone Number",
-            name: "phoneNumber",
-            placeholder: "04412345678",
-            readOnly: view,
-          })}
-          {inputEmail({
-            register,
-            errors,
-            label: "Email ID",
-            name: "email",
-            placeholder: "Email",
+            label: "Opening Stock Value",
+            name: "openingStockValue",
+            placeholder: "Opening Stock Value",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Logo",
-            name: "logo",
-            placeholder: "Logo",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Watermark",
-            name: "watermark",
-            placeholder: "Watermark",
+            label: "Product Image",
+            name: "productImage",
+            placeholder: "Product Image",
             readOnly: view,
           })}
           {inputCheckBox({
             register,
             errors,
-            watch,
             name: "blocked",
             label: "Status (Active/Inactive)",
             isRequired: false,
@@ -290,4 +286,4 @@ export const FormBranches = ({
   );
 };
 
-export default FormBranches;
+export default FormItems;

@@ -2,14 +2,12 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
-import useBranchesHook from "../../../api/branches";
-import useCompaniesHook from "../../../api/companies";
-import useStatesHook from "../../../api/states";
-import useCitiesHook from "../../../api/cities";
+import useItemGroupsHook from "../../../api/itemGroups";
 import {
-  ViewBranches,
+  Spinner,
+  ViewItemGroups,
   Pagination,
-  FormBranches,
+  FormItemGroups,
   Message,
   Confirm,
 } from "../../../components";
@@ -20,7 +18,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 
-const Branches = () => {
+const ItemGroups = () => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -28,33 +26,15 @@ const Branches = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getBranches, postBranch, updateBranch, deleteBranch } =
-    useBranchesHook({
-      page,
-      q,
-    });
-
-  const { getCompanies } = useCompaniesHook({
+  const {
+    getItemGroups,
+    postItemGroup,
+    updateItemGroup,
+    deleteItemGroup,
+  } = useItemGroupsHook({
     page,
     q,
   });
-
-  const { data: companyId } = getCompanies;
-  console.log("companyId", companyId);
-
-  const { getStates } = useStatesHook({
-    page,
-    q,
-  });
-
-  const { data: getState } = getStates;
-
-  const { getCities } = useCitiesHook({
-    page,
-    q,
-  });
-
-  const { data: getCity } = getCities;
 
   const {
     register,
@@ -64,13 +44,10 @@ const Branches = () => {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      confirmed: true,
-      blocked: false,
-    },
+    defaultValues: {},
   });
 
-  const { data, isLoading, isError, error, refetch } = getBranches;
+  const { data, isLoading, isError, error, refetch } = getItemGroups;
 
   const {
     isLoading: isLoadingUpdate,
@@ -78,7 +55,7 @@ const Branches = () => {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
     mutateAsync: mutateAsyncUpdate,
-  } = updateBranch;
+  } = updateItemGroup;
 
   const {
     isLoading: isLoadingDelete,
@@ -86,7 +63,7 @@ const Branches = () => {
     error: errorDelete,
     isSuccess: isSuccessDelete,
     mutateAsync: mutateAsyncDelete,
-  } = deleteBranch;
+  } = deleteItemGroup;
 
   const {
     isLoading: isLoadingPost,
@@ -94,7 +71,7 @@ const Branches = () => {
     error: errorPost,
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
-  } = postBranch;
+  } = postItemGroup;
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -127,107 +104,61 @@ const Branches = () => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          branchSerialNo: data.branchSerialNo,
-          registrationDate: data.registrationDate,
-          companyID: data.companyID,
-          city: data.city,
-          branchID: data.branchID,
-          user: data.user,
-          branchName: data.branchName,
-          branchShortName: data.branchShortName,
-          gSTINNumber: data.gSTINNumber,
-          address1: data.address1,
-          address2: data.address2,
-          address3: data.address3,
-          pincode: data.pincode,
-          mobileNumber: data.mobileNumber,
-          phoneNumber: data.phoneNumber,
-          email: data.email,
-          logo: data.logo,
-          watermark: data.watermark,
-          blocked: data.blocked,
+          itemGroupSerialNo: data.itemGroupSerialNo,
+          itemGroup: data.itemGroup,
+          itemSubGroup: data.itemSubGroup,
         })
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (branch) => {
-    setId(branch._id);
+  const viewHandler = (itemGroup) => {
+    setId(itemGroup._id);
     setView(true);
-    setValue("branchSerialNo", branch.branchSerialNo);
-    setValue("registrationDate", branch.registrationDate);
-    setValue("companyID", branch.companyID);
-    setValue("city", branch.city);
-    setValue("branchID", branch.branchID);
-    setValue("user", branch.user);
-    setValue("branchName", branch.branchName);
-    setValue("branchShortName", branch.branchShortName);
-    setValue("gSTINNumber", branch.gSTINNumber);
-    setValue("address1", branch.address1);
-    setValue("address2", branch.address2);
-    setValue("address3", branch.address3);
-    setValue("pincode", branch.pincode);
-    setValue("mobileNumber", branch.mobileNumber);
-    setValue("phoneNumber", branch.phoneNumber);
-    setValue("email", branch.email);
-    setValue("logo", branch.logo);
-    setValue("watermark", branch.watermark);
-    setValue("blocked", branch.blocked);
+    setValue("itemGroupSerialNo", itemGroup.itemGroupSerialNo);
+    setValue("itemGroup", itemGroup.itemGroup);
+    setValue("itemSubGroup", itemGroup.itemSubGroup);
   };
 
-  const editHandler = (branch) => {
-    setId(branch._id);
+  const editHandler = (itemGroup) => {
+    setId(itemGroup._id);
     setView(false);
     setEdit(true);
-    setValue("branchSerialNo", branch.branchSerialNo);
-    setValue("registrationDate", branch.registrationDate);
-    setValue("companyID", branch.companyID);
-    setValue("city", branch.city);
-    setValue("branchID", branch.branchID);
-    setValue("user", branch.user);
-    setValue("branchName", branch.branchName);
-    setValue("branchShortName", branch.branchShortName);
-    setValue("gSTINNumber", branch.gSTINNumber);
-    setValue("address1", branch.address1);
-    setValue("address2", branch.address2);
-    setValue("address3", branch.address3);
-    setValue("pincode", branch.pincode);
-    setValue("mobileNumber", branch.mobileNumber);
-    setValue("phoneNumber", branch.phoneNumber);
-    setValue("email", branch.email);
-    setValue("logo", branch.logo);
-    setValue("watermark", branch.watermark);
-    setValue("blocked", branch.blocked);
+    setValue("itemGroupSerialNo", itemGroup.itemGroupSerialNo);
+    setValue("itemGroup", itemGroup.itemGroup);
+    setValue("itemSubGroup", itemGroup.itemSubGroup);
   };
 
   return (
     <>
       <Helmet>
-        <title>Branches | HTC</title>
-        <meta property="og:title" content="Branches" key="title" />
+        <title>Item Groups | HTC</title>
+        <meta property="og:title" content="Item Groups" key="title" />
       </Helmet>
       {isSuccessDelete && (
         <Message variant="success">
-          Branch has been deleted successfully.
+          Item Group has been deleted successfully.
         </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
         <Message variant="success">
-          Branch has been updated successfully.
+          Item Group has been updated successfully.
         </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
         <Message variant="success">
-          Branch has been created successfully.
+          Item Group has been Created successfully.
         </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
 
-      {isError ? (
+      {isLoading ? (
+        <Spinner />
+      ) : isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <ViewBranches
+        <ViewItemGroups
           data={data}
           viewHandler={viewHandler}
           editHandler={editHandler}
@@ -235,14 +166,14 @@ const Branches = () => {
           isLoadingDelete={isLoadingDelete}
           setQ={setQ}
           q={q}
+          searchHandler={searchHandler}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          searchHandler={searchHandler}
           setView={setView}
         />
       )}
 
-      <div className="my-3">
+      <div className="ms-auto text-end">
         <Pagination data={data} setPage={setPage} />
       </div>
 
@@ -261,7 +192,7 @@ const Branches = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit Branch" : view ? "View Branch" : "Add Branch"}
+                {edit ? "Edit ItemGroup" : view ? "View ItemGroup" : "Add ItemGroup"}
               </h3>
 
               <button
@@ -277,7 +208,7 @@ const Branches = () => {
               </button>
             </DialogTitle>
             <div className="flex-1 overflow-auto py-4 px-6">
-              <FormBranches
+              <FormItemGroups
                 edit={edit}
                 view={view}
                 formCleanHandler={formCleanHandler}
@@ -293,9 +224,6 @@ const Branches = () => {
                 watch={watch}
                 error={error}
                 nextSequenceNumber={data && data.nextSequenceNumber}
-                company={companyId && companyId.data}
-                states={getState && getState.data}
-                cities={getCity && getCity.data}
               />
             </div>
           </DialogPanel>
@@ -306,4 +234,4 @@ const Branches = () => {
   );
 };
 
-export default Branches;
+export default ItemGroups;

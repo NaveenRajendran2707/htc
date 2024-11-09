@@ -16,9 +16,13 @@
 // import GSTTax from '../../models/GSTTax.js'
 // import HSN from '../../models/HSN.js'
 // import Employee from '../../models/Employee.js'
-import AccountGroup from '../../models/AccountGroup.js'
+// import AccountGroup from '../../models/AccountGroup.js'
+// import ItemGroup from '../../models/ItemGroup.js'
+// import Items from "../../models/Items.js";
+// import Brand from '../../models/Brand.js'
+import Category from '../../models/Category.js'
 
-import {  
+import {
   // users,
   // profile,
   // roles,
@@ -36,15 +40,20 @@ import {
   // gsttax,
   // hsn,
   // employees
-  accountgroups
-} from '../../../config/data.js'
+  //accountgroups
+  // employees,
+  // itemgroup,
+  // items,
+  // brand,
+  category
+} from "../../../config/data.js";
 
-const secret = 'js'
+const secret = "js";
 
 export const seed = async (req, res) => {
   try {
     if (!req.query.secret || req.query.secret !== secret)
-      return res.status(401).json({ error: 'Unauthorized' })
+      return res.status(401).json({ error: "Unauthorized" });
 
     // Delete all existing data
     // await User.deleteMany({})
@@ -69,6 +78,22 @@ export const seed = async (req, res) => {
 
     // Create Account Group
     await AccountGroup.create(accountgroups)
+    // await ItemGroup.deleteMany({})
+    // await Items.deleteMany({});
+    // await Brand.deleteMany({})
+    await Category.deleteMany({})
+
+    //Create Category
+    await Category.create(category)
+
+    // //Create Brand
+    // await Brand.create(brand)
+
+    // //Create Items
+    // await Items.create(items);
+
+    // //Create Item Group
+    // await ItemGroup.create(itemgroup)
 
     // // Create Employee
     // await Employee.create(employees)
@@ -78,9 +103,9 @@ export const seed = async (req, res) => {
 
     // // Create GST Tax
     // await GSTTax.create(gsttax)
-    
+
     // // Create HSN
-    // await HSN.create(hsn)    
+    // await HSN.create(hsn)
 
     // Create Units
     // await Unit.create(units)
@@ -173,9 +198,9 @@ export const seed = async (req, res) => {
     // await superAdminRole.save()
 
     res.status(200).json({
-      message: 'Database seeded successfully',
-    })
+      message: "Database seeded successfully",
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-}
+};

@@ -22,6 +22,14 @@ import ViewStates from './states/ViewStates'
 import FormStates from './states/FormStates'
 import ViewAccountGroups from './account-groups/ViewAccountGroups'
 import FormAccountGroups from './account-groups/FormAccountGroups'
+import ViewItems from './items/ViewItems';
+import FormItems from './items/FormItems';
+import ViewItemGroups from './item-groups/ViewItemGroups';
+import FormItemGroups from './item-groups/FormItemGroups';
+import ViewBrand from './brand/ViewBrand';
+import FormBrand from './brand/FormBrand';
+import ViewCategories from './categories/ViewCategories';
+import FormCategories from './categories/FormCategories';
 import ViewServiceTypes from './service-types/ViewServiceTypes'
 import FormServiceTypes from './service-types/FormServiceTypes'
 import ViewHSNs from './hsns/ViewHSNs'
@@ -54,13 +62,21 @@ export {
   ViewBranches,
   FormBranches,
   ViewCompanies,
-  FormCompanies,  
+  FormCompanies,
+  ViewItems,
+  FormItems,
+  ViewItemGroups,
+  FormItemGroups,
+  ViewBrand,
+  FormBrand,
+  ViewCategories,
+  FormCategories,
   ViewPermissions,
   FormPermissions,
   ViewDesignations,
   FormDesignations,
   ViewDepartments,
-  FormDepartments,  
+  FormDepartments,
   ViewUnitConversions,
   FormUnitConversions,
   ViewUnits,
@@ -94,4 +110,4 @@ export {
   Search,
   Header,
   Footer,
-}
+};

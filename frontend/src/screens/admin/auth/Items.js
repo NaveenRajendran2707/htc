@@ -2,14 +2,18 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
+import useItemsHook from "../../../api/items";
 import useBranchesHook from "../../../api/branches";
-import useCompaniesHook from "../../../api/companies";
-import useStatesHook from "../../../api/states";
-import useCitiesHook from "../../../api/cities";
+import useItemGroupsHook from "../../../api/itemGroups";
+import useCategoriesHook from "../../../api/categories";
+import useUnitConversionsHook from "../../../api/unitConversions";
+import useHSNsHook from "../../../api/hsns";
+import useGSTTaxesHook from "../../../api/gstTaxes";
 import {
-  ViewBranches,
+  Spinner,
+  ViewItems,
   Pagination,
-  FormBranches,
+  FormItems,
   Message,
   Confirm,
 } from "../../../components";
@@ -20,7 +24,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 
-const Branches = () => {
+const Items = () => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -28,33 +32,40 @@ const Branches = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getBranches, postBranch, updateBranch, deleteBranch } =
-    useBranchesHook({
-      page,
-      q,
-    });
-
-  const { getCompanies } = useCompaniesHook({
+  const { getItems, postItem, updateItem, deleteItem } = useItemsHook({
     page,
     q,
   });
 
-  const { data: companyId } = getCompanies;
-  console.log("companyId", companyId);
-
-  const { getStates } = useStatesHook({
+  const { getBranches } = useBranchesHook({
     page,
     q,
   });
 
-  const { data: getState } = getStates;
-
-  const { getCities } = useCitiesHook({
+  const { getItemGroups } = useItemGroupsHook({
     page,
     q,
   });
 
-  const { data: getCity } = getCities;
+  const { getCategories } = useCategoriesHook({
+    page,
+    q,
+  });
+
+  const { getUnitConversions } = useUnitConversionsHook({
+    page,
+    q,
+  });
+
+  const { getHSNs } = useHSNsHook({
+    page,
+    q,
+  });
+
+  const { getGSTTaxes } = useGSTTaxesHook({
+    page,
+    q,
+  });
 
   const {
     register,
@@ -64,13 +75,17 @@ const Branches = () => {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      confirmed: true,
-      blocked: false,
-    },
+    defaultValues: {},
   });
 
-  const { data, isLoading, isError, error, refetch } = getBranches;
+  const { data: getBranchName } = getBranches;
+  const { data: getItemGroup } = getItemGroups;
+  const { data: getCategory } = getCategories;
+  const { data: getUom } = getUnitConversions;
+  const { data: getHSNcode } = getHSNs;
+  const { data: getGST } = getGSTTaxes;
+
+  const { data, isLoading, isError, error, refetch } = getItems;
 
   const {
     isLoading: isLoadingUpdate,
@@ -78,7 +93,7 @@ const Branches = () => {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
     mutateAsync: mutateAsyncUpdate,
-  } = updateBranch;
+  } = updateItem;
 
   const {
     isLoading: isLoadingDelete,
@@ -86,7 +101,7 @@ const Branches = () => {
     error: errorDelete,
     isSuccess: isSuccessDelete,
     mutateAsync: mutateAsyncDelete,
-  } = deleteBranch;
+  } = deleteItem;
 
   const {
     isLoading: isLoadingPost,
@@ -94,7 +109,7 @@ const Branches = () => {
     error: errorPost,
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
-  } = postBranch;
+  } = postItem;
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -127,107 +142,112 @@ const Branches = () => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          branchSerialNo: data.branchSerialNo,
-          registrationDate: data.registrationDate,
-          companyID: data.companyID,
-          city: data.city,
-          branchID: data.branchID,
-          user: data.user,
+          itemSerialNo: data.itemSerialNo,
           branchName: data.branchName,
-          branchShortName: data.branchShortName,
-          gSTINNumber: data.gSTINNumber,
-          address1: data.address1,
-          address2: data.address2,
-          address3: data.address3,
-          pincode: data.pincode,
-          mobileNumber: data.mobileNumber,
-          phoneNumber: data.phoneNumber,
-          email: data.email,
-          logo: data.logo,
-          watermark: data.watermark,
+          groupName: data.groupName,
+          productCategory: data.productCategory,
+          name: data.name,
+          aliasName: data.aliasName,
+          uom: data.uom,
+          cost: data.cost,
+          listPrice: data.listPrice,
+          discount: data.discount,
+          marginPrice: data.marginPrice,
+          MRP: data.MRP,
+          batchNo: data.batchNo,
+          expiryDate: data.expiryDate,
+          freeGiftQty: data.freeGiftQty,
+          HSNCode: data.HSNCode,
+          GSTTaxRate: data.GSTTaxRate,
+          reOrderQty: data.reOrderQty,
+          openingStockQty: data.openingStockQty,
+          openingStockValue: data.openingStockValue,
+          productImage: data.productImage,
           blocked: data.blocked,
         })
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (branch) => {
-    setId(branch._id);
+  const viewHandler = (item) => {
+    setId(item._id);
     setView(true);
-    setValue("branchSerialNo", branch.branchSerialNo);
-    setValue("registrationDate", branch.registrationDate);
-    setValue("companyID", branch.companyID);
-    setValue("city", branch.city);
-    setValue("branchID", branch.branchID);
-    setValue("user", branch.user);
-    setValue("branchName", branch.branchName);
-    setValue("branchShortName", branch.branchShortName);
-    setValue("gSTINNumber", branch.gSTINNumber);
-    setValue("address1", branch.address1);
-    setValue("address2", branch.address2);
-    setValue("address3", branch.address3);
-    setValue("pincode", branch.pincode);
-    setValue("mobileNumber", branch.mobileNumber);
-    setValue("phoneNumber", branch.phoneNumber);
-    setValue("email", branch.email);
-    setValue("logo", branch.logo);
-    setValue("watermark", branch.watermark);
-    setValue("blocked", branch.blocked);
+    setValue("itemSerialNo", item.itemSerialNo);
+    setValue("branchName", item.branchName);
+    setValue("groupName", item.groupName);
+    setValue("productCategory", item.productCategory);
+    setValue("name", item.name);
+    setValue("aliasName", item.aliasName);
+    setValue("uom", item.uom);
+    setValue("cost", item.cost);
+    setValue("listPrice", item.listPrice);
+    setValue("discount", item.discount);
+    setValue("marginPrice", item.marginPrice);
+    setValue("MRP", item.MRP);
+    setValue("batchNo", item.batchNo);
+    setValue("expiryDate", item.expiryDate);
+    setValue("freeGiftQty", item.freeGiftQty);
+    setValue("HSNCode", item.HSNCode);
+    setValue("GSTTaxRate", item.GSTTaxRate);
+    setValue("reOrderQty", item.reOrderQty);
+    setValue("openingStockQty", item.openingStockQty);
+    setValue("openingStockValue", item.openingStockValue);
+    setValue("productImage", item.productImage);
+    setValue("blocked", item.blocked);
   };
 
-  const editHandler = (branch) => {
-    setId(branch._id);
+  const editHandler = (item) => {
+    setId(item._id);
     setView(false);
     setEdit(true);
-    setValue("branchSerialNo", branch.branchSerialNo);
-    setValue("registrationDate", branch.registrationDate);
-    setValue("companyID", branch.companyID);
-    setValue("city", branch.city);
-    setValue("branchID", branch.branchID);
-    setValue("user", branch.user);
-    setValue("branchName", branch.branchName);
-    setValue("branchShortName", branch.branchShortName);
-    setValue("gSTINNumber", branch.gSTINNumber);
-    setValue("address1", branch.address1);
-    setValue("address2", branch.address2);
-    setValue("address3", branch.address3);
-    setValue("pincode", branch.pincode);
-    setValue("mobileNumber", branch.mobileNumber);
-    setValue("phoneNumber", branch.phoneNumber);
-    setValue("email", branch.email);
-    setValue("logo", branch.logo);
-    setValue("watermark", branch.watermark);
-    setValue("blocked", branch.blocked);
+    setValue("itemSerialNo", item.itemSerialNo);
+    setValue("branchName", item.branchName);
+    setValue("groupName", item.groupName);
+    setValue("productCategory", item.productCategory);
+    setValue("name", item.name);
+    setValue("aliasName", item.aliasName);
+    setValue("uom", item.uom);
+    setValue("cost", item.cost);
+    setValue("listPrice", item.listPrice);
+    setValue("discount", item.discount);
+    setValue("marginPrice", item.marginPrice);
+    setValue("MRP", item.MRP);
+    setValue("batchNo", item.batchNo);
+    setValue("expiryDate", item.expiryDate);
+    setValue("freeGiftQty", item.freeGiftQty);
+    setValue("HSNCode", item.HSNCode);
+    setValue("GSTTaxRate", item.GSTTaxRate);
+    setValue("reOrderQty", item.reOrderQty);
+    setValue("openingStockQty", item.openingStockQty);
+    setValue("openingStockValue", item.openingStockValue);
+    setValue("productImage", item.productImage);
+    setValue("blocked", item.blocked);
   };
 
   return (
     <>
       <Helmet>
-        <title>Branches | HTC</title>
-        <meta property="og:title" content="Branches" key="title" />
+        <title>Items | HTC</title>
+        <meta property="og:title" content="Items" key="title" />
       </Helmet>
       {isSuccessDelete && (
-        <Message variant="success">
-          Branch has been deleted successfully.
-        </Message>
+        <Message variant="success">Item has been deleted successfully.</Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
-        <Message variant="success">
-          Branch has been updated successfully.
-        </Message>
+        <Message variant="success">Item has been updated successfully.</Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
-        <Message variant="success">
-          Branch has been created successfully.
-        </Message>
+        <Message variant="success">Item has been Created successfully.</Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
 
-      {isError ? (
+      {isLoading ? (
+        <Spinner />
+      ) : isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <ViewBranches
+        <ViewItems
           data={data}
           viewHandler={viewHandler}
           editHandler={editHandler}
@@ -235,14 +255,14 @@ const Branches = () => {
           isLoadingDelete={isLoadingDelete}
           setQ={setQ}
           q={q}
+          searchHandler={searchHandler}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          searchHandler={searchHandler}
           setView={setView}
         />
       )}
 
-      <div className="my-3">
+      <div className="ms-auto text-end">
         <Pagination data={data} setPage={setPage} />
       </div>
 
@@ -261,7 +281,7 @@ const Branches = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit Branch" : view ? "View Branch" : "Add Branch"}
+                {edit ? "Edit Item" : view ? "View Item" : "Add Item"}
               </h3>
 
               <button
@@ -277,7 +297,7 @@ const Branches = () => {
               </button>
             </DialogTitle>
             <div className="flex-1 overflow-auto py-4 px-6">
-              <FormBranches
+              <FormItems
                 edit={edit}
                 view={view}
                 formCleanHandler={formCleanHandler}
@@ -293,9 +313,12 @@ const Branches = () => {
                 watch={watch}
                 error={error}
                 nextSequenceNumber={data && data.nextSequenceNumber}
-                company={companyId && companyId.data}
-                states={getState && getState.data}
-                cities={getCity && getCity.data}
+                branch={getBranchName && getBranchName.data}
+                group={getItemGroup && getItemGroup.data}
+                category={getCategory && getCategory.data}
+                uom={getUom && getUom.data}
+                hsn={getHSNcode && getHSNcode.data}
+                gst={getGST && getGST.data}
               />
             </div>
           </DialogPanel>
@@ -306,4 +329,4 @@ const Branches = () => {
   );
 };
 
-export default Branches;
+export default Items;

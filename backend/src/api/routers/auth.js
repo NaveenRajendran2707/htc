@@ -113,6 +113,31 @@ import {
   postUserRoleById,
 } from '../controllers/auth/user-roles.js'
 import { getProfiles, getProfile, postProfile } from '../controllers/auth/profile.js'
+import {
+  getItemGroups,
+  postItemGroup,
+  deleteItemGroup,
+  putItemGroup,
+} from '../controllers/auth/item-groups.js'
+import {
+  getItems,
+  postItem,
+  deleteItem,
+  putItem,
+} from '../controllers/auth/items.js'
+import {
+  getBrands,
+  postBrand,
+  deleteBrand,
+  putBrand,
+} from '../controllers/auth/brand.js'
+import {
+  getCategorys,
+  postCategory,
+  deleteCategory,
+  putCategory,
+} from '../controllers/auth/categories.js'
+import { getProfile, postProfile } from '../controllers/auth/profile.js'
 import { getUserProfiles } from '../controllers/auth/user-profiles.js'
 import { login } from '../controllers/auth/login.js'
 import { postForgotPassword } from '../controllers/auth/forgot-password.js'
@@ -179,6 +204,45 @@ router
   .put(isAuth, putGSTTax)
   .delete(isAuth, deleteGSTTax)
 
+// item group
+router
+  .route('/api/auth/item-groups')
+  .get(isAuth, getItemGroups)
+  .post(isAuth, postItemGroup)
+router
+  .route('/api/auth/item-groups/:id')
+  .put(isAuth, putItemGroup)
+  .delete(isAuth, deleteItemGroup)
+
+// items
+router
+  .route('/api/auth/items')
+  .get(isAuth, getItems)
+  .post(isAuth, postItem)
+router
+  .route('/api/auth/items/:id')
+  .put(isAuth, putItem)
+  .delete(isAuth, deleteItem)
+
+// brand
+router
+  .route('/api/auth/brand')
+  .get(isAuth, getBrands)
+  .post(isAuth, postBrand)
+router
+  .route('/api/auth/brand/:id')
+  .put(isAuth, putBrand)
+  .delete(isAuth, deleteBrand)
+
+// categories
+router
+  .route('/api/auth/categories')
+  .get(isAuth, getCategorys)
+  .post(isAuth, postCategory)
+router
+  .route('/api/auth/categories/:id')
+  .put(isAuth, putCategory)
+  .delete(isAuth, deleteCategory)
 
 // hsn
 router
