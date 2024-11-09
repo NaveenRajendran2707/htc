@@ -1,28 +1,28 @@
 import dynamicAPI from './dynamicAPI'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-const url = '/api/auth/roles'
+const url = '/api/auth/account-groups'
 
-const queryKey = 'roles'
+const queryKey = 'account-groups'
 
-export default function useRolesHook(props) {
+export default function useAccountGroupsHook(props) {
   const { page = 1, id, q = '', limit = 25 } = props
   const queryClient = useQueryClient()
 
-  const getRoles = useQuery(
+  const getAccountGroups = useQuery(
     queryKey,
     async () =>
       await dynamicAPI('get', `${url}?page=${page}&q=${q}&limit=${limit}`, {}),
     { retry: 0 }
   )
 
-  const getRoleById = useQuery(
+  const getAccountGroupById = useQuery(
     queryKey,
     async (id) => await dynamicAPI('get', `${url}/${id}`, {}),
     { retry: 0, enabled: !!id }
   )
 
-  const updateRole = useMutation(
+  const updateAccountGroup = useMutation(
     async (obj) => await dynamicAPI('put', `${url}/${obj._id}`, obj),
     {
       retry: 0,
@@ -30,7 +30,7 @@ export default function useRolesHook(props) {
     }
   )
 
-  const deleteRole = useMutation(
+  const deleteAccountGroup = useMutation(
     async (id) => await dynamicAPI('delete', `${url}/${id}`, {}),
     {
       retry: 0,
@@ -38,7 +38,7 @@ export default function useRolesHook(props) {
     }
   )
 
-  const postRole = useMutation(
+  const postAccountGroup = useMutation(
     async (obj) => await dynamicAPI('post', url, obj),
     {
       retry: 0,
@@ -47,10 +47,10 @@ export default function useRolesHook(props) {
   )
 
   return {
-    getRoles,
-    updateRole,
-    deleteRole,
-    postRole, 
-    getRoleById,
+    getAccountGroups,
+    updateAccountGroup,
+    deleteAccountGroup,
+    postAccountGroup,
+    getAccountGroupById,
   }
 }

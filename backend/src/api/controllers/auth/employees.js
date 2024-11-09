@@ -1,5 +1,5 @@
 import Employee from '../../models/Employee.js'
-import Profile from '../../models/Profile.js'
+import User from '../../models/User.js'
 import UserRole from '../../models/UserRole.js'
 
 const schemaName = Employee
@@ -28,10 +28,17 @@ export const getEmployees = async (req, res) => {
       .sort({ createdAt: -1 })
       .select('-password')
       .lean()
+      .populate('user', ['firstName','lastName','email'])
+      .populate('state', ['stateName'])
+      .populate('city', ['cityName'])
+      .populate('department', ['department'])
+      .populate('designation', ['designation'])
 
     const result = await query
 
-    const getLastItem = await schemaName.find({}).sort({sequenceNumber: -1}).limit(1)
+    console.log("result", result)
+
+    const getLastItem = await User.find({}).sort({sequenceNumber: -1}).limit(1)
     const nextSequenceNumber = getLastItem && getLastItem.length > 0 ? getLastItem[0].sequenceNumber + 1 : ''
 
     res.status(200).json({
@@ -51,29 +58,32 @@ export const getEmployees = async (req, res) => {
 
 export const postEmployee = async (req, res) => {
   try {
-    const object = await schemaName.create(req.body)
+    
+    const userObject = await User.create(req.body)
+    req.body.user = userObject._id
+    const employeeObject = await schemaName.create(req.body)
 
-    await Profile.create({
-      user: object._id,
-      department: object.department,
-      designation: object.designation,
-      name: object.name,
-      address1: object.address1,
-      address2: object.address2,
-      address3: object.address3,
-      city: object.city,
-      pincode: object.pincode,
-      state: object.state,
-      mobile: object.mobile,
-      pan: object.pan,
-      pf: object.pf,
-      esi: object.esi,
-      dob: object.dob,
-      salaryscheduletype: object.salaryscheduletype,      
-      image: `https://avatars.githubusercontent.com/u/3984336?v=4`,
-    })
+    // await User.create({
+    //   user: object._id,
+    //   department: object.department,
+    //   designation: object.designation,
+    //   name: object.name,
+    //   address1: object.address1,
+    //   address2: object.address2,
+    //   address3: object.address3,
+    //   city: object.city,
+    //   pincode: object.pincode,
+    //   state: object.state,
+    //   mobile: object.mobile,
+    //   pan: object.pan,
+    //   pf: object.pf,
+    //   esi: object.esi,
+    //   dob: object.dob,
+    //   salaryscheduletype: object.salaryscheduletype,      
+    //   image: `https://avatars.githubusercontent.com/u/3984336?v=4`,
+    // })
 
-    res.status(200).send(object)
+    res.status(200).send(userObject)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -98,8 +108,6 @@ export const getEmployeeById = async (req, res) => {
 
 export const putEmployee = async (req, res) => {
   try {
-
-    console.log("req.body", req.body);
 
     const { id } = req.params
     const { department, designation, name, confirmed, blocked, password, email } = req.body
@@ -142,8 +150,7 @@ export const putEmployee = async (req, res) => {
 }
 
 export const deleteEmployee = async (req, res) => {
-  try {
-    console.log(req.params)
+  try {    
     const { id } = req.params
     const object = await schemaName.findByIdAndDelete(id)
 

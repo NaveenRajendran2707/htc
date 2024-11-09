@@ -98,9 +98,6 @@ export const getCompanyById = async (req, res) => {
 
 export const putCompany = async (req, res) => {
   try {
-
-    console.log("req.body", req.body);
-
     const { id } = req.params
     const { companySerialNo, registrationDate, introductionID, city, companyID, typeofService, companyType, user, 
       companyName, companyShortName, gSTINNumber, companyAdminName, address1, address2, address3, pincode, mobileNumber1, 
@@ -144,7 +141,7 @@ export const putCompany = async (req, res) => {
 
 export const deleteCompany = async (req, res) => {
   try {
-    console.log(req.params)
+
     const { id } = req.params
     const object = await schemaName.findByIdAndDelete(id)
 

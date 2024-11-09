@@ -7,6 +7,7 @@ import {
   inputText,
   staticInputSelect,
   inputDate,
+  dynamicInputSelect,
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBox
 } from "../../utils/dynamicForm";
@@ -34,6 +35,10 @@ export const FormEmployees = ({
   handleSubmit,
   submitHandler,
   error,
+  departmentData,
+  designationData,
+  stateData,
+  cityData,
   setIsModalOpen,
   permissionData,
   menuData,  
@@ -56,46 +61,74 @@ export const FormEmployees = ({
             register,
             errors,
             label: "",
+            name: "userType",
+            placeholder: "User Type",
+            value: "Client",
+            readOnly: true,
+          })}
+          {inputHidden({
+            register,
+            errors,
+            label: "",
             name: "sequenceNumber",
             placeholder: "Sequence Number",
             value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
             readOnly: true,
           })}
+          {inputHidden({
+            register,
+            errors,
+            label: "",
+            name: "userID",
+            placeholder: "User ID",
+            value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            readOnly: true,
+          })} 
           {inputText({
             register,
             errors,
             label: "Employee ID",
             name: "employeeID",
             placeholder: "Employee ID",
-            value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value: "EMP"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}          
-          {staticInputSelect({
+          {dynamicInputSelect({
             register,
             errors,
             label: "Department",
             name: "department",
             placeholder: "Department",
             isRequired: false,
-            data: [{ name: "Account" }],
+            data: departmentData && departmentData,
+            value: "department",
             readOnly: view,
           })}
-          {staticInputSelect({
+          {dynamicInputSelect({
             register,
             errors,
             label: "Designation",
             name: "designation",
             placeholder: "Designation",
             isRequired: false,
-            data: [{ name: "Manager" }],
+            data: designationData && designationData,
+            value: "designation",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Name",
-            name: "name",
-            placeholder: "Name",
+            label: "First Name",
+            name: "firstName",
+            placeholder: "First Name",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Last Name",
+            name: "lastName",
+            placeholder: "Last Name",
             readOnly: view,
           })}
           {inputText({
@@ -122,14 +155,26 @@ export const FormEmployees = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {staticInputSelect({
+          {dynamicInputSelect({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,            
+            data: stateData && stateData,
+            value: "stateName",
+            readOnly: view,
+          })}
+          {dynamicInputSelect({
             register,
             errors,
             label: "City",
             name: "city",
             placeholder: "City",
-            isRequired: false,
-            data: [{ name: "Chennai" }, { name: "Madurai" }],
+            isRequired: false,            
+            data: cityData && cityData,
+            value: "cityName",
             readOnly: view,
           })}
           {inputText({
@@ -139,17 +184,7 @@ export const FormEmployees = ({
             name: "pincode",
             placeholder: "600 078",
             readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,
-            data: [{ name: "Tamilnadu" }, { name: "Kerala" }],
-            readOnly: view,
-          })}
+          })}          
           {inputText({
             register,
             errors,

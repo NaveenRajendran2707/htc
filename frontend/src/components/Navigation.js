@@ -89,6 +89,7 @@ const Navigation = ({ toggleSidebar }) => {
 
         {menus() &&
           menus().uniqueDropdowns.map((item) => (
+            // <Disclosure as="li" key={item} defaultOpen>
             <Disclosure as="li" key={item}>
               {({ open }) => (
                 <>
@@ -98,7 +99,7 @@ const Navigation = ({ toggleSidebar }) => {
                     </span>
                     <span>
                       {item === "profile"
-                        ? user() && user().name
+                        ? user() && user().firstName + " " + user().lastName
                         : item.charAt(0).toUpperCase() + item.substring(1)}
                     </span>
                     <span

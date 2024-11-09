@@ -8,6 +8,7 @@ import ResetPassword from "./screens/auth/ResetPassword";
 import Profile from "./screens/account/Profile";
 import Menus from "./screens/admin/auth/Menus";
 import ServiceTypes from "./screens/admin/auth/ServiceTypes";
+import AccountGroups from "./screens/admin/auth/AccountGroups";
 import HSNs from "./screens/admin/auth/HSNs";
 import GSTTaxes from "./screens/admin/auth/GSTTaxes";
 import Permissions from "./screens/admin/auth/Permissions";
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/account/profile" element={<Profile />} />
           <Route path="/admin/auth/menus" element={<Menus />} />
           <Route path="/admin/auth/service-types" element={<ServiceTypes />} />
+          <Route path="/admin/auth/account-groups" element={<AccountGroups />} />
           <Route path="/admin/auth/hsns" element={<HSNs />} />
           <Route path="/admin/auth/gst-taxes" element={<GSTTaxes />} />
           <Route path='/admin/auth/departments' element={<Departments />} />

@@ -6,6 +6,10 @@ import usePermissionsHook from "../../../api/permissions";
 import useMenusHook from "../../../api/menus";
 import useUsersHook from "../../../api/users";
 import useEmployeesHook from "../../../api/employees";
+import useCitiesHook from "../../../api/cities";
+import useStatesHook from "../../../api/states";
+import useDepartmentsHook from "../../../api/departments";
+import useDesignationsHook from "../../../api/designations";
 import {
   ViewEmployees,
   ViewStates,
@@ -59,6 +63,8 @@ const Employees = () => {
   const { data: permissionData } = getPermissions;
   const { data: menuData } = getMenus;
 
+  console.log("data", data)
+
   const {
     isLoading: isLoadingUpdate,
     isError: isErrorUpdate,
@@ -82,6 +88,32 @@ const Employees = () => {
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
   } = postEmployee;
+
+  const { getDepartments } = useDepartmentsHook({
+    limit: 1000000,
+  });
+
+  const { data: departmentData } = getDepartments;
+
+  const { getDesignations } = useDesignationsHook({
+    limit: 1000000,
+  });
+
+  const { data: designationData } = getDesignations;
+
+
+  const { getStates } = useStatesHook({
+    limit: 1000000,
+  });
+
+  const { data: stateData } = getStates;
+
+  const { getCities } = useCitiesHook({
+    limit: 1000000,
+  });
+
+  const { data: cityData } = getCities;
+
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -267,6 +299,10 @@ const Employees = () => {
                 setIsModalOpen={setIsModalOpen}
                 watch={watch}
                 error={error}
+                stateData={stateData && stateData.data}
+                cityData={cityData && cityData.data}
+                departmentData={departmentData && departmentData.data}
+                designationData={designationData && designationData.data}
                 permissionData={permissionData && permissionData.data}
                 menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}

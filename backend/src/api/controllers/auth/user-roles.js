@@ -28,7 +28,7 @@ export const getUserRoles = async (req, res) => {
       .sort({ createdAt: -1 })
       .lean()
       .populate('user')
-      .populate('role')
+      .populate('role') 
 
     const result = await query
 

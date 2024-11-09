@@ -51,6 +51,7 @@ export const postRole = async (req, res) => {
     let menu = []
     if (name) type = name.toUpperCase().trim().replace(/\s+/g, '_')
 
+
     if (req.body.permission) {
       if (Array.isArray(req.body.permission)) {
         permission = req.body.permission

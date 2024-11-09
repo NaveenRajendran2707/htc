@@ -8,7 +8,7 @@ const schemaNameString = 'User'
 
 export const getUsers = async (req, res) => {
   try {
-    const q = req.query && req.query.q
+    const q = req.query && req.query.q  
 
     let query = schemaName.find(
       q ? { email: { $regex: q, $options: 'i' } } : {}
@@ -29,8 +29,14 @@ export const getUsers = async (req, res) => {
       .sort({ createdAt: -1 })
       .select('-password')
       .lean()
+      .populate('profile')
+
+    console.log("result", query)
 
     const result = await query
+
+    console.log("result", result)
+    //return false
 
     const getLastItem = await schemaName.find({}).sort({sequenceNumber: -1}).limit(1)
     const nextSequenceNumber = getLastItem && getLastItem.length > 0 ? getLastItem[0].sequenceNumber + 1 : ''
@@ -52,27 +58,22 @@ export const getUsers = async (req, res) => {
 
 export const postUser = async (req, res) => {
   try {
-    const object = await schemaName.create(req.body)
-
-    await Profile.create({
-      user: object._id,
-      department: object.department,
-      designation: object.designation,
-      name: object.name,
-      address1: object.address1,
-      address2: object.address2,
-      address3: object.address3,
-      city: object.city,
-      pincode: object.pincode,
-      state: object.state,
-      mobile: object.mobile,
-      pan: object.pan,
-      pf: object.pf,
-      esi: object.esi,
-      dob: object.dob,
-      salaryscheduletype: object.salaryscheduletype,      
-      image: `https://avatars.githubusercontent.com/u/3984336?v=4`,
+    const objectProfile = await Profile.create({      
+      sequenceNumber: req.body.sequenceNumber,      
+      address1: req.body.address1,
+      address2: req.body.address2,
+      address3: req.body.address3,
+      city: req.body.city,
+      pincode: req.body.pincode,
+      state: req.body.state,
+      mobile: req.body.mobile,
+      pan: req.body.pan,      
+      confirmed: req.body.confirmed,
+      blocked: req.body.blocked
     })
+
+    req.body.profile = objectProfile._id
+    const object = await schemaName.create(req.body)
 
     res.status(200).send(object)
   } catch (error) {
@@ -87,7 +88,7 @@ export const getUserById = async (req, res) => {
       .findById(id)
       .lean()
       .sort({ createdAt: -1 })
-      .select('-password')
+      .select('-password')      
 
     if (!objects)
       return res.status(404).json({ error: `${schemaNameString} not found` })
@@ -100,18 +101,18 @@ export const getUserById = async (req, res) => {
 export const putUser = async (req, res) => {
   try {
 
-    console.log("req.body", req.body);
-
     const { id } = req.params
-    const { department, designation, name, confirmed, blocked, password, email } = req.body
+    const { department, designation, firstName, lastName, confirmed, blocked, password, email } = req.body
 
     const object = await schemaName.findById(id)
+    
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` })
 
     object.department = department
     object.designation = designation
-    object.name = name
+    object.firstName = firstName
+    object.lastName = lastName
     object.email = email
     object.address1 = address1
     object.address2 = address2
@@ -144,7 +145,7 @@ export const putUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    console.log(req.params)
+
     const { id } = req.params
     const object = await schemaName.findByIdAndDelete(id)
 

@@ -1,7 +1,7 @@
 import { Spinner, Message } from "..";
-import { dynamicInputSelect } from "../../utils/dynamicForm";
+import { inputHidden, inputText, inputTextArea } from "../../utils/dynamicForm";
 
-const FormUserRoles = ({
+const FormServiceTypes = ({
   edit,
   view,
   formCleanHandler,
@@ -14,11 +14,9 @@ const FormUserRoles = ({
   handleSubmit,
   submitHandler,
   error,
-  dataRoles,
-  dataUsers,
   setIsModalOpen,
+  nextSequenceNumber
 }) => {
-  
   return (
     <>
       {isLoading ? (
@@ -27,36 +25,62 @@ const FormUserRoles = ({
         <Message variant="danger">{error}</Message>
       ) : (
         <form onSubmit={handleSubmit(submitHandler)}>
-          {dynamicInputSelect({
+          {inputHidden({
             register,
             errors,
-            label: "User",
-            name: "user",
-            value: "userID",
-            data:
-              dataUsers &&
-              dataUsers.data &&
-              dataUsers.data.filter((user) => user.confirmed && !user.blocked),
-            placeholder: "User",
-            readOnly: view,
+            label: "",
+            name: "sequenceNumber",
+            placeholder: "Sequence Number",
+            value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
+            readOnly: true,
           })}
-
-          {dynamicInputSelect({
+          {inputText({
             register,
             errors,
-            label: "Role",
-            name: "role",
-            placeholder: "Role",
-            data: dataRoles && dataRoles.data,
-            value: "name",
+            label: "Service Serial No",
+            name: "serviceSerialNo",
+            placeholder: "Service Serial No",
+            value: "SER"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            readOnly: true,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Service Name",
+            name: "serviceName",
+            placeholder: "Service Name",
             readOnly: view,
           })}
-
+          {inputText({
+            register,
+            errors,
+            label: "Perticular",
+            name: "particular",
+            placeholder: "Perticular",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Fees",
+            name: "fees",
+            placeholder: "Fees",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Status",
+            name: "status",
+            placeholder: "Status",
+            readOnly: view,
+            value: "Active"
+          })}
           {view ? "" :
           <div className="flex gap-3">
             <button
               type="submit"
-              className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+              className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
               disabled={isLoadingPost || isLoadingUpdate}
             >
               {isLoadingPost || isLoadingUpdate ? (
@@ -84,11 +108,11 @@ const FormUserRoles = ({
               Cancel
             </button>
           </div>
-          }
+        }
         </form>
       )}
     </>
   );
 };
 
-export default FormUserRoles;
+export default FormServiceTypes;

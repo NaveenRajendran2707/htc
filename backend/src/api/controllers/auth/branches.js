@@ -99,8 +99,6 @@ export const getBranchById = async (req, res) => {
 export const putBranch = async (req, res) => {
   try {
 
-    console.log("req.body", req.body);
-
     const { id } = req.params
     const { branchSerialNo, registrationDate, companyID, city, branchID, user, 
       branchName, branchShortName, gSTINNumber, address1, address2, address3, pincode, mobileNumber, 
@@ -139,8 +137,7 @@ export const putBranch = async (req, res) => {
 }
 
 export const deleteBranch = async (req, res) => {
-  try {
-    console.log(req.params)
+  try {    
     const { id } = req.params
     const object = await schemaName.findByIdAndDelete(id)
 

@@ -7,6 +7,12 @@ import {
   deleteEmployee,
 } from '../controllers/auth/employees.js'
 import {
+  getAccountGroups,
+  postAccountGroup,
+  putAccountGroup,
+  deleteAccountGroup,
+} from '../controllers/auth/account-groups.js'
+import {
   getServiceTypes,
   postServiceType,
   putServiceType,
@@ -106,7 +112,7 @@ import {
   putUserRole,
   postUserRoleById,
 } from '../controllers/auth/user-roles.js'
-import { getProfile, postProfile } from '../controllers/auth/profile.js'
+import { getProfiles, getProfile, postProfile } from '../controllers/auth/profile.js'
 import { getUserProfiles } from '../controllers/auth/user-profiles.js'
 import { login } from '../controllers/auth/login.js'
 import { postForgotPassword } from '../controllers/auth/forgot-password.js'
@@ -140,6 +146,16 @@ router
   .route('/api/auth/employees/:id')
   .put(isAuth, putEmployee)
   .delete(isAuth, deleteEmployee)
+
+// account group
+router
+  .route('/api/auth/account-groups')
+  .get(isAuth, getAccountGroups)
+  .post(isAuth, postAccountGroup)
+router
+  .route('/api/auth/account-groups/:id')
+  .put(isAuth, putAccountGroup)
+  .delete(isAuth, deleteAccountGroup)
 
 
 // service type
@@ -267,6 +283,7 @@ router
 // profile
 router
   .route('/api/auth/profile')
+  .get(isAuth, getProfiles)
   .get(isAuth, getProfile)
   .post(isAuth, postProfile)
 

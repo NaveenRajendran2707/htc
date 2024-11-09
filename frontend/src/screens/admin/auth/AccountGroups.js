@@ -2,15 +2,12 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
-import usePermissionsHook from "../../../api/permissions";
-import useMenusHook from "../../../api/menus";
-import useUsersHook from "../../../api/users";
-import useCitiesHook from "../../../api/cities";
-import useStatesHook from "../../../api/states";
+import useAccountGroupsHook from "../../../api/accountGroups";
 import {
-  ViewUsers,  
+  Spinner,
+  ViewAccountGroups,
   Pagination,
-  FormUsers,
+  FormAccountGroups,
   Message,
   Confirm,
 } from "../../../components";
@@ -21,7 +18,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 
-const Users = () => {
+const AccountGroups = () => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -29,16 +26,14 @@ const Users = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getUsers, postUser, updateUser, deleteUser } = useUsersHook({
+  const {
+    getAccountGroups,
+    postAccountGroup,
+    updateAccountGroup,
+    deleteAccountGroup,
+  } = useAccountGroupsHook({
     page,
     q,
-  });
-
-  const { getPermissions } = usePermissionsHook({
-    limit: 1000000,
-  });
-  const { getMenus } = useMenusHook({
-    limit: 1000000,
   });
 
   const {
@@ -49,15 +44,10 @@ const Users = () => {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      confirmed: true,
-      blocked: false,
-    },
+    defaultValues: {},
   });
 
-  const { data, isLoading, isError, error, refetch } = getUsers;
-  const { data: permissionData } = getPermissions;
-  const { data: menuData } = getMenus;
+  const { data, isLoading, isError, error, refetch } = getAccountGroups;
 
   const {
     isLoading: isLoadingUpdate,
@@ -65,7 +55,7 @@ const Users = () => {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
     mutateAsync: mutateAsyncUpdate,
-  } = updateUser;
+  } = updateAccountGroup;
 
   const {
     isLoading: isLoadingDelete,
@@ -73,7 +63,7 @@ const Users = () => {
     error: errorDelete,
     isSuccess: isSuccessDelete,
     mutateAsync: mutateAsyncDelete,
-  } = deleteUser;
+  } = deleteAccountGroup;
 
   const {
     isLoading: isLoadingPost,
@@ -81,21 +71,7 @@ const Users = () => {
     error: errorPost,
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
-  } = postUser;
-
-  const { getStates } = useStatesHook({
-    limit: 1000000,
-  });
-
-  const { data: stateData } = getStates;
-
-  const { getCities } = useCitiesHook({
-    limit: 1000000,
-  });
-
-  const { data: cityData } = getCities;
-
-  
+  } = postAccountGroup;
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -125,91 +101,64 @@ const Users = () => {
   };
 
   const submitHandler = (data) => {
-    console.log("edit", edit);
-    console.log("adminnnnn", data)
-
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          sequenceNumber: data.sequenceNumber, 
-          firstName: data.firstName,
-          lastName: data.lastName,
-          address1: data.address1,
-          address2: data.address2,
-          address3: data.address3,
-          city: data.city,
-          pincode: data.pincode,
-          state: data.state,
-          mobile: data.mobile,
-          pan: data.pan,
-          email: data.email,
-          confirmed: data.confirmed,
-          blocked: data.blocked,
-          password: data.password,
+          accountGroupSerialNo: data.accountGroupSerialNo,
+          accountGroup: data.accountGroup,
+          accountSubGroup: data.accountSubGroup,
         })
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (user) => {
-    setId(user._id);
-    setView(true);    
-    setValue("firstName", user.firstName);
-    setValue("lastName", user.lastName);
-    setValue("address1", user.profile?.address1);
-    setValue("address2", user.profile?.address2);
-    setValue("address3", user.profile?.address3);
-    setValue("city", user.profile?.city);
-    setValue("pincode", user.profile?.pincode);
-    setValue("state", user.profile?.state);
-    setValue("mobile", user.profile?.mobile);
-    setValue("pan", user.profile?.pan);    
-    setValue("email", user.email);
-    setValue("confirmed", user.confirmed);
-    setValue("blocked", user.blocked);
+  const viewHandler = (accountGroup) => {
+    setId(accountGroup._id);
+    setView(true);
+    setValue("accountGroupSerialNo", accountGroup.accountGroupSerialNo);
+    setValue("accountGroup", accountGroup.accountGroup);
+    setValue("accountSubGroup", accountGroup.accountSubGroup);
   };
 
-  const editHandler = (user) => {
-    setId(user._id);
+  const editHandler = (accountGroup) => {
+    setId(accountGroup._id);
     setView(false);
     setEdit(true);
-    setValue("firstName", user.firstName);
-    setValue("lastName", user.lastName);
-    setValue("address1", user.profile?.address1);
-    setValue("address2", user.profile?.address2);
-    setValue("address3", user.profile?.address3);
-    setValue("city", user.profile?.city);
-    setValue("pincode", user.profile?.pincode);
-    setValue("state", user.profile?.state);
-    setValue("mobile", user.profile?.mobile);
-    setValue("pan", user.profile?.pan);    
-    setValue("email", user.email);
-    setValue("confirmed", user.confirmed);
-    setValue("blocked", user.blocked);
+    setValue("accountGroupSerialNo", accountGroup.accountGroupSerialNo);
+    setValue("accountGroup", accountGroup.accountGroup);
+    setValue("accountSubGroup", accountGroup.accountSubGroup);
   };
 
   return (
     <>
       <Helmet>
-        <title>Users | HTC</title>
-        <meta property="og:title" content="Users" key="title" />
+        <title>Account Groups | HTC</title>
+        <meta property="og:title" content="Account Groups" key="title" />
       </Helmet>
       {isSuccessDelete && (
-        <Message variant="success">User has been deleted successfully.</Message>
+        <Message variant="success">
+          Account Group has been deleted successfully.
+        </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
-        <Message variant="success">User has been updated successfully.</Message>
+        <Message variant="success">
+          Account Group has been updated successfully.
+        </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
-        <Message variant="success">User has been created successfully.</Message>
+        <Message variant="success">
+          Account Group has been Created successfully.
+        </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
 
-      {isError ? (
+      {isLoading ? (
+        <Spinner />
+      ) : isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <ViewUsers
+        <ViewAccountGroups
           data={data}
           viewHandler={viewHandler}
           editHandler={editHandler}
@@ -217,13 +166,14 @@ const Users = () => {
           isLoadingDelete={isLoadingDelete}
           setQ={setQ}
           q={q}
+          searchHandler={searchHandler}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          searchHandler={searchHandler}
           setView={setView}
         />
       )}
-      <div className="my-3">
+
+      <div className="ms-auto text-end">
         <Pagination data={data} setPage={setPage} />
       </div>
 
@@ -242,20 +192,23 @@ const Users = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit User" : view ? "View User" : "Add User"}
+                {edit ? "Edit AccountGroup" : view ? "View AccountGroup" : "Add AccountGroup"}
               </h3>
 
               <button
                 type="button"
                 className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-2"
                 aria-label="Close"
-                onClick={() => {setIsModalOpen(false); formCleanHandler()}}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
               >
                 <span className="material-symbols-rounded">close</span>
               </button>
             </DialogTitle>
             <div className="flex-1 overflow-auto py-4 px-6">
-              <FormUsers
+              <FormAccountGroups
                 edit={edit}
                 view={view}
                 formCleanHandler={formCleanHandler}
@@ -270,10 +223,6 @@ const Users = () => {
                 setIsModalOpen={setIsModalOpen}
                 watch={watch}
                 error={error}
-                stateData={stateData && stateData.data}
-                cityData={cityData && cityData.data}
-                permissionData={permissionData && permissionData.data}
-                menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}
               />
             </div>
@@ -285,4 +234,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default AccountGroups;

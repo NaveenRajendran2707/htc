@@ -4,6 +4,55 @@ import User from '../../models/User.js'
 const schemaName = Profile
 const schemaNameString = 'Profile'
 
+export const getProfiles = async (req, res) => {
+  try {
+    const q = req.query && req.query.q
+
+    let query = schemaName.find(
+      q ? { email: { $regex: q, $options: 'i' } } : {}
+    )
+
+    const page = parseInt(req.query.page) || 1
+    const pageSize = parseInt(req.query.limit) || 25
+    const skip = (page - 1) * pageSize
+    const total = await schemaName.countDocuments(
+      q ? { email: { $regex: q, $options: 'i' } } : {}
+    )
+
+    const pages = Math.ceil(total / pageSize)
+
+    query = query
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .select('-password')
+      .lean()
+      .populate('user', ['firstName','lastName','email'])
+      .populate('state', ['stateName'])
+      .populate('city', ['cityName'])
+      .populate('department', ['department'])
+      .populate('designation', ['designation'])
+
+    const result = await query
+
+    const getLastItem = await User.find({}).sort({sequenceNumber: -1}).limit(1)
+    const nextSequenceNumber = getLastItem && getLastItem.length > 0 ? getLastItem[0].sequenceNumber + 1 : ''
+
+    res.status(200).json({
+      startIndex: skip + 1,
+      endIndex: skip + result.length,
+      count: result.length,
+      page,
+      pages,
+      total,
+      nextSequenceNumber,
+      data: result,
+    })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
 export const getProfile = async (req, res) => {
   try {
     const { _id } = req.user
@@ -30,21 +79,21 @@ export const postProfile = async (req, res) => {
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` })
 
-    if (name) await User.findOneAndUpdate({ _id }, { name })
-    if (password) {
-      const regex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-      if (!regex.test(password))
-        return res.status(400).json({
-          error:
-            'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character',
-        })
+    // if (name) await User.findOneAndUpdate({ _id }, { name })
+    // if (password) {
+    //   const regex =
+    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    //   if (!regex.test(password))
+    //     return res.status(400).json({
+    //       error:
+    //         'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character',
+    //     })
 
-      await User.findOneAndUpdate(
-        { _id },
-        { password: await object.user.encryptPassword(password) }
-      )
-    }
+    //   await User.findOneAndUpdate(
+    //     { _id },
+    //     { password: await object.user.encryptPassword(password) }
+    //   )
+    // }
 
     object.name = name ? name : object.name
     object.phone = phone ? phone : object.phone

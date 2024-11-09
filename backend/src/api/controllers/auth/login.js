@@ -17,7 +17,8 @@ export const login = async (req, res) => {
 
       return res.send({
         _id: user._id,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         blocked: user.blocked,
         confirmed: user.confirmed,

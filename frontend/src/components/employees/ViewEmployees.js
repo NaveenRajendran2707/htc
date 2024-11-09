@@ -37,7 +37,7 @@ const ViewEmployees = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-2 py-4">Joined Date</th>
+              <th className="px-2 py-4">Employee ID</th>              
               <th className="px-2 py-4">Department</th>
               <th className="px-2 py-4">Designation</th>
               <th className="px-2 py-4">Name</th>
@@ -54,6 +54,7 @@ const ViewEmployees = ({
             <th className="px-2 py-4">ESI No.</th>
             <th className="px-2 py-4">DOB</th>
             <th className="px-2 py-4">Salary Schedule Type</th>             */}
+            <th className="px-2 py-4">Joined Date</th>
               <th className="px-2 py-4">Confirmed</th>
               <th className="px-2 py-4">Blocked</th>
               {/* <th className="px-2 py-4">Permission</th> */}
@@ -65,14 +66,12 @@ const ViewEmployees = ({
             {data &&
               data.data.map((employee) => (
                 <tr key={employee._id}>
+                  <td className="p-2">{employee.employeeID}</td>
+                  <td className="p-2">{employee.department.department}</td>
+                  <td className="p-2">{employee.designation.designation}</td>
+                  <td className="p-2">{employee.firstName + " " + employee.lastName}</td>
                   <td className="p-2">
-                    {moment(employee.createdAt).format("lll")}
-                  </td>
-                  <td className="p-2">{employee.department}</td>
-                  <td className="p-2">{employee.designation}</td>
-                  <td className="p-2">{employee.name}</td>
-                  <td className="p-2">
-                    <a href={`mailto:${employee.email}`}>{employee.email}</a>
+                    <a href={`mailto:${employee.user.email}`}>{employee.user.email}</a>
                   </td>
                   {/* <td className="p-2">{employee.address1}</td>
                 <td className="p-2">{employee.address2}</td>
@@ -86,6 +85,9 @@ const ViewEmployees = ({
                 <td className="p-2">{employee.esi}</td>
                 <td className="p-2">{employee.dob}</td>
                 <td className="p-2">{employee.salaryscheduletype}</td> */}
+                  <td className="p-2">
+                    {moment(employee.createdAt).format("lll")}
+                  </td>
                   <td className="p-2">
                     {employee.confirmed ? (
                       <span className="material-symbols-rounded text-green-600">

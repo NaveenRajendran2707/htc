@@ -49,7 +49,7 @@ const ViewDesignations = ({
                 <tr key={designation._id}>
                   <td className="p-2">{designation.designationSerialNo}</td>
                   <td className="p-2">{designation.designation}</td>                  
-                  <td className="p-2">{designation.department.department}</td>
+                  <td className="p-2">{designation.department && designation.department.department}</td>
                   <td className="p-2">
                     <div className="flex gap-2">
 

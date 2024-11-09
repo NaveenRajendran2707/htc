@@ -56,11 +56,20 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
               <span className="block text-sm font-medium text-black dark:text-white">
                 {/* {user && user.name ? user().name : "Guest"} */}
               </span>
-              <span className="block text-xs">Admin</span>
+              <Link
+                to="/auth/login"
+                className="flex items-center gap-1 px-3 py-2"
+                aria-current="page"
+                onClick={logoutHandler}
+              >
+                <span className="material-symbols-rounded">logout</span>
+                <span>Logout</span>
+              </Link>
+              {/* <span className="block text-xs">Admin</span> */}
             </span>
-            <span className="h-10 w-10 rounded-full">
+            {/* <span className="h-10 w-10 rounded-full">
               <img src="/avatar.png" alt="User" />
-            </span>
+            </span> */}
           </MenuButton>
           <MenuItems
             anchor="bottom end"

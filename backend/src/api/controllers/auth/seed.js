@@ -15,7 +15,8 @@
 // import ServiceType from '../../models/ServiceType.js'
 // import GSTTax from '../../models/GSTTax.js'
 // import HSN from '../../models/HSN.js'
-import Employee from '../../models/Employee.js'
+// import Employee from '../../models/Employee.js'
+import AccountGroup from '../../models/AccountGroup.js'
 
 import {  
   // users,
@@ -34,7 +35,8 @@ import {
   // servicetype,
   // gsttax,
   // hsn,
-  employees
+  // employees
+  accountgroups
 } from '../../../config/data.js'
 
 const secret = 'js'
@@ -62,10 +64,14 @@ export const seed = async (req, res) => {
     // await ServiceType.deleteMany({})
     // await GSTTax.deleteMany({})
     // await HSN.deleteMany({})
-    await Employee.deleteMany({})
+    // await Employee.deleteMany({})
+    await AccountGroup.deleteMany({})
 
-    // Create Employee
-    await Employee.create(employees)
+    // Create Account Group
+    await AccountGroup.create(accountgroups)
+
+    // // Create Employee
+    // await Employee.create(employees)
 
     // // Create Service Type
     // await ServiceType.create(servicetype)

@@ -106,6 +106,7 @@ const Roles = () => {
   };
 
   const submitHandler = (data) => {
+    console.log("data", data)
     edit
       ? mutateAsyncUpdate({
           _id: id,

@@ -7,6 +7,7 @@ import {
   inputText,
   staticInputSelect,
   inputDate,
+  dynamicInputSelect,
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBox
 } from "../../utils/dynamicForm";
@@ -34,6 +35,8 @@ export const FormUsers = ({
   handleSubmit,
   submitHandler,
   error,
+  stateData,
+  cityData,
   setIsModalOpen,
   permissionData,
   menuData,  
@@ -69,33 +72,21 @@ export const FormUsers = ({
             placeholder: "User ID",
             value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
-          })}          
-          {staticInputSelect({
+          })}                    
+          {inputText({
             register,
             errors,
-            label: "Department",
-            name: "department",
-            placeholder: "Department",
-            isRequired: false,
-            data: [{ name: "Account" }],
-            readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "Designation",
-            name: "designation",
-            placeholder: "Designation",
-            isRequired: false,
-            data: [{ name: "Manager" }],
+            label: "First Name",
+            name: "firstName",
+            placeholder: "First Name",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Name",
-            name: "name",
-            placeholder: "Name",
+            label: "Last Name",
+            name: "lastName",
+            placeholder: "Last Name",
             readOnly: view,
           })}
           {inputText({
@@ -122,14 +113,26 @@ export const FormUsers = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {staticInputSelect({
+          {dynamicInputSelect({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,            
+            data: stateData && stateData,
+            value: "stateName",
+            readOnly: view,
+          })}
+          {dynamicInputSelect({
             register,
             errors,
             label: "City",
             name: "city",
             placeholder: "City",
-            isRequired: false,
-            data: [{ name: "Chennai" }, { name: "Madurai" }],
+            isRequired: false,            
+            data: cityData && cityData,
+            value: "cityName",
             readOnly: view,
           })}
           {inputText({
@@ -139,17 +142,7 @@ export const FormUsers = ({
             name: "pincode",
             placeholder: "600 078",
             readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,
-            data: [{ name: "Tamilnadu" }, { name: "Kerala" }],
-            readOnly: view,
-          })}
+          })}          
           {inputText({
             register,
             errors,
@@ -173,41 +166,7 @@ export const FormUsers = ({
             name: "pan",
             placeholder: "AAAAA1234Z",
             readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "PF No.",
-            name: "pf",
-            placeholder: "KN/PY/1234567/987",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "ESI No.",
-            name: "esi",
-            placeholder: "31-00-123456-000-0001",
-            readOnly: view,
-          })}
-          {inputDate({
-            register,
-            errors,
-            label: "DOB",
-            name: "dob",
-            placeholder: "11/11/1999",
-            readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "Salary Schedule Type",
-            name: "salaryscheduletype",
-            placeholder: "Salary Schedule Type",
-            isRequired: false,
-            data: [{ name: "Weekly" }, { name: "Monthly" }],
-            readOnly: view,
-          })}
+          })}          
           {view ? <div></div> : <div>
             {inputPassword({
               register,

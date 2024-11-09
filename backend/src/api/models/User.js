@@ -5,11 +5,19 @@ import bcrypt from 'bcryptjs'
 const userScheme = mongoose.Schema(
   {
     sequenceNumber: { type: Number, unique: true },
-    userID: { type: String, required: true},
+    userID: { type: String, required: true},    
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Profile',
+    },
+    userType: {
+      type: String,
+      enum : ['Admin','Client','Channel Partner'],
+      default: 'Admin'
+    },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true, lowercase: true },    
+    email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
