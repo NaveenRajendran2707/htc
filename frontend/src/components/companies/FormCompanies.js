@@ -8,6 +8,7 @@ import {
   staticInputSelect,
   inputDate,
   staticInputSelectState,
+  dynamicInputSelect
 } from "../../utils/dynamicForm";
 
 // import { useState } from "react";
@@ -31,6 +32,7 @@ export const FormCompanies = ({
   service,
   states,
   cities,
+  user,
 }) => {
   const [city, setCity] = useState([]);
   const handleStateChange = (e) => {
@@ -132,12 +134,15 @@ export const FormCompanies = ({
             data: [{ name: "Proprietor" }, { name: "Partnership" }],
             readOnly: view,
           })}
-          {inputText({
+           {dynamicInputSelect({
             register,
             errors,
             label: "User ID",
             name: "user",
             placeholder: "User ID",
+            isRequired: false,            
+            data: user && user,
+            value: "firstName",
             readOnly: view,
           })}
           {inputText({

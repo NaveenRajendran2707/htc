@@ -6,6 +6,7 @@ import useCompaniesHook from "../../../api/companies";
 import useServiceHook from "../../../api/serviceTypes";
 import useStatesHook from "../../../api/states";
 import useCitiesHook from "../../../api/cities";
+import useUsersHook from "../../../api/users";
 import {
   ViewCompanies,
   Pagination,
@@ -40,7 +41,6 @@ const Companies = () => {
   });
 
   const { data: services } = getServiceTypes;
-  console.log("services", services);
 
   const { getStates } = useStatesHook({
     page,
@@ -55,6 +55,14 @@ const Companies = () => {
   });
 
   const { data: getCity } = getCities;
+
+  const { getUsers } = useUsersHook({
+    page,
+    q,
+  });
+
+  const { data: users } = getUsers;
+  console.log("users", users);
 
   const {
     register,
@@ -306,6 +314,7 @@ const Companies = () => {
                 service={services && services.data}
                 states={getState && getState.data}
                 cities={getCity && getCity.data}
+                user={users && users.data}
               />
             </div>
           </DialogPanel>
