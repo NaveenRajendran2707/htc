@@ -7,7 +7,7 @@ export const inputHidden = (args) => {
     label,
     isRequired = true,
     readOnly,
-    value
+    value,
   } = args;
 
   return (
@@ -21,7 +21,9 @@ export const inputHidden = (args) => {
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         value={value}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -32,7 +34,6 @@ export const inputHidden = (args) => {
   );
 };
 
-
 export const inputText = (args) => {
   const {
     register,
@@ -42,7 +43,7 @@ export const inputText = (args) => {
     label,
     isRequired = true,
     readOnly,
-    value
+    value,
   } = args;
 
   return (
@@ -56,7 +57,9 @@ export const inputText = (args) => {
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         value={value}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -88,7 +91,9 @@ export const inputTel = (args) => {
         type="tel"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -122,7 +127,9 @@ export const inputTextArea = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -154,7 +161,9 @@ export const inputNumber = (args) => {
         type="number"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -166,7 +175,7 @@ export const inputNumber = (args) => {
 };
 
 export const inputEmail = (args) => {
-  const { register, placeholder, errors, label, name, readOnly, } = args;
+  const { register, placeholder, errors, label, name, readOnly } = args;
 
   return (
     <div className="mb-4">
@@ -184,7 +193,9 @@ export const inputEmail = (args) => {
         type="email"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -263,7 +274,9 @@ export const dynamicInputSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       >
         <option value="">Select {label}</option>
         {data &&
@@ -304,13 +317,59 @@ export const staticInputSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       >
         <option value="">Select {label}</option>
         {data &&
           data.map((d) => (
             <option key={d.name} value={d.name}>
               {d.name}
+            </option>
+          ))}
+      </select>
+      {errors && errors[name] && (
+        <span className="block text-sm text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
+export const dynaimcInputSelectField = (args) => {
+  const {
+    register,
+    placeholder,
+    errors,
+    name,
+    data,
+    label,
+    value,
+    isRequired = true,
+    readOnly,
+  } = args;
+
+  return (
+    <div className="mb-3">
+      <label className="block mb-1" htmlFor={name}>
+        {label}
+      </label>
+      <select
+        {...register(name, isRequired && { required: `${label} is required` })}
+        type="text"
+        placeholder={`${placeholder}`}
+        readOnly={!!readOnly}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
+      >
+        <option value="">Select {label}</option>
+        {data &&
+          data.map((d) => (
+            <option key={d.name} value={d.name}>
+              {d[value]}
             </option>
           ))}
       </select>
@@ -333,7 +392,7 @@ export const staticInputSelectState = (args) => {
     label,
     isRequired = true,
     readOnly,
-    onChange
+    onChange,
   } = args;
 
   return (
@@ -347,14 +406,16 @@ export const staticInputSelectState = (args) => {
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         onChange={onChange}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       >
         <option value="">Select {label}</option>
         {data &&
           data.map((d) => (
             <option key={d._id} value={d.name} data-id={d._id}>
-            {d.name}
-          </option>
+              {d.name}
+            </option>
           ))}
       </select>
       {errors && errors[name] && (
@@ -367,13 +428,15 @@ export const staticInputSelectState = (args) => {
 };
 
 export const inputCheckBox = (args) => {
-  const { register, errors, name, label, isRequired = true, readOnly, } = args;
+  const { register, errors, name, label, isRequired = true, readOnly } = args;
 
   return (
     <div className="mb-3">
       <div className="flex items-center mb-4">
         <input
-          className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${readOnly && 'bg-slate-200'}`}
+          className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
+            readOnly && "bg-slate-200"
+          }`}
           type="checkbox"
           readOnly={!!readOnly}
           id={name}
@@ -399,13 +462,21 @@ export const inputCheckBox = (args) => {
 };
 
 export const inputMultipleCheckBoxGroups = (args) => {
-  const { register, errors, name, data, label, isRequired = true, readOnly, } = args;
+  const {
+    register,
+    errors,
+    name,
+    data,
+    label,
+    isRequired = true,
+    readOnly,
+  } = args;
 
   return (
     <div className="mb-3">
       <div className="mb-3">
         {data &&
-          data.map((d) => (            
+          data.map((d) => (
             <div key={d._id} className="inline-flex w-1/4 items-center mb-4">
               <input
                 {...register(
@@ -413,18 +484,20 @@ export const inputMultipleCheckBoxGroups = (args) => {
                   isRequired && { required: `${label} is required` }
                 )}
                 readOnly={!!readOnly}
-                className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${readOnly && 'bg-slate-200'}`}
+                className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
+                  readOnly && "bg-slate-200"
+                }`}
                 type="checkbox"
                 value={d._id}
                 id={`check${d._id}`}
-              />              
+              />
               <label
                 className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"
                 htmlFor={`check${d._id}`}
               >
                 {d.method} ({d.name})
               </label>
-            </div>            
+            </div>
           ))}
       </div>
       {errors && errors[name] && (
@@ -436,9 +509,16 @@ export const inputMultipleCheckBoxGroups = (args) => {
   );
 };
 
-
 export const inputMultipleCheckBox = (args) => {
-  const { register, errors, name, data, label, isRequired = true, readOnly, } = args;
+  const {
+    register,
+    errors,
+    name,
+    data,
+    label,
+    isRequired = true,
+    readOnly,
+  } = args;
 
   return (
     <div className="mb-3">
@@ -451,7 +531,9 @@ export const inputMultipleCheckBox = (args) => {
                   name,
                   isRequired && { required: `${label} is required` }
                 )}
-                className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${readOnly && 'bg-slate-200'}`}
+                className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
+                  readOnly && "bg-slate-200"
+                }`}
                 type="checkbox"
                 readOnly={!!readOnly}
                 value={d._id}
@@ -475,7 +557,6 @@ export const inputMultipleCheckBox = (args) => {
   );
 };
 
-
 export const inputFile = (args) => {
   const {
     register,
@@ -498,7 +579,9 @@ export const inputFile = (args) => {
         type="file"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
         id="formFile"
         onChange={(e) => setFile(e.target.files[0])}
       />
@@ -532,7 +615,9 @@ export const inputDate = (args) => {
         type="date"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -568,7 +653,9 @@ export const InputAutoCompleteSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       />
       <datalist id="datalistOptions">
         <option value="">-------------</option>
@@ -611,7 +698,9 @@ export const dynamicInputSelectNumber = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
       >
         <option value="select">Select</option>
 

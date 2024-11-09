@@ -3,7 +3,7 @@ import {
   inputHidden,
   inputCheckBox,
   inputText,
-  dynamicInputSelect,
+  dynaimcInputSelectField,
 } from "../../utils/dynamicForm";
 
 const FormItems = ({
@@ -59,7 +59,7 @@ const FormItems = ({
               ),
             readOnly: false,
           })}
-          {dynamicInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "Branch Name",
@@ -70,7 +70,7 @@ const FormItems = ({
             value: "branchName",
             readOnly: view,
           })}
-          {dynamicInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "Group Name",
@@ -81,7 +81,7 @@ const FormItems = ({
             value: "itemGroup",
             readOnly: view,
           })}
-          {dynamicInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "Product Category",
@@ -109,7 +109,7 @@ const FormItems = ({
             placeholder: "Alias Name",
             readOnly: view,
           })}
-          {dynamicInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "Uom",
@@ -184,7 +184,7 @@ const FormItems = ({
             placeholder: "Free Gift Qty",
             readOnly: view,
           })}
-          {dynamicInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "HSN Code",
@@ -195,7 +195,7 @@ const FormItems = ({
             value: "hSNCode",
             readOnly: view,
           })}
-          {dynamicInputSelect({
+          {dynaimcInputSelectField({
             register,
             errors,
             label: "GST Tax Rate",
