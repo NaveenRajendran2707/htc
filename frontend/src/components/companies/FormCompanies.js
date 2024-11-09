@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Message } from "../../components";
 import {
   inputHidden,
   inputCheckBox,
-  inputEmail,  
+  inputEmail,
   inputText,
   staticInputSelect,
   inputDate,
+  staticInputSelectState,
 } from "../../utils/dynamicForm";
 
 // import { useState } from "react";
@@ -25,8 +27,24 @@ export const FormCompanies = ({
   submitHandler,
   error,
   setIsModalOpen,
-  nextSequenceNumber
+  nextSequenceNumber,
+  service,
+  states,
+  cities,
 }) => {
+  const [city, setCity] = useState([]);
+  const handleStateChange = (e) => {
+    const id = e.target.selectedOptions[0].dataset.id;
+    if (id !== "") {
+      const filteredCities = cities
+        .filter((item) => item?.state?._id === id)
+        .map((item) => ({ name: item.cityName }));
+      setCity(filteredCities);
+    } else {
+      setCity([]);
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -48,14 +66,19 @@ export const FormCompanies = ({
             placeholder: "Sequence Number",
             value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
             readOnly: true,
-          })}          
+          })}
           {inputText({
             register,
             errors,
             label: "Company Serial No.",
             name: "companySerialNo",
             placeholder: "Company Serial No.",
-            value: "COM"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "COM" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
           })}
           {inputDate({
@@ -91,7 +114,12 @@ export const FormCompanies = ({
             name: "typeofService",
             placeholder: "Type of Service",
             isRequired: false,
-            data: [{ name: "S-1" }, { name: "S-2" }],
+            data:
+              service &&
+              service.map((item) => ({
+                name: item.serviceName,
+                _id: item._id,
+              })),
             readOnly: view,
           })}
           {staticInputSelect({
@@ -168,6 +196,22 @@ export const FormCompanies = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
+          {staticInputSelectState({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,
+            data:
+              states &&
+              states.map((item) => ({
+                name: item.stateName,
+                _id: item._id,
+              })),
+            onChange: handleStateChange,
+            readOnly: view,
+          })}
           {staticInputSelect({
             register,
             errors,
@@ -175,7 +219,7 @@ export const FormCompanies = ({
             name: "city",
             placeholder: "City",
             isRequired: false,
-            data: [{ name: "Chennai" }, { name: "Madurai" }],
+            data: city && city,
             readOnly: view,
           })}
           {inputText({
@@ -233,7 +277,7 @@ export const FormCompanies = ({
             name: "watermark",
             placeholder: "Watermark",
             readOnly: view,
-          })}                   
+          })}
           {inputCheckBox({
             register,
             errors,
@@ -244,39 +288,39 @@ export const FormCompanies = ({
             placeholder: "Status",
             readOnly: view,
           })}
-          {view ? "" :
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
-              disabled={isLoadingPost || isLoadingUpdate}
-            >
-              {isLoadingPost || isLoadingUpdate ? (
-                <span
-                  className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
-                  role="status"
-                  aria-label="loading"
-                >
-                  <span className="sr-only">Loading...</span>
-                </span>
-              ) : (
-                <span>
-                  {edit ? 'Update' : 'Save' }
-                </span>
-              )}
-            </button>
-            <button
-              type="button"
-              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
-              onClick={() => {
-                setIsModalOpen(false);
-                formCleanHandler();
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        }
+          {view ? (
+            ""
+          ) : (
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+                disabled={isLoadingPost || isLoadingUpdate}
+              >
+                {isLoadingPost || isLoadingUpdate ? (
+                  <span
+                    className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
+                    role="status"
+                    aria-label="loading"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </span>
+                ) : (
+                  <span>{edit ? "Update" : "Save"}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </form>
       )}
     </>

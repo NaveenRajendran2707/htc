@@ -3,6 +3,9 @@ import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
 import useCompaniesHook from "../../../api/companies";
+import useServiceHook from "../../../api/serviceTypes";
+import useStatesHook from "../../../api/states";
+import useCitiesHook from "../../../api/cities";
 import {
   ViewCompanies,
   Pagination,
@@ -25,10 +28,33 @@ const Companies = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getCompanies, postCompany, updateCompany, deleteCompany } = useCompaniesHook({
+  const { getCompanies, postCompany, updateCompany, deleteCompany } =
+    useCompaniesHook({
+      page,
+      q,
+    });
+
+  const { getServiceTypes } = useServiceHook({
     page,
     q,
   });
+
+  const { data: services } = getServiceTypes;
+  console.log("services", services);
+
+  const { getStates } = useStatesHook({
+    page,
+    q,
+  });
+
+  const { data: getState } = getStates;
+
+  const { getCities } = useCitiesHook({
+    page,
+    q,
+  });
+
+  const { data: getCity } = getCities;
 
   const {
     register,
@@ -192,15 +218,21 @@ const Companies = () => {
         <meta property="og:title" content="Companies" key="title" />
       </Helmet>
       {isSuccessDelete && (
-        <Message variant="success">Company has been deleted successfully.</Message>
+        <Message variant="success">
+          Company has been deleted successfully.
+        </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
-        <Message variant="success">Company has been updated successfully.</Message>
+        <Message variant="success">
+          Company has been updated successfully.
+        </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
-        <Message variant="success">Company has been created successfully.</Message>
+        <Message variant="success">
+          Company has been created successfully.
+        </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
 
@@ -238,7 +270,7 @@ const Companies = () => {
               className="flex justify-between items-center py-4 px-6"
               as="div"
             >
-              <h3 className="text-2xl font-bold">                
+              <h3 className="text-2xl font-bold">
                 {edit ? "Edit Company" : view ? "View Company" : "Add Company"}
               </h3>
 
@@ -246,7 +278,10 @@ const Companies = () => {
                 type="button"
                 className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-2"
                 aria-label="Close"
-                onClick={() => {setIsModalOpen(false); formCleanHandler()}}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
               >
                 <span className="material-symbols-rounded">close</span>
               </button>
@@ -268,6 +303,9 @@ const Companies = () => {
                 watch={watch}
                 error={error}
                 nextSequenceNumber={data && data.nextSequenceNumber}
+                service={services && services.data}
+                states={getState && getState.data}
+                cities={getCity && getCity.data}
               />
             </div>
           </DialogPanel>

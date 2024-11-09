@@ -323,6 +323,49 @@ export const staticInputSelect = (args) => {
   );
 };
 
+export const staticInputSelectState = (args) => {
+  const {
+    register,
+    placeholder,
+    errors,
+    name,
+    data,
+    label,
+    isRequired = true,
+    readOnly,
+    onChange
+  } = args;
+
+  return (
+    <div className="mb-3">
+      <label className="block mb-1" htmlFor={name}>
+        {label}
+      </label>
+      <select
+        {...register(name, isRequired && { required: `${label} is required` })}
+        type="text"
+        placeholder={`${placeholder}`}
+        readOnly={!!readOnly}
+        onChange={onChange}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${readOnly && 'bg-slate-200'}`}
+      >
+        <option value="">Select {label}</option>
+        {data &&
+          data.map((d) => (
+            <option key={d._id} value={d.name} data-id={d._id}>
+            {d.name}
+          </option>
+          ))}
+      </select>
+      {errors && errors[name] && (
+        <span className="block text-sm text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
 export const inputCheckBox = (args) => {
   const { register, errors, name, label, isRequired = true, readOnly, } = args;
 

@@ -313,7 +313,7 @@
 //     stateName: 'Kerala',
 //     stateShortName: 'KL',
 //     stateGSTCode: '34',
-//   }  
+//   }
 // ]
 
 // const cities = [
@@ -328,7 +328,7 @@
 //     cityID: 'CT02',
 //     cityName: 'Madurai',
 //     cityShortName: 'MDU',
-//   }, 
+//   },
 // ]
 
 // const companies = [
@@ -365,16 +365,16 @@
 //     registrationDate: '2024-06-12',
 //     companyID: 'TNCHN56789CP',
 //     city: 'CT01',
-//     branchID: 'TNCHN123456',        
+//     branchID: 'TNCHN123456',
 //     user: '66cc220075d69b52d4a4292e',
 //     branchName: 'ACB Agency',
 //     branchShortName: 'ACB',
-//     gSTINNumber: '33ABCDE1234F1ZR',    
+//     gSTINNumber: '33ABCDE1234F1ZR',
 //     address1: '#3',
 //     address2: 'Ramkrishna Street',
 //     address3: 'Kodambakkam',
 //     pincode: '600078',
-//     mobileNumber: '9876543210',    
+//     mobileNumber: '9876543210',
 //     phoneNumber: '04412345678',
 //     email: 'hramkumar@gmail.com',
 //     logo: 'acbagency.jpg',
@@ -382,7 +382,6 @@
 //     blocked: false
 //   }
 // ]
-
 
 // const departments = [
 //   {
@@ -392,20 +391,20 @@
 //   {
 //     departmentSerialNo: 'DEP02',
 //     department: 'Purchase',
-//   }  
+//   }
 // ]
 
 // const designations = [
 //   {
 //     designationSerialNo: 'DES01',
 //     department: 'Sales',
-//     designation: 'Manager',    
+//     designation: 'Manager',
 //   },
 //   {
 //     designationSerialNo: 'DES02',
 //     department: 'Sales',
 //     designation: 'Executive',
-//   }  
+//   }
 // ]
 
 // const units = [
@@ -416,7 +415,7 @@
 //   {
 //     unitSerialNo: 'UNT02',
 //     unitName: 'Pcs',
-//   }  
+//   }
 // ]
 
 // const unitconversions = [
@@ -431,9 +430,8 @@
 //     mainUnit: 'Pcs',
 //     subUnit: 'Box',
 //     conversionFactor: '10000000',
-//   }  
+//   }
 // ]
-
 
 // const servicetype = [
 //   {
@@ -448,7 +446,7 @@
 // const gsttax = [
 //   {
 //     gSTTaxSerialNo: 'GST01',
-//     gSTTax: '18%',    
+//     gSTTax: '18%',
 //   },
 // ]
 
@@ -460,28 +458,85 @@
 //   },
 // ]
 
-const employees = [
+// const employees = [
+//   {
+//     sequenceNumber: 1,
+//     employeeID: 'EMP000001',
+//     department: '67136bdb084cbb55eb19f982',
+//     designation: '67138585388ddb02a7360ee6',
+//     address1: '#3',
+//     address2: 'Ramkrishna Street',
+//     address3: 'Kodambakkam',
+//     city: '6712a5b97896175f6aa5ff30',
+//     pincode: '600010',
+//     state: '67127d2842a1ca2065ce468d',
+//     mobile: '9841290999',
+//     pan: 'ALSER5454E',
+//     pf: '23424234324234',
+//     esi: '23423423423',
+//     dob: '2024-10-24',
+//     salaryscheduletype: 'Weekly',
+//     user: '66cc220075d69b52d4a4292e',
+//   },
+// ]
+
+// const itemgroup = [
+//   {
+//     sequenceNumber: 1,
+//     itemGroupSerialNo: "IGP00001",
+//     itemGroup: "General",
+//     itemSubGroup: "PVC",
+//   },
+// ];
+
+// const items = [
+//   {
+//     sequenceNumber: 1,
+//     itemSerialNo: "ITM00001",
+//     branchName: "ACB Agency",
+//     groupName: "ABC",
+//     productCategory: "General",
+//     name: "Captian",
+//     aliasName: "Miller",
+//     uom: "Pcs",
+//     cost: "950",
+//     listPrice: "850",
+//     discount: "20%",
+//     marginPrice: "600",
+//     MRP: "1000",
+//     batchNo: "CMP01",
+//     expiryDate: "2024-06-12",
+//     freeGiftQty: "2",
+//     HSNCode: "123456",
+//     GSTTaxRate: "18%",
+//     reOrderQty: "1",
+//     openingStockQty: "2",
+//     openingStockValue: "AB",
+//     productImage: "",
+//     blocked: false,
+//   },
+// ];
+
+// const brand = [
+//   {
+//     sequenceNumber: 1,
+//     brandSerialNo: "BRD00001",
+//     brandName: "PVC",
+//     discount: "20%",
+//     margin: "1%"
+//   },
+// ];
+
+const category = [
   {
     sequenceNumber: 1,
-    employeeID: 'EMP000001',
-    department: '67136bdb084cbb55eb19f982',
-    designation: '67138585388ddb02a7360ee6',
-    address1: '#3',
-    address2: 'Ramkrishna Street',
-    address3: 'Kodambakkam',
-    city: '6712a5b97896175f6aa5ff30',
-    pincode: '600010',
-    state: '67127d2842a1ca2065ce468d',
-    mobile: '9841290999',
-    pan: 'ALSER5454E',
-    pf: '23424234324234',
-    esi: '23423423423',
-    dob: '2024-10-24',
-    salaryscheduletype: 'Weekly',
-    user: '66cc220075d69b52d4a4292e',
+    brandSerialNo: "BRD00001",
+    brandName: "PVC",
+    discount: "20%",
+    margin: "1%"
   },
-]
+];
 
-//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn }
+//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn, employees, itemgroup, items, brand, category }
 
-export { employees }
+export { category };
