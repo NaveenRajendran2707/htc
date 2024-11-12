@@ -22,9 +22,7 @@ const ViewPermissions = ({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Permissions ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">Permissions</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by email"
@@ -34,7 +32,10 @@ const ViewPermissions = ({
           />
           <button
             className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
-            onClick={() => {setIsModalOpen(true);setView(false);}}
+            onClick={() => {
+              setIsModalOpen(true);
+              setView(false);
+            }}
           >
             Add New Permission
           </button>
@@ -44,6 +45,7 @@ const ViewPermissions = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th className="px-2 py-4">SI.NO</th>
               <th className="px-2 py-4">Name</th>
               <th className="px-2 py-4">Method</th>
               <th className="px-2 py-4">Route</th>
@@ -54,8 +56,9 @@ const ViewPermissions = ({
 
           <tbody>
             {data &&
-              data.data.map((permission) => (
+              data.data.map((permission, index) => (
                 <tr key={permission._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{permission.name}</td>
                   <td className="p-2">
                     {method("primary", "GET", permission)}
@@ -79,13 +82,15 @@ const ViewPermissions = ({
                   <td className="p-2">
                     <div className="btn-group">
                       <button
-                          className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
-                          onClick={() => {
-                            setIsModalOpen(true);
-                            viewHandler(permission);
-                          }}
-                        >
-                        <span className="material-symbols-rounded ">visibility</span>
+                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
+                        onClick={() => {
+                          setIsModalOpen(true);
+                          viewHandler(permission);
+                        }}
+                      >
+                        <span className="material-symbols-rounded ">
+                          visibility
+                        </span>
                       </button>
                       <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"

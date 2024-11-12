@@ -15,9 +15,7 @@ const ViewUsers = ({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Users ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">Users</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by email"
@@ -37,7 +35,8 @@ const ViewUsers = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-2 py-4">User ID</th>              
+              <th className="px-2 py-4">SI.NO</th>
+              <th className="px-2 py-4">User Code</th>
               <th className="px-2 py-4">Name</th>
               <th className="px-2 py-4">Address 3</th>
               <th className="px-2 py-4">City</th>
@@ -46,25 +45,27 @@ const ViewUsers = ({
               <th className="px-2 py-4">Email</th>
               <th className="px-2 py-4">Joined Date</th>
               <th className="px-2 py-4">Confirmed</th>
-              <th className="px-2 py-4">Blocked</th>              
+              <th className="px-2 py-4">Blocked</th>
               <th className="px-2 py-4">Actions</th>
-              
             </tr>
           </thead>
 
           <tbody>
             {data &&
-              data.data.map((user) => (
+              data.data.map((user, index) => (
                 <tr key={user._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{user.userID}</td>
-                  <td className="p-2">{user.firstName} {user.lastName}</td>
+                  <td className="p-2">
+                    {user.firstName} {user.lastName}
+                  </td>
                   <td className="p-2">{user.profile?.address1}</td>
                   <td className="p-2">{user.profile?.city}</td>
                   <td className="p-2">{user.profile?.state}</td>
                   <td className="p-2">{user.profile?.mobile}</td>
                   <td className="p-2">
                     <a href={`mailto:${user.email}`}>{user.email}</a>
-                  </td>                                    
+                  </td>
                   <td className="p-2">
                     {moment(user.createdAt).format("lll")}
                   </td>
@@ -90,7 +91,7 @@ const ViewUsers = ({
                       </span>
                     )}
                   </td>
-                  
+
                   {/* <td className="p-2">
                     <div className="flex gap-2">
                       <button
@@ -107,28 +108,27 @@ const ViewUsers = ({
 
                   <td className="p-2">
                     <div className="flex gap-2">
-
-                    <button
+                      <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
                         onClick={() => {
                           setIsModalOpen(true);
                           viewHandler(user);
                         }}
                       >
-                        <span className="material-symbols-rounded ">visibility</span>
+                        <span className="material-symbols-rounded ">
+                          visibility
+                        </span>
                       </button>
 
                       <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
-                        onMouseOver={() => {
-                                                      
-                        }}
+                        onMouseOver={() => {}}
                         onClick={() => {
                           setIsModalOpen(true);
                           editHandler(user);
                         }}
                       >
-                        <span className="material-symbols-rounded ">edit</span>                        
+                        <span className="material-symbols-rounded ">edit</span>
                       </button>
 
                       <button

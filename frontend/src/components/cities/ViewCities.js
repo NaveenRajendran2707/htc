@@ -15,9 +15,7 @@ const ViewCities = ({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Cities ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">Cities</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by name"
@@ -27,7 +25,10 @@ const ViewCities = ({
           />
           <button
             className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
-            onClick={() => {setIsModalOpen(true); setView(false)}}
+            onClick={() => {
+              setIsModalOpen(true);
+              setView(false);
+            }}
           >
             Add New City
           </button>
@@ -37,8 +38,9 @@ const ViewCities = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-2 py-4">City ID</th>
-              <th className="px-2 py-4">City Name</th>              
+              <th className="px-2 py-4">SI.NO</th>
+              <th className="px-2 py-4">City Code</th>
+              <th className="px-2 py-4">City Name</th>
               <th className="px-2 py-4">City Short Name</th>
               <th className="px-2 py-4">State Name</th>
               <th className="px-2 py-4">Actions</th>
@@ -46,23 +48,25 @@ const ViewCities = ({
           </thead>
           <tbody>
             {data &&
-              data.data.map((city) => (
-                <tr key={city._id}>                  
+              data.data.map((city, index) => (
+                <tr key={city._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{city.cityID}</td>
                   <td className="p-2">{city.cityName}</td>
                   <td className="p-2">{city.cityShortName}</td>
-                  <td className="p-2">{city.state && city.state.stateName}</td>                  
+                  <td className="p-2">{city.state && city.state.stateName}</td>
                   <td className="p-2">
                     <div className="flex gap-2">
-
-                    <button
+                      <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
                         onClick={() => {
                           setIsModalOpen(true);
                           viewHandler(city);
                         }}
                       >
-                        <span className="material-symbols-rounded ">visibility</span>
+                        <span className="material-symbols-rounded ">
+                          visibility
+                        </span>
                       </button>
 
                       <button

@@ -37,18 +37,18 @@ const FormCategories = ({
           {inputText({
             register,
             errors,
-            label: "Brand Serial No",
-            name: "brandSerialNo",
-            placeholder: "Brand Serial No",
-            value: "BRD"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            label: "category Serial No",
+            name: "categorySerialNo",
+            placeholder: "category Serial No",
+            value: "CTG"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}
           {inputText({
             register,
             errors,
-            label: "Brand Name",
-            name: "brandName",
-            placeholder: "Brand Name",
+            label: "category Name",
+            name: "categoryName",
+            placeholder: "category Name",
             readOnly: view,
           })}
           {inputText({

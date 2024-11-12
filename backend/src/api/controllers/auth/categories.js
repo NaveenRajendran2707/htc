@@ -60,8 +60,8 @@ export const putCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      brandSerialNo,
-      brandName,
+      categorySerialNo,
+      categoryName,
       discount,
       margin,
     } = req.body;
@@ -70,8 +70,8 @@ export const putCategory = async (req, res) => {
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` });
 
-    object.brandSerialNo = brandSerialNo;
-    object.brandName = brandName;
+    object.categorySerialNo = categorySerialNo;
+    object.categoryName = categoryName;
     object.discount = discount;
     object.margin = margin;
 

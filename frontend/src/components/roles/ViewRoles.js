@@ -15,9 +15,7 @@ const ViewRoles = ({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Roles ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">Roles</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by name"
@@ -37,6 +35,7 @@ const ViewRoles = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th className="px-2 py-4">SI.NO</th>
               <th className="px-2 py-4">Name</th>
               <th className="px-2 py-4">Type</th>
               <th className="px-2 py-4">Description</th>
@@ -46,15 +45,15 @@ const ViewRoles = ({
 
           <tbody>
             {data &&
-              data.data.map((role) => (
+              data.data.map((role, index) => (
                 <tr key={role?._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{role.name}</td>
                   <td className="p-2">{role.type}</td>
                   <td className="p-2">{role.description}</td>
 
                   <td className="p-2">
                     <div className="flex gap-2">
-
                       <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
                         onClick={() => {
@@ -62,7 +61,9 @@ const ViewRoles = ({
                           viewHandler(role);
                         }}
                       >
-                        <span className="material-symbols-rounded ">visibility</span>
+                        <span className="material-symbols-rounded ">
+                          visibility
+                        </span>
                       </button>
 
                       <button

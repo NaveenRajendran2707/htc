@@ -4,9 +4,7 @@ const ViewUserProfiles = ({ data, setQ, q, searchHandler }) => {
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          User Profiles ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">User Profiles</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by email"
@@ -20,6 +18,7 @@ const ViewUserProfiles = ({ data, setQ, q, searchHandler }) => {
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th className="px-2 py-4">SI.NO</th>
               <th className="px-2 py-4">Image</th>
               <th className="px-2 py-4">Name</th>
               <th className="px-2 py-4">Address</th>
@@ -30,8 +29,9 @@ const ViewUserProfiles = ({ data, setQ, q, searchHandler }) => {
 
           <tbody>
             {data &&
-              data.data.map((userProfile) => (
+              data.data.map((userProfile, index) => (
                 <tr key={userProfile._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">
                     <img
                       width="30"

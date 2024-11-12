@@ -15,9 +15,7 @@ const ViewBrand = ({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Brand ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">Brand</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by name"
@@ -40,7 +38,8 @@ const ViewBrand = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-2 py-4">Brand Serial No</th>
+              <th className="px-2 py-4">SI.NO</th>
+              <th className="px-2 py-4">Brand Code</th>
               <th className="px-2 py-4">Brand Name</th>
               <th className="px-2 py-4">Discount</th>
               <th className="px-2 py-4">Margin</th>
@@ -49,8 +48,9 @@ const ViewBrand = ({
           </thead>
           <tbody>
             {data &&
-              data.data.map((brand) => (
+              data.data.map((brand, index) => (
                 <tr key={brand._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{brand.brandSerialNo}</td>
                   <td className="p-2">{brand.brandName}</td>
                   <td className="p-2">{brand.discount}</td>

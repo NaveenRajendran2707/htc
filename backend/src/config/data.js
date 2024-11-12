@@ -541,8 +541,8 @@ const accountgroups = [
 const category = [
   {
     sequenceNumber: 1,
-    brandSerialNo: "BRD00001",
-    brandName: "PVC",
+    categorySerialNo: "CTG00001",
+    categoryName: "PVC",
     discount: "20%",
     margin: "1%"
   },
