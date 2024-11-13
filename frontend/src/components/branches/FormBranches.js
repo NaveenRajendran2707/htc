@@ -69,9 +69,9 @@ export const FormBranches = ({
           {inputText({
             register,
             errors,
-            label: "Branch Serial No.",
+            label: "Branch Code",
             name: "branchSerialNo",
-            placeholder: "Branch Serial No.",
+            placeholder: "Branch Code",
             value:
               "BRN" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
@@ -94,7 +94,7 @@ export const FormBranches = ({
             label: "Company ID",
             name: "companyID",
             placeholder: "Company ID",
-            isRequired: false,
+            isRequired: true,
             data:
               company &&
               company.map((item) => ({
@@ -111,14 +111,14 @@ export const FormBranches = ({
             placeholder: "TNCHN12345CO",
             readOnly: view,
           })}
-          {inputText({
+          {/* {inputText({
             register,
             errors,
             label: "User ID",
             name: "user",
             placeholder: "User ID",
             readOnly: view,
-          })}
+          })} */}
           {inputText({
             register,
             errors,

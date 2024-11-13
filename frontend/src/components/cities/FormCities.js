@@ -40,9 +40,9 @@ const FormCities = ({
           {inputText({
             register,
             errors,
-            label: "City ID",
+            label: "City Code",
             name: "cityID",
-            placeholder: "City ID",
+            placeholder: "City Code",
             value: "CTY"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

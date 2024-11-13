@@ -72,9 +72,9 @@ export const FormCompanies = ({
           {inputText({
             register,
             errors,
-            label: "Company Serial No.",
+            label: "Company Code",
             name: "companySerialNo",
-            placeholder: "Company Serial No.",
+            placeholder: "Company Code",
             value:
               "COM" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(

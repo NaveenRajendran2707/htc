@@ -37,9 +37,9 @@ const FormUnits = ({
           {inputText({
             register,
             errors,
-            label: "Unit Serial No",
+            label: "Unit Code",
             name: "unitSerialNo",
-            placeholder: "Unit Serial No",
+            placeholder: "Unit Code",
             value: "UNT"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

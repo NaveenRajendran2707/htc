@@ -192,7 +192,7 @@ const AccountGroups = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit AccountGroup" : view ? "View AccountGroup" : "Add AccountGroup"}
+                {edit ? "Edit Account Group" : view ? "View Account Group" : "Add Account Group"}
               </h3>
 
               <button

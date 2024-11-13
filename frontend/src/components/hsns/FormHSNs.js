@@ -37,9 +37,9 @@ const FormHSNs = ({
           {inputText({
             register,
             errors,
-            label: "HSN Code Serial No",
+            label: "HSN Code Code",
             name: "hSNCodeSerialNo",
-            placeholder: "HSN Code Serial No",
+            placeholder: "HSN Code Code",
             value: "HSN"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

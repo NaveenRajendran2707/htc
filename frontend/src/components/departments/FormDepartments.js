@@ -37,9 +37,9 @@ const FormDepartments = ({
           {inputText({
             register,
             errors,
-            label: "Department Serial No",
+            label: "Department Code",
             name: "departmentSerialNo",
-            placeholder: "Department Serial No",
+            placeholder: "Department Code",
             value: "DEP"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

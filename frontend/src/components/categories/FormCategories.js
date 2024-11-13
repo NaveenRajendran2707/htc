@@ -37,9 +37,9 @@ const FormCategories = ({
           {inputText({
             register,
             errors,
-            label: "category Serial No",
+            label: "category Code",
             name: "categorySerialNo",
-            placeholder: "category Serial No",
+            placeholder: "category Code",
             value: "CTG"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

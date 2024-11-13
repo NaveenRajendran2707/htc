@@ -37,9 +37,9 @@ const FormGSTTaxes = ({
           {inputText({
             register,
             errors,
-            label: "GST Tax Serial No",
+            label: "GST Tax Code",
             name: "gSTTaxSerialNo",
-            placeholder: "GST Tax Serial No",
+            placeholder: "GST Tax Code",
             value: "GST"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

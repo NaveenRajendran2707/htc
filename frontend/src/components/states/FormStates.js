@@ -38,9 +38,9 @@ const FormStates = ({
           {inputText({
             register,
             errors,
-            label: "State ID",
+            label: "State Code",
             name: "stateID",
-            placeholder: "State ID",
+            placeholder: "State Code",
             value: "STA"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}
