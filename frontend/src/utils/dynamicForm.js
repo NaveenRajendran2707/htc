@@ -70,6 +70,48 @@ export const inputText = (args) => {
   );
 };
 
+export const inputSelect = (args) => {
+  const {
+    register,
+    name,
+    label,
+    options,
+    errors,
+    isRequired = true,
+    placeholder,
+    readOnly,
+    value,
+  } = args;
+
+  return (
+    <div className="mb-3">
+      <label className="block mb-1" htmlFor={name}>
+        {label}
+      </label>
+      <select
+        {...register(name, isRequired && { required: `${label} is required` })}
+        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+          readOnly && "bg-slate-200"
+        }`}
+        disabled={readOnly}
+        value={value}
+      >
+        <option value="">{placeholder || `Select ${label}`}</option>
+        {options?.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      {errors && errors[name] && (
+        <span className="block text-sm text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
 export const inputTel = (args) => {
   const {
     register,

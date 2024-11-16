@@ -57,6 +57,7 @@ import FormContainer from './FormContainer'
 import Search from './Search'
 import Header from './Header'
 import Footer from './Footer'
+import FormSalesVoucher from './sales-purchase/FormSalesVoucher'
 
 export {
   ViewUsers,
@@ -118,4 +119,5 @@ export {
   Search,
   Header,
   Footer,
+  FormSalesVoucher
 };

@@ -32,6 +32,7 @@ import Categories from "./screens/admin/auth/Categories";
 import ChannelPartners from "./screens/admin/auth/ChannelPartners";
 import Accounts from "./screens/admin/auth/Accounts";
 import { Layout, AuthLayout } from "./components";
+import SalesVoucher from "./screens/admin/auth/SalesVoucher";
 
 const App = () => {
   return (
@@ -76,6 +77,7 @@ const App = () => {
           <Route path="/admin/auth/categories" element={<Categories />} />
           <Route path="/admin/auth/channel-partners" element={<ChannelPartners />} />
           <Route path="/admin/auth/accounts" element={<Accounts />} />
+          <Route path="/admin/auth/sales-purchase" element={<SalesVoucher />} />
         </Route>
       </Route>
 
