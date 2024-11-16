@@ -480,16 +480,67 @@
 //   },
 // ]
 
+// const channelpartners = [
+//   {
+//     sequenceNumber: 1,
+//     channelPartnerSerialNo: 'CPT000001',
+//     registrationDate: '2024-10-24',
+//     state: 'TamilNadu',
+//     city: 'Chennai',
+//     introductionID: 'TNCHN12345CO',
+//     channelPartnerID: 'TNCHN12345CP',
+//     userID: 'RamKumarH',
+//     name:'Mr. H.Ram Kumar',
+//     address1: '#3',
+//     address2: 'Ramkrishna Street',
+//     address3: 'Kodambakkam',
+//     pincode: '600 078',
+//     mobileNumber: '044 12345678',
+//     phoneNumber:'044 12345678',
+//     emailID:'mailto:hramkumar@gmail.com',
+//     panNumber: 'ABCDE1234F',
+//     planType: '',
+//     bankAccountNumber: '',
+//     IFSCCode: '',
+//     profilePicture: '',
+//     blocked: false,
+//   },
+// ]
 
-const accountgroups = [
+const accounts = [
   {
     sequenceNumber: 1,
-    accountGroupSerialNo: 'AGP00001',
+    accountSerialNo: 'ACC000001',
     accountGroup: 'Sundry Creditors',
-    accountSubGroup: 'MONDAY', 
+    accountName: 'Mr. H.Ram Kumar',
+    aliasName: 'Chennai',
+    address1: '#3',
+    address2: 'Ramkrishna Street',
+    address3: 'Kodambakkam',
+    city: 'Chennai',
+    state: 'TamilNadu',
+    pincode: '600 078',
+    mobileNumber: '044 12345678',
+    emailID:'mailto:hramkumar@gmail.com',
+    GSTINNo: 'ABCDE1234F',
+    panNo: '',
+    transportName: '',
+    openingBalance: '',
+    password: '',
+    blocked: false,
+  },
+]
+
+
+// const accountgroups = [
+//   {
+//     sequenceNumber: 1,
+//     accountGroupSerialNo: 'AGP00001',
+//     accountGroup: 'Sundry Creditors',
+//     accountSubGroup: 'MONDAY', 
     
-  }
-];
+//   }
+// ];
 
 // const itemgroup = [
 //   {
@@ -538,17 +589,17 @@ const accountgroups = [
 //   },
 // ];
 
-const category = [
-  {
-    sequenceNumber: 1,
-    categorySerialNo: "CTG00001",
-    categoryName: "PVC",
-    discount: "20%",
-    margin: "1%"
-  },
-];
+// const category = [
+//   {
+//     sequenceNumber: 1,
+//     categorySerialNo: "CTG00001",
+//     categoryName: "PVC",
+//     discount: "20%",
+//     margin: "1%"
+//   },
+// ];
 
 
-//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn, employees, accountgroups, itemgroup, items, brand }
+//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn, employees, accountgroups, itemgroup, items, brand, category, channelpartners }
 
-export { category };
+export { accounts };

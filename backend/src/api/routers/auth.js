@@ -13,6 +13,18 @@ import {
   deleteAccountGroup,
 } from '../controllers/auth/account-groups.js'
 import {
+  getChannelPartners,
+  postChannelPartner,
+  putChannelPartner,
+  deleteChannelPartner,
+} from '../controllers/auth/channel-partners.js'
+import {
+  getAccounts,
+  postAccount,
+  putAccount,
+  deleteAccount,
+} from '../controllers/auth/accounts.js'
+import {
   getServiceTypes,
   postServiceType,
   putServiceType,
@@ -181,6 +193,26 @@ router
   .route('/api/auth/account-groups/:id')
   .put(isAuth, putAccountGroup)
   .delete(isAuth, deleteAccountGroup)
+
+// channel partner
+router
+  .route('/api/auth/channel-partners')
+  .get(isAuth, getChannelPartners)
+  .post(isAuth, postChannelPartner)
+router
+  .route('/api/auth/channel-partners/:id')
+  .put(isAuth, putChannelPartner)
+  .delete(isAuth, deleteChannelPartner)
+
+// account
+router
+  .route('/api/auth/accounts')
+  .get(isAuth, getAccounts)
+  .post(isAuth, postAccount)
+router
+  .route('/api/auth/accounts/:id')
+  .put(isAuth, putAccount)
+  .delete(isAuth, deleteAccount)
 
 
 // service type

@@ -29,6 +29,8 @@ import Items from "./screens/admin/auth/Items";
 import ItemGroups from "./screens/admin/auth/ItemGroups";
 import Brand from "./screens/admin/auth/Brand";
 import Categories from "./screens/admin/auth/Categories";
+import ChannelPartners from "./screens/admin/auth/ChannelPartners";
+import Accounts from "./screens/admin/auth/Accounts";
 import { Layout, AuthLayout } from "./components";
 
 const App = () => {
@@ -72,6 +74,8 @@ const App = () => {
           <Route path="/admin/auth/item-groups" element={<ItemGroups />} />
           <Route path="/admin/auth/brand" element={<Brand />} />
           <Route path="/admin/auth/categories" element={<Categories />} />
+          <Route path="/admin/auth/channel-partners" element={<ChannelPartners />} />
+          <Route path="/admin/auth/accounts" element={<Accounts />} />
         </Route>
       </Route>
 
