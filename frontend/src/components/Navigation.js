@@ -12,7 +12,6 @@ const Navigation = ({ toggleSidebar }) => {
   // const navigate = useNavigate();
   // const { postLogout } = useAuthHook();
   const { auth } = useAuth();
-
   // const { mutateAsync } = useMutation(postLogout, {
   //   onSuccess: () => navigate("/auth/login"),
   // });
@@ -25,6 +24,9 @@ const Navigation = ({ toggleSidebar }) => {
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
 
+  const userMenus = localStorage.getItem("userMenu")
+    ? JSON.parse(localStorage.getItem("userMenu"))
+    : null;
   const guestItems = () => {
     return (
       <nav className="">
@@ -45,39 +47,119 @@ const Navigation = ({ toggleSidebar }) => {
 
   const user = () => {
     const userInfo = auth?.userInfo;
-
     return userInfo;
   };
 
+  // const menus = () => {
+  //   console.log("userInfo--", auth?.userRole);
+  //   const dropdownItems = auth?.userRole?.menu?.map((route) => route?.menu);
+
+  //   const menuItems = auth?.userRole?.menu?.map((route) => route);
+  //   console.log("menuItems", menuItems);
+
+  //   const dropdownArray =
+  //     dropdownItems &&
+  //     dropdownItems.filter((item) => item !== "hidden" && item !== "normal");
+
+  //   const uniqueDropdowns = [...new Set(dropdownArray)];
+  //   console.log("uniqueDropdowns", uniqueDropdowns);
+
+  //   return { uniqueDropdowns, menuItems };
+  // };
+
   const menus = () => {
-    
-    const dropdownItems = auth?.userRole?.menu?.map(
-      (route) => route?.menu
-    );
-
-    const menuItems = auth?.userRole?.menu?.map((route) => route);
-
-    const dropdownArray =
-      dropdownItems &&
-      dropdownItems.filter((item) => item !== "hidden" && item !== "normal");
-
-    const uniqueDropdowns = [...new Set(dropdownArray)];
-
+    const userMenuIds = auth?.userInfo?.menu || [];
+    const menuItems =
+      userMenus?.data?.data?.filter((menuItem) =>
+        userMenuIds.includes(menuItem._id)
+      ) || [];
+    // console.log("MatchedMenu", menuItems);
+    const uniqueDropdowns = [...new Set(menuItems.map((menu) => menu.menu))];
+    // console.log("UniqueDropdowns", uniqueDropdowns);
     return { uniqueDropdowns, menuItems };
+  };
+
+  const handleLinkClick = (event) => {
+    console.log("Linkclicked", event);
   };
 
   const authItems = () => {
     return (
+      // <>
+      //   {menus() &&
+      //     menus().menuItems.map(
+      //       (menu) =>
+      //         menu.menu === "normal" &&
+      //         menu.auth === true && (
+      //           <li key={menu._id}>
+      //             <Link
+      //               to={menu.path}
+      //               className="group relative flex items-center gap-2 rounded px-4 py-2 duration-200 ease-in-out hover:bg-slate-700 dark:hover:bg-slate-600 dark:bg-slate-600 bg-slate-600 text-slate-50 active"
+      //               aria-current="page"
+      //             >
+      //               <span className="material-symbols-rounded">dashboard</span>
+      //               <span>{menu.name}</span>
+      //             </Link>
+      //           </li>
+      //         )
+      //     )}
+
+      //   {menus() &&
+      //     menus().uniqueDropdowns.map((item) => (
+      //       <Disclosure as="li" key={item}>
+      //         {({ open }) => (
+      //           <>
+      //             <DisclosureButton className="group relative flex justify-between items-center gap-2 w-full rounded p-2 text-slate-200 duration-200 ease-in-out hover:bg-slate-700 dark:hover:bg-slate-600 data-[open]:bg-slate-700">
+      //               <span className="material-symbols-rounded">
+      //                 shield_person
+      //               </span>
+      //               <span>
+      //                 {item === "profile"
+      //                   ? user() && user().firstName + " " + user().lastName
+      //                   : item.charAt(0).toUpperCase() + item.substring(1)}
+      //               </span>
+      //               <span
+      //                 className={clsx(
+      //                   "material-symbols-rounded ml-auto",
+      //                   open && "rotate-180"
+      //                 )}
+      //               >
+      //                 keyboard_arrow_down
+      //               </span>
+      //             </DisclosureButton>
+      //             <DisclosurePanel>
+      //               <ul className="pb-4 pt-2 flex flex-col pl-4 space-y-2">
+      //                 {menus() &&
+      //                   menus().menuItems.map(
+      //                     (menu) =>
+      //                       menu.menu === item && (
+      //                         <li key={menu._id}>
+      //                           <Link
+      //                             to={menu.path}
+      //                             className="group relative flex items-center gap-2 rounded-md pl-6 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-400"
+      //                           >
+      //                             {menu.name}
+      //                           </Link>
+      //                         </li>
+      //                       )
+      //                   )}
+      //               </ul>
+      //             </DisclosurePanel>
+      //           </>
+      //         )}
+      //       </Disclosure>
+      //     ))}
+      // </>
       <>
         {menus() &&
-          menus().menuItems.map(
+          menus().menuItems?.map(
             (menu) =>
               menu.menu === "normal" &&
               menu.auth === true && (
                 <li key={menu._id}>
                   <Link
                     to={menu.path}
-                    className="group relative flex items-center gap-2 rounded px-4 py-2 duration-200 ease-in-out hover:bg-slate-700 dark:hover:bg-slate-600 dark:bg-slate-600 bg-slate-600 text-slate-50 active"
+                    className="group relative flex items-center gap-2 rounded px-4 py-2 duration-200 ease-in-out hover:bg-slate-700 dark:hover:bg-slate-600 bg-slate-600 text-slate-50 active"
                     aria-current="page"
                   >
                     <span className="material-symbols-rounded">dashboard</span>
@@ -88,8 +170,7 @@ const Navigation = ({ toggleSidebar }) => {
           )}
 
         {menus() &&
-          menus().uniqueDropdowns.map((item) => (
-            // <Disclosure as="li" key={item} defaultOpen>
+          menus().uniqueDropdowns?.map((item) => (
             <Disclosure as="li" key={item}>
               {({ open }) => (
                 <>
@@ -99,7 +180,7 @@ const Navigation = ({ toggleSidebar }) => {
                     </span>
                     <span>
                       {item === "profile"
-                        ? user() && user().firstName + " " + user().lastName
+                        ? user()?.firstName + " " + user()?.lastName
                         : item.charAt(0).toUpperCase() + item.substring(1)}
                     </span>
                     <span
@@ -114,12 +195,13 @@ const Navigation = ({ toggleSidebar }) => {
                   <DisclosurePanel>
                     <ul className="pb-4 pt-2 flex flex-col pl-4 space-y-2">
                       {menus() &&
-                        menus().menuItems.map(
+                        menus().menuItems?.map(
                           (menu) =>
                             menu.menu === item && (
                               <li key={menu._id}>
                                 <Link
                                   to={menu.path}
+                                  onClick={() => handleLinkClick(menu.path)}
                                   className="group relative flex items-center gap-2 rounded-md pl-6 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-400"
                                 >
                                   {menu.name}
