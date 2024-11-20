@@ -69,7 +69,7 @@ const ViewEmployees = ({
                   <td className="p-2">{employee.employeeID}</td>
                   <td className="p-2">{employee.department.department}</td>
                   <td className="p-2">{employee.designation.designation}</td>
-                  <td className="p-2">{employee.firstName + " " + employee.lastName}</td>
+                  <td className="p-2">{employee.user.firstName + " " + employee.user.lastName}</td>
                   <td className="p-2">
                     <a href={`mailto:${employee.user.email}`}>{employee.user.email}</a>
                   </td>

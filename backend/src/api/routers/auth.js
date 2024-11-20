@@ -112,7 +112,6 @@ import {
   putUserRole,
   postUserRoleById,
 } from '../controllers/auth/user-roles.js'
-import { getProfiles, getProfile, postProfile } from '../controllers/auth/profile.js'
 import {
   getItemGroups,
   postItemGroup,
@@ -137,7 +136,7 @@ import {
   deleteCategory,
   putCategory,
 } from '../controllers/auth/categories.js'
-import { getProfile, postProfile } from '../controllers/auth/profile.js'
+import { getProfiles, getProfile, postProfile } from '../controllers/auth/profile.js'
 import { getUserProfiles } from '../controllers/auth/user-profiles.js'
 import { login } from '../controllers/auth/login.js'
 import { postForgotPassword } from '../controllers/auth/forgot-password.js'
