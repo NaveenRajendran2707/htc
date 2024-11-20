@@ -18,6 +18,7 @@ const useAuthHook = () => {
   const postLogout = () => {
     setAuth(null)
     localStorage.removeItem('userRole')
+    localStorage.removeItem('userMenu')
     return localStorage.removeItem('userInfo')
   }
 

@@ -100,53 +100,53 @@ const Categories = () => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          brandSerialNo: data.brandSerialNo,
-          brandName: data.brandName,
+          categorySerialNo: data.categorySerialNo,
+          categoryName: data.categoryName,
           discount: data.discount,
           margin: data.margin,
         })
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (brand) => {
-    setId(brand._id);
+  const viewHandler = (category) => {
+    setId(category._id);
     setView(true);
-    setValue("brandSerialNo", brand.brandSerialNo);
-    setValue("brandName", brand.brandName);
-    setValue("discount", brand.discount);
-    setValue("margin", brand.margin);
+    setValue("categorySerialNo", category.categorySerialNo);
+    setValue("categoryName", category.categoryName);
+    setValue("discount", category.discount);
+    setValue("margin", category.margin);
   };
 
-  const editHandler = (brand) => {
-    setId(brand._id);
+  const editHandler = (category) => {
+    setId(category._id);
     setView(false);
     setEdit(true);
-    setValue("brandSerialNo", brand.brandSerialNo);
-    setValue("brandName", brand.brandName);
-    setValue("discount", brand.discount);
-    setValue("margin", brand.margin);
+    setValue("categorySerialNo", category.categorySerialNo);
+    setValue("categoryName", category.categoryName);
+    setValue("discount", category.discount);
+    setValue("margin", category.margin);
   };
   return (
     <>
       <Helmet>
-        <title>Brands | HTC</title>
-        <meta property="og:title" content="Brands" key="title" />
+        <title>Categories | HTC</title>
+        <meta property="og:title" content="Categories" key="title" />
       </Helmet>
       {isSuccessDelete && (
         <Message variant="success">
-          Brand has been deleted successfully.
+          Category has been deleted successfully.
         </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
         <Message variant="success">
-          Brand has been updated successfully.
+          Category has been updated successfully.
         </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
         <Message variant="success">
-          Brand has been Created successfully.
+          Category has been Created successfully.
         </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}

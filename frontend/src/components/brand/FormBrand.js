@@ -37,9 +37,9 @@ const FormBrand = ({
           {inputText({
             register,
             errors,
-            label: "Brand Serial No",
+            label: "Brand Code",
             name: "brandSerialNo",
-            placeholder: "Brand Serial No",
+            placeholder: "Brand Code",
             value: "BRD"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

@@ -16,7 +16,7 @@ const ViewAccountGroups = ({
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
         <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Account Groups ({data && data.total})
+          Account Groups
         </h2>
         <div className="flex flex-wrap gap-3">
           <Search
@@ -27,7 +27,10 @@ const ViewAccountGroups = ({
           />
           <button
             className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
-            onClick={() => {setIsModalOpen(true);setView(false);}}
+            onClick={() => {
+              setIsModalOpen(true);
+              setView(false);
+            }}
           >
             Add New Account Group
           </button>
@@ -37,19 +40,21 @@ const ViewAccountGroups = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-2 py-4">Account Group Serial No</th>
+              <th className="px-2 py-4">SI.NO</th>
+              <th className="px-2 py-4">Account Group Code</th>
               <th className="px-2 py-4">Account Group</th>
-              <th className="px-2 py-4">Account Sub Group</th>              
+              <th className="px-2 py-4">Account Sub Group</th>
               <th className="px-2 py-4">Actions</th>
             </tr>
           </thead>
           <tbody>
             {data &&
-              data.data.map((accountGroup) => (
+              data.data.map((accountGroup, index) => (
                 <tr key={accountGroup._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{accountGroup.accountGroupSerialNo}</td>
                   <td className="p-2">{accountGroup.accountGroup}</td>
-                  <td className="p-2">{accountGroup.accountSubGroup}</td>                  
+                  <td className="p-2">{accountGroup.accountSubGroup}</td>
                   <td className="p-2">
                     <div className="flex gap-2">
                       <button
@@ -59,7 +64,9 @@ const ViewAccountGroups = ({
                           viewHandler(accountGroup);
                         }}
                       >
-                        <span className="material-symbols-rounded ">visibility</span>
+                        <span className="material-symbols-rounded ">
+                          visibility
+                        </span>
                       </button>
 
                       <button
@@ -93,7 +100,7 @@ const ViewAccountGroups = ({
                       </button>
                     </div>
                   </td>
-                </tr> 
+                </tr>
               ))}
           </tbody>
         </table>

@@ -7,6 +7,7 @@ export const login = async (req, res) => {
     const password = req.body.password
 
     const user = await User.findOne({ email })
+    console.log('user', user)
 
     if (user && (await user.matchPassword(password))) {
       if (user.blocked)
@@ -23,6 +24,8 @@ export const login = async (req, res) => {
         blocked: user.blocked,
         confirmed: user.confirmed,
         token: generateToken(user._id),
+        permission: user.permission,
+        menu: user.menu,
       })
     } else {
       return res.status(401).send({ error: 'Invalid credentials' })

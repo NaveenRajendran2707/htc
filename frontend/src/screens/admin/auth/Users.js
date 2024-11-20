@@ -8,7 +8,7 @@ import useUsersHook from "../../../api/users";
 import useCitiesHook from "../../../api/cities";
 import useStatesHook from "../../../api/states";
 import {
-  ViewUsers,  
+  ViewUsers,
   Pagination,
   FormUsers,
   Message,
@@ -95,8 +95,6 @@ const Users = () => {
 
   const { data: cityData } = getCities;
 
-  
-
   const formCleanHandler = () => {
     setEdit(false);
     reset();
@@ -126,12 +124,12 @@ const Users = () => {
 
   const submitHandler = (data) => {
     console.log("edit", edit);
-    console.log("adminnnnn", data)
+    console.log("adminnnnn", data);
 
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          sequenceNumber: data.sequenceNumber, 
+          sequenceNumber: data.sequenceNumber,
           firstName: data.firstName,
           lastName: data.lastName,
           address1: data.address1,
@@ -146,13 +144,16 @@ const Users = () => {
           confirmed: data.confirmed,
           blocked: data.blocked,
           password: data.password,
+          permission: data.permission,
+          menu: data.menu,
         })
       : mutateAsyncPost(data);
   };
 
   const viewHandler = (user) => {
+    console.log("viewHandler", user);
     setId(user._id);
-    setView(true);    
+    setView(true);
     setValue("firstName", user.firstName);
     setValue("lastName", user.lastName);
     setValue("address1", user.profile?.address1);
@@ -166,9 +167,12 @@ const Users = () => {
     setValue("email", user.email);
     setValue("confirmed", user.confirmed);
     setValue("blocked", user.blocked);
+    setValue("permission", user.permission);
+    setValue("menu", user.menu);
   };
 
   const editHandler = (user) => {
+    console.log("editHandler", user);
     setId(user._id);
     setView(false);
     setEdit(true);
@@ -185,6 +189,8 @@ const Users = () => {
     setValue("email", user.email);
     setValue("confirmed", user.confirmed);
     setValue("blocked", user.blocked);
+    setValue("permission", user.permission);
+    setValue("menu", user.menu);
   };
 
   return (
@@ -221,6 +227,8 @@ const Users = () => {
           setIsModalOpen={setIsModalOpen}
           searchHandler={searchHandler}
           setView={setView}
+          state={getStates}
+          city={getCities}
         />
       )}
       <div className="my-3">
@@ -249,7 +257,10 @@ const Users = () => {
                 type="button"
                 className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-2"
                 aria-label="Close"
-                onClick={() => {setIsModalOpen(false); formCleanHandler()}}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
               >
                 <span className="material-symbols-rounded">close</span>
               </button>

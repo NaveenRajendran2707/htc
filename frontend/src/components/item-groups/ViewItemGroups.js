@@ -15,9 +15,7 @@ const ViewItemGroups = ({
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">
-        <h2 className="font-bold text-2xl text-gray-800 my-1">
-          Item Groups ({data && data.total})
-        </h2>
+        <h2 className="font-bold text-2xl text-gray-800 my-1">Item Groups</h2>
         <div className="flex flex-wrap gap-3">
           <Search
             placeholder="Search by name"
@@ -40,7 +38,8 @@ const ViewItemGroups = ({
         <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
           <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-2 py-4">Item Group Serial No</th>
+              <th className="px-2 py-4">SI.NO</th>
+              <th className="px-2 py-4">Item Group Code</th>
               <th className="px-2 py-4">Item Group</th>
               <th className="px-2 py-4">Item Sub Group</th>
               <th className="px-2 py-4">Actions</th>
@@ -48,8 +47,9 @@ const ViewItemGroups = ({
           </thead>
           <tbody>
             {data &&
-              data.data.map((itemGroup) => (
+              data.data.map((itemGroup, index) => (
                 <tr key={itemGroup._id}>
+                  <td className="p-2">{index + 1}</td>
                   <td className="p-2">{itemGroup.itemGroupSerialNo}</td>
                   <td className="p-2">{itemGroup.itemGroup}</td>
                   <td className="p-2">{itemGroup.itemSubGroup}</td>

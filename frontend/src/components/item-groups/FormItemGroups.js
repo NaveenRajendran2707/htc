@@ -37,9 +37,9 @@ const FormItemGroups = ({
           {inputText({
             register,
             errors,
-            label: "Item Group Serial No",
+            label: "Item Group Code",
             name: "itemGroupSerialNo",
-            placeholder: "Item Group Serial No",
+            placeholder: "Item Group Code",
             value: "IGP"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

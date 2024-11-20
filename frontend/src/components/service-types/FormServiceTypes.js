@@ -37,9 +37,9 @@ const FormServiceTypes = ({
           {inputText({
             register,
             errors,
-            label: "Service Serial No",
+            label: "Service Code",
             name: "serviceSerialNo",
-            placeholder: "Service Serial No",
+            placeholder: "Service Code",
             value: "SER"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

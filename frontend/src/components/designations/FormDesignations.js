@@ -40,9 +40,9 @@ const FormDesignations = ({
           {inputText({
             register,
             errors,
-            label: "Designation Serial No",
+            label: "Designation Code",
             name: "designationSerialNo",
-            placeholder: "Designation Serial No",
+            placeholder: "Designation Code",
             value: "DES"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}

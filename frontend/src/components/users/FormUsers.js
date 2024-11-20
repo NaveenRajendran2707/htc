@@ -9,17 +9,21 @@ import {
   inputDate,
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
-  inputMultipleCheckBox
+  inputMultipleCheckBox,
 } from "../../utils/dynamicForm";
 
 const methodConversion = (methodName) => {
-  switch(methodName){
-    case 'GET': return 'List';
-    case 'POST': return 'Add';
-    case 'PUT': return 'Edit';
-    case 'DELETE': return 'Delete';
-  }  
-}
+  switch (methodName) {
+    case "GET":
+      return "List";
+    case "POST":
+      return "Add";
+    case "PUT":
+      return "Edit";
+    case "DELETE":
+      return "Delete";
+  }
+};
 
 export const FormUsers = ({
   edit,
@@ -39,8 +43,8 @@ export const FormUsers = ({
   cityData,
   setIsModalOpen,
   permissionData,
-  menuData,  
-  nextSequenceNumber
+  menuData,
+  nextSequenceNumber,
 }) => {
   return (
     <>
@@ -70,9 +74,14 @@ export const FormUsers = ({
             label: "User ID",
             name: "userID",
             placeholder: "User ID",
-            value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "USR" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
-          })}                    
+          })}
           {inputText({
             register,
             errors,
@@ -119,7 +128,7 @@ export const FormUsers = ({
             label: "State",
             name: "state",
             placeholder: "State",
-            isRequired: false,            
+            isRequired: false,
             data: stateData && stateData,
             value: "stateName",
             readOnly: view,
@@ -130,7 +139,7 @@ export const FormUsers = ({
             label: "City",
             name: "city",
             placeholder: "City",
-            isRequired: false,            
+            isRequired: false,
             data: cityData && cityData,
             value: "cityName",
             readOnly: view,
@@ -142,7 +151,7 @@ export const FormUsers = ({
             name: "pincode",
             placeholder: "600 078",
             readOnly: view,
-          })}          
+          })}
           {inputText({
             register,
             errors,
@@ -166,32 +175,35 @@ export const FormUsers = ({
             name: "pan",
             placeholder: "AAAAA1234Z",
             readOnly: view,
-          })}          
-          {view ? <div></div> : <div>
-            {inputPassword({
-              register,
-              errors,
-              label: "Password",
-              name: "password",
-              minLength: true,
-              isRequired: false,
-              placeholder: "Password",
-              readOnly: view,
-            })}
-            {inputPassword({
-              register,
-              errors,
-              watch,
-              name: "confirmPassword",
-              label: "Confirm Password",
-              validate: true,
-              minLength: true,
-              isRequired: false,
-              placeholder: "Confirm Password",
-              readOnly: view,
-            })}
+          })}
+          {view || edit ? (
+            <div></div>
+          ) : (
+            <div>
+              {inputPassword({
+                register,
+                errors,
+                label: "Password",
+                name: "password",
+                minLength: true,
+                isRequired: false,
+                placeholder: "Password",
+                readOnly: view,
+              })}
+              {inputPassword({
+                register,
+                errors,
+                watch,
+                name: "confirmPassword",
+                label: "Confirm Password",
+                validate: true,
+                minLength: true,
+                isRequired: false,
+                placeholder: "Confirm Password",
+                readOnly: view,
+              })}
             </div>
-          }
+          )}
           {inputCheckBox({
             register,
             errors,
@@ -214,7 +226,7 @@ export const FormUsers = ({
             readOnly: view,
           })}
 
-          {view || edit ? 
+          {view || edit ? (
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
@@ -225,39 +237,44 @@ export const FormUsers = ({
                   name: "permission",
                   placeholder: "Permission",
                   data:
-                    permissionData &&                
-                    permissionData.filter(item => item.show).map((item) => ({                  
+                    permissionData &&
+                    permissionData
+                      .filter((item) => item.show)
+                      .map((item) => ({
                         name: `${item.name}`,
                         method: methodConversion(item.method),
                         _id: item._id,
-                    })),
+                      })),
                   isRequired: false,
                   readOnly: view,
                 })}
               </div>
 
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
-              <h4 className="font-medium text-base mb-3">Menus</h4>
-              {inputMultipleCheckBox({
-                register,
-                errors,
-                label: "Menu",
-                name: "menu",
-                placeholder: "Menu",
-                data:
-                  menuData &&
-                  menuData.map((item) => ({
-                    name: `${item.menu} - ${item.path}`,
-                    _id: item._id,
-                  })),
-                isRequired: false,
-              })}
+                <h4 className="font-medium text-base mb-3">Menus</h4>
+                {inputMultipleCheckBox({
+                  register,
+                  errors,
+                  label: "Menu",
+                  name: "menu",
+                  placeholder: "Menu",
+                  data:
+                    menuData &&
+                    menuData.map((item) => ({
+                      name: `${item.menu} - ${item.path}`,
+                      _id: item._id,
+                    })),
+                  isRequired: false,
+                })}
               </div>
             </>
-          : ""
-          }
+          ) : (
+            ""
+          )}
 
-          {view ? "" :
+          {view ? (
+            ""
+          ) : (
             <div className="flex gap-3">
               <button
                 type="submit"
@@ -273,9 +290,7 @@ export const FormUsers = ({
                     <span className="sr-only">Loading...</span>
                   </span>
                 ) : (
-                  <span>
-                    {edit ? 'Update' : 'Save' }
-                  </span>
+                  <span>{edit ? "Update" : "Save"}</span>
                 )}
               </button>
               <button
@@ -289,7 +304,7 @@ export const FormUsers = ({
                 Cancel
               </button>
             </div>
-          }
+          )}
         </form>
       )}
     </>

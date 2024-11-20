@@ -20,7 +20,9 @@
 // import ItemGroup from '../../models/ItemGroup.js'
 // import Items from "../../models/Items.js";
 // import Brand from '../../models/Brand.js'
-import Category from '../../models/Category.js'
+// import Category from '../../models/Category.js'
+// import ChannelPartner from '../../models/ChannelPartner.js'
+import Account from "../../models/Account.js";
 
 import {
   // users,
@@ -45,7 +47,9 @@ import {
   // itemgroup,
   // items,
   // brand,
-  category
+  // category,
+  // channelpartners,
+  accounts,
 } from "../../../config/data.js";
 
 const secret = "js";
@@ -74,17 +78,25 @@ export const seed = async (req, res) => {
     // await GSTTax.deleteMany({})
     // await HSN.deleteMany({})
     // await Employee.deleteMany({})
-    await AccountGroup.deleteMany({})
-
-    // Create Account Group
-    await AccountGroup.create(accountgroups)
+    // await AccountGroup.deleteMany({})
     // await ItemGroup.deleteMany({})
     // await Items.deleteMany({});
     // await Brand.deleteMany({})
-    await Category.deleteMany({})
+    // await Category.deleteMany({})
+    // await ChannelPartner.deleteMany({})
+    await Account.deleteMany({});
 
-    //Create Category
-    await Category.create(category)
+    //Create Accounts
+    await Account.create(accounts);
+
+    // //Create Channel Partner
+    // await ChannelPartner.create(channelpartners)
+
+    // //Create Category
+    // await Category.create(category)
+
+    // // Create Account Group
+    // await AccountGroup.create(accountgroups)
 
     // //Create Brand
     // await Brand.create(brand)

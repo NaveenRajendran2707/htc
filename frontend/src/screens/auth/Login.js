@@ -4,7 +4,12 @@ import { FormContainer, Message } from "../../components";
 import { useForm } from "react-hook-form";
 import useAuthHook from "../../api/auth";
 import useUserRolesHook from "../../api/userRoles";
-import { inputEmail, inputPassword, staticInputSelect } from "../../utils/dynamicForm";
+import useMenusHook from "../../api/menus";
+import {
+  inputEmail,
+  inputPassword,
+  staticInputSelect,
+} from "../../utils/dynamicForm";
 import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet";
 
@@ -28,6 +33,8 @@ const Login = () => {
     limit: 10000000,
   });
 
+  const { getMenus } = useMenusHook({ limit: 1000000 });
+
   console.log("postLogin", postLogin);
 
   const { isLoading, isError, error, mutateAsync, isSuccess, data } = postLogin;
@@ -40,9 +47,9 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      localStorage.setItem("userMenu", JSON.stringify(getMenus));
       userRoleMutateAsync(data._id);
       if (userRole) {
-
         localStorage.setItem("userRole", JSON.stringify(userRole));
         localStorage.setItem("userInfo", JSON.stringify(data));
 
@@ -108,7 +115,11 @@ const Login = () => {
                   name: "usertype",
                   placeholder: "User Type",
                   isRequired: true,
-                  data: [{name: "Admin"}, {name: "Client"}, {name: "Channel Partner"}],
+                  data: [
+                    { name: "Admin" },
+                    { name: "Client" },
+                    { name: "Channel Partner" },
+                  ],
                 })}
                 {inputEmail({
                   register,

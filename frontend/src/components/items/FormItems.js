@@ -48,9 +48,9 @@ const FormItems = ({
           {inputText({
             register,
             errors,
-            label: "Item Serial No",
+            label: "Item Code",
             name: "itemSerialNo",
-            placeholder: "Item Serial No",
+            placeholder: "Item Code",
             value:
               "ITM" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(

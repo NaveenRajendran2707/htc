@@ -1,5 +1,10 @@
 import { Spinner, Message } from "..";
-import { inputHidden, inputText, inputTextArea } from "../../utils/dynamicForm";
+import {
+  inputHidden,
+  inputText,
+  staticInputSelect,
+  inputTextArea,
+} from "../../utils/dynamicForm";
 
 const FormServiceTypes = ({
   edit,
@@ -15,7 +20,7 @@ const FormServiceTypes = ({
   submitHandler,
   error,
   setIsModalOpen,
-  nextSequenceNumber
+  nextSequenceNumber,
 }) => {
   return (
     <>
@@ -37,78 +42,68 @@ const FormServiceTypes = ({
           {inputText({
             register,
             errors,
-            label: "Service Serial No",
-            name: "serviceSerialNo",
-            placeholder: "Service Serial No",
-            value: "SER"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            label: "Account Code",
+            name: "accountGroupSerialNo",
+            placeholder: "Account Code",
+            value:
+              "AGP" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
           })}
-          {inputText({
+          {staticInputSelect({
             register,
             errors,
-            label: "Service Name",
-            name: "serviceName",
-            placeholder: "Service Name",
+            label: "Account Group",
+            name: "accountGroup",
+            placeholder: "Account Group",
+            isRequired: false,
+            data: [{ name: "Sundry Creditors" }],
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Perticular",
-            name: "particular",
-            placeholder: "Perticular",
+            label: "Account Sub Group",
+            name: "accountSubGroup",
+            placeholder: "Account Sub Group",
             readOnly: view,
           })}
-          {inputText({
-            register,
-            errors,
-            label: "Fees",
-            name: "fees",
-            placeholder: "Fees",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Status",
-            name: "status",
-            placeholder: "Status",
-            readOnly: view,
-            value: "Active"
-          })}
-          {view ? "" :
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
-              disabled={isLoadingPost || isLoadingUpdate}
-            >
-              {isLoadingPost || isLoadingUpdate ? (
-                <span
-                  className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
-                  role="status"
-                  aria-label="loading"
-                >
-                  <span className="sr-only">Loading...</span>
-                </span>
-              ) : (
-                <span>
-                  {edit ? 'Update' : 'Save' }
-                </span>
-              )}
-            </button>
-            <button
-              type="button"
-              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
-              onClick={() => {
-                setIsModalOpen(false);
-                formCleanHandler();
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        }
+          {view ? (
+            ""
+          ) : (
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+                disabled={isLoadingPost || isLoadingUpdate}
+              >
+                {isLoadingPost || isLoadingUpdate ? (
+                  <span
+                    className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
+                    role="status"
+                    aria-label="loading"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </span>
+                ) : (
+                  <span>{edit ? "Update" : "Save"}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </form>
       )}
     </>

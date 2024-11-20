@@ -1,5 +1,10 @@
 import { Spinner, Message } from "..";
-import { inputHidden, inputText, dynamicInputSelect } from "../../utils/dynamicForm";
+import {
+  inputHidden,
+  inputText,
+  staticInputSelect,
+  dynamicInputSelect,
+} from "../../utils/dynamicForm";
 
 const FormUnitConversions = ({
   edit,
@@ -16,7 +21,7 @@ const FormUnitConversions = ({
   error,
   unitData,
   setIsModalOpen,
-  nextSequenceNumber
+  nextSequenceNumber,
 }) => {
   return (
     <>
@@ -40,10 +45,15 @@ const FormUnitConversions = ({
           {inputText({
             register,
             errors,
-            label: "Unit Conversion Serial No",
+            label: "Unit Conversion Code",
             name: "unitConversionSerialNo",
-            placeholder: "Unit Conversion Serial No",
-            value: "UCV"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            placeholder: "Unit Conversion Code",
+            value:
+              "UCV" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
           })}
           {dynamicInputSelect({
@@ -52,17 +62,19 @@ const FormUnitConversions = ({
             label: "Main Unit",
             name: "mainUnit",
             placeholder: "Main Unit",
-            isRequired: false,            
+            isRequired: true,
             data: unitData && unitData,
             value: "unitName",
             readOnly: view,
           })}
-          {inputText({
+          {staticInputSelect({
             register,
             errors,
             label: "Sub Unit",
             name: "subUnit",
             placeholder: "Sub Unit",
+            isRequired: false,
+            data: [{ name: "Gms" }],
             readOnly: view,
           })}
           {inputText({
@@ -71,42 +83,43 @@ const FormUnitConversions = ({
             label: "Conversion Factor",
             name: "conversionFactor",
             placeholder: "Conversion Factor",
+            isRequired: false,
             readOnly: view,
           })}
-          
-          {view ? "" :
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
-              disabled={isLoadingPost || isLoadingUpdate}
-            >
-              {isLoadingPost || isLoadingUpdate ? (
-                <span
-                  className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
-                  role="status"
-                  aria-label="loading"
-                >
-                  <span className="sr-only">Loading...</span>
-                </span>
-              ) : (
-                <span>
-                  {edit ? 'Update' : 'Save' }
-                </span>
-              )}
-            </button>
-            <button
-              type="button"
-              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opaunitConversion-50 disabled:pointer-events-none "
-              onClick={() => {
-                setIsModalOpen(false);
-                formCleanHandler();
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        }
+
+          {view ? (
+            ""
+          ) : (
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+                disabled={isLoadingPost || isLoadingUpdate}
+              >
+                {isLoadingPost || isLoadingUpdate ? (
+                  <span
+                    className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
+                    role="status"
+                    aria-label="loading"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </span>
+                ) : (
+                  <span>{edit ? "Update" : "Save"}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opaunitConversion-50 disabled:pointer-events-none "
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </form>
       )}
     </>

@@ -2,6 +2,10 @@ import ViewUsers from './users/ViewUsers'
 import FormUsers from './users/FormUsers'
 import ViewEmployees from './employees/ViewEmployees'
 import FormEmployees from './employees/FormEmployees'
+import ViewChannelPartners from './channel-partners/ViewChannelPartners'
+import FormChannelPartners from './channel-partners/FormChannelPartners'
+import ViewAccounts from './accounts/ViewAccounts'
+import FormAccounts from './accounts/FormAccounts'
 import ViewBranches from './branches/ViewBranches'
 import FormBranches from './branches/FormBranches'
 import ViewCompanies from './companies/ViewCompanies'
@@ -53,12 +57,17 @@ import FormContainer from './FormContainer'
 import Search from './Search'
 import Header from './Header'
 import Footer from './Footer'
+import FormSalesVoucher from './sales-purchase/FormSalesVoucher'
 
 export {
   ViewUsers,
   FormUsers,
   ViewEmployees,
   FormEmployees,
+  ViewChannelPartners,
+  FormChannelPartners,
+  ViewAccounts,
+  FormAccounts,
   ViewBranches,
   FormBranches,
   ViewCompanies,
@@ -110,4 +119,5 @@ export {
   Search,
   Header,
   Footer,
+  FormSalesVoucher
 };

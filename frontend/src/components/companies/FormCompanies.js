@@ -72,9 +72,9 @@ export const FormCompanies = ({
           {inputText({
             register,
             errors,
-            label: "Company Serial No.",
+            label: "Company Code",
             name: "companySerialNo",
-            placeholder: "Company Serial No.",
+            placeholder: "Company Code",
             value:
               "COM" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
@@ -130,7 +130,7 @@ export const FormCompanies = ({
             label: "Company Type",
             name: "companyType",
             placeholder: "Company Type",
-            isRequired: false,
+            isRequired: true,
             data: [{ name: "Proprietor" }, { name: "Partnership" }],
             readOnly: view,
           })}
@@ -140,7 +140,7 @@ export const FormCompanies = ({
             label: "User ID",
             name: "user",
             placeholder: "User ID",
-            isRequired: false,            
+            isRequired: true,            
             data: user && user,
             value: "firstName",
             readOnly: view,
@@ -182,6 +182,7 @@ export const FormCompanies = ({
             errors,
             label: "Address 1",
             name: "address1",
+            isRequired: false,
             placeholder: "House/Flat no, Building name",
             readOnly: view,
           })}
@@ -190,6 +191,7 @@ export const FormCompanies = ({
             errors,
             label: "Address 2",
             name: "address2",
+            isRequired: false,
             placeholder: "Street name/number",
             readOnly: view,
           })}
@@ -198,6 +200,7 @@ export const FormCompanies = ({
             errors,
             label: "Address 3",
             name: "address3",
+            isRequired: false,
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
@@ -232,6 +235,7 @@ export const FormCompanies = ({
             errors,
             label: "Pin code",
             name: "pincode",
+            isRequired: false,
             placeholder: "600 078",
             readOnly: view,
           })}
@@ -240,6 +244,7 @@ export const FormCompanies = ({
             errors,
             label: "Mobile Number 1",
             name: "mobileNumber1",
+            isRequired: true,
             placeholder: "9876543210",
             readOnly: view,
           })}
@@ -248,6 +253,7 @@ export const FormCompanies = ({
             errors,
             label: "Mobile Number 2",
             name: "mobileNumber2",
+            isRequired: false,
             placeholder: "044 12345678",
             readOnly: view,
           })}
@@ -256,6 +262,7 @@ export const FormCompanies = ({
             errors,
             label: "Phone Number",
             name: "phoneNumber",
+            isRequired: false,
             placeholder: "04412345678",
             readOnly: view,
           })}
@@ -273,6 +280,7 @@ export const FormCompanies = ({
             label: "Logo",
             name: "logo",
             placeholder: "Logo",
+            isRequired: false,
             readOnly: view,
           })}
           {inputText({
@@ -280,6 +288,7 @@ export const FormCompanies = ({
             errors,
             label: "Watermark",
             name: "watermark",
+            isRequired: false,
             placeholder: "Watermark",
             readOnly: view,
           })}
