@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
 import useAccountsHook from "../../../api/accounts";
+import usePermissionsHook from "../../../api/permissions";
+import useMenusHook from "../../../api/menus";
 import useStatesHook from "../../../api/states";
 import useCitiesHook from "../../../api/cities";
 import useUsersHook from "../../../api/users";
@@ -64,6 +66,13 @@ const Accounts = () => {
 
   const { data: account } = getAccountGroups;
 
+  const { getPermissions } = usePermissionsHook({
+    limit: 1000000,
+  });
+  const { getMenus } = useMenusHook({
+    limit: 1000000,
+  });
+
   const {
     register,
     handleSubmit,
@@ -79,6 +88,8 @@ const Accounts = () => {
   });
 
   const { data, isLoading, isError, error, refetch } = getAccounts;
+  const { data: permissionData } = getPermissions;
+  const { data: menuData } = getMenus;
 
   const {
     isLoading: isLoadingUpdate,
@@ -146,13 +157,15 @@ const Accounts = () => {
           state: data.state,
           pincode: data.pincode,
           mobileNumber: data.mobileNumber,
-          emailID: data.emailID,
+          email: data.email,
           GSTINNo: data.GSTINNo,
           panNo: data.panNo,
           transportName: data.transportName,
           openingBalance: data.openingBalance,
           password: data.password,
           blocked: data.blocked,
+          permission: data.permission,
+          menu: data.menu,
         })
       : mutateAsyncPost(data);
   };
@@ -168,16 +181,20 @@ const Accounts = () => {
     setValue("address2", account.address2);
     setValue("address3", account.address3);
     setValue("state", account.state);
+    setValue("firstName", account.user?.firstName);
+    setValue("lastName", account.user?.lastName);
     setValue("city", account.city);
     setValue("pincode", account.pincode);
     setValue("mobileNumber", account.mobileNumber);
-    setValue("emailID", account.emailID);
+    setValue("email", account.user?.email);
     setValue("GSTINNo", account.GSTINNo);
     setValue("panNo", account.panNo);
     setValue("transportName", account.transportName);
     setValue("openingBalance", account.openingBalance);
     setValue("password", account.password);
     setValue("blocked", account.blocked);
+    setValue("permission", account.user?.permission);
+    setValue("menu", account.user?.menu);
   };
 
   const editHandler = (account) => {
@@ -188,6 +205,8 @@ const Accounts = () => {
     setValue("accountGroup", account.accountGroup);
     setValue("accountName", account.accountName);
     setValue("aliasName", account.aliasName);
+    setValue("firstName", account.user?.firstName);
+    setValue("lastName", account.user?.lastName);
     setValue("address1", account.address1);
     setValue("address2", account.address2);
     setValue("address3", account.address3);
@@ -195,13 +214,15 @@ const Accounts = () => {
     setValue("city", account.city);
     setValue("pincode", account.pincode);
     setValue("mobileNumber", account.mobileNumber);
-    setValue("emailID", account.emailID);
+    setValue("email", account.user?.email);
     setValue("GSTINNo", account.GSTINNo);
     setValue("panNo", account.panNo);
     setValue("transportName", account.transportName);
     setValue("openingBalance", account.openingBalance);
     setValue("password", account.password);
     setValue("blocked", account.blocked);
+    setValue("permission", account.user?.permission);
+    setValue("menu", account.user?.menu);
   };
 
   return (
@@ -300,6 +321,8 @@ const Accounts = () => {
                 cities={getCity && getCity.data}
                 user={users && users.data}
                 accounts={account && account.data}
+                permissionData={permissionData && permissionData.data}
+                menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}
               />
             </div>

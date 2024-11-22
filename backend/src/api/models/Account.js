@@ -5,7 +5,7 @@ const AccountScheme = mongoose.Schema(
     sequenceNumber: { type: Number, unique: true },
     accountSerialNo: { type: String, required: true, unique: true },
     accountGroup: { type: String, required: true },
-    accountName: { type: String, required: true },
+    accountName: { type: String },
     aliasName: { type: String },
     address1: { type: String },
     address2: { type: String },
@@ -21,6 +21,10 @@ const AccountScheme = mongoose.Schema(
     openingBalance: { type: String },
     password: { type: String },
     blocked: { type: String },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   { timestamps: true }
 );

@@ -243,7 +243,7 @@ export const FormEmployees = ({
             data: [{ name: "Weekly" }, { name: "Monthly" }],
             readOnly: view,
           })}
-          {view ? <div></div> : <div>
+          {view || edit ? <div></div> : <div>
             {inputPassword({
               register,
               errors,

@@ -12,7 +12,18 @@ import {
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBox,
 } from "../../utils/dynamicForm";
-
+const methodConversion = (methodName) => {
+  switch (methodName) {
+    case "GET":
+      return "List";
+    case "POST":
+      return "Add";
+    case "PUT":
+      return "Edit";
+    case "DELETE":
+      return "Delete";
+  }
+};
 export const FormAccounts = ({
   edit,
   view,
@@ -32,9 +43,13 @@ export const FormAccounts = ({
   states,
   cities,
   accounts,
+  permissionData,
+  menuData,
 }) => {
   const [city, setCity] = useState([]);
+  const [getTrue, setTrue] = useState(false);
   const handleStateChange = (e) => {
+    setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
     if (id !== "") {
       const filteredCities = cities
@@ -71,8 +86,22 @@ export const FormAccounts = ({
             register,
             errors,
             label: "",
-            name: "Account Code",
-            placeholder: "accountSerialNo",
+            name: "userID",
+            placeholder: "User ID",
+            value:
+              "USR" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
+            readOnly: true,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Account Code",
+            name: "accountSerialNo",
+            placeholder: "Account Code",
             value:
               "ACC" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
@@ -108,6 +137,22 @@ export const FormAccounts = ({
             name: "aliasName",
             placeholder: "",
             isRequired: false,
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "First Name",
+            name: "firstName",
+            placeholder: "First Name",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Last Name",
+            name: "lastName",
+            placeholder: "Last Name",
             readOnly: view,
           })}
           {inputText({
@@ -160,7 +205,14 @@ export const FormAccounts = ({
             name: "city",
             placeholder: "City",
             isRequired: true,
-            data: city && city,
+            data:
+              !edit || getTrue
+                ? city && city
+                : cities &&
+                  cities.map((item) => ({
+                    name: item.cityName,
+                    _id: item._id,
+                  })),
             readOnly: view,
           })}
           {inputText({
@@ -185,7 +237,7 @@ export const FormAccounts = ({
             register,
             errors,
             label: "Email ID",
-            name: "emailID",
+            name: "email",
             placeholder: "hramkumar@gmail.com",
             isRequired: false,
             readOnly: view,
@@ -227,7 +279,7 @@ export const FormAccounts = ({
             isRequired: false,
             readOnly: view,
           })}
-          {staticInputSelect({
+          {/* {staticInputSelect({
             register,
             errors,
             label: "Password",
@@ -236,7 +288,23 @@ export const FormAccounts = ({
             isRequired: false,
             data: [{ name: "Zth01@edF*147Je" }],
             readOnly: view,
-          })}
+          })} */}
+          {view || edit ? (
+            <div></div>
+          ) : (
+            <div>
+              {inputPassword({
+                register,
+                errors,
+                label: "Password",
+                name: "password",
+                minLength: true,
+                isRequired: false,
+                placeholder: "Password",
+                readOnly: view,
+              })}
+            </div>
+          )}
           {inputCheckBox({
             register,
             errors,
@@ -247,7 +315,7 @@ export const FormAccounts = ({
             placeholder: "Blocked",
             readOnly: view,
           })}
-          {/* {view || edit ? (
+          {view || edit ? (
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
@@ -291,7 +359,7 @@ export const FormAccounts = ({
             </>
           ) : (
             ""
-          )} */}
+          )}
 
           {view ? (
             ""

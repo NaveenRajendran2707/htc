@@ -50,7 +50,9 @@ export const FormChannelPartners = ({
   user,
 }) => {
   const [city, setCity] = useState([]);
+  const [getTrue, setTrue] = useState(false);
   const handleStateChange = (e) => {
+    setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
     if (id !== "") {
       const filteredCities = cities
@@ -83,12 +85,26 @@ export const FormChannelPartners = ({
             value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
             readOnly: true,
           })}
-          {inputHidden({
+           {inputHidden({
             register,
             errors,
             label: "",
-            name: "Channel Partner Code",
-            placeholder: "channelPartnerSerialNo",
+            name: "userID",
+            placeholder: "User ID",
+            value:
+              "USR" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
+            readOnly: true,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Channel Partner Code",
+            name: "channelPartnerSerialNo",
+            placeholder: "Channel Partner Code",
             value:
               "CPT" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
@@ -106,7 +122,7 @@ export const FormChannelPartners = ({
             isRequired: true,
             readOnly: view,
           })}
-         {staticInputSelectState({
+          {staticInputSelectState({
             register,
             errors,
             label: "State",
@@ -129,7 +145,14 @@ export const FormChannelPartners = ({
             name: "city",
             placeholder: "City",
             isRequired: false,
-            data: city && city,
+            data:
+              !edit || getTrue
+                ? city && city
+                : cities &&
+                  cities.map((item) => ({
+                    name: item.cityName,
+                    _id: item._id,
+                  })),
             readOnly: view,
           })}
           {inputText({
@@ -154,7 +177,7 @@ export const FormChannelPartners = ({
             register,
             errors,
             label: "User ID",
-            name: "userID",
+            name: "userName",
             placeholder: "User ID",
             isRequired: true,
             data: user && user,
@@ -164,10 +187,17 @@ export const FormChannelPartners = ({
           {inputText({
             register,
             errors,
-            label: "Name",
-            name: "name",
-            placeholder: "Mr. H.Ram Kumar",
-            isRequired: true,
+            label: "First Name",
+            name: "firstName",
+            placeholder: "First Name",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Last Name",
+            name: "lastName",
+            placeholder: "Last Name",
             readOnly: view,
           })}
           {inputText({
@@ -229,11 +259,39 @@ export const FormChannelPartners = ({
             register,
             errors,
             label: "Email ID",
-            name: "emailID",
+            name: "email",
             placeholder: "hramkumar@gmail.com",
             isRequired: true,
             readOnly: view,
           })}
+             {view || edit ? (
+            <div></div>
+          ) : (
+            <div>
+              {inputPassword({
+                register,
+                errors,
+                label: "Password",
+                name: "password",
+                minLength: true,
+                isRequired: false,
+                placeholder: "Password",
+                readOnly: view,
+              })}
+              {inputPassword({
+                register,
+                errors,
+                watch,
+                name: "confirmPassword",
+                label: "Confirm Password",
+                validate: true,
+                minLength: true,
+                isRequired: false,
+                placeholder: "Confirm Password",
+                readOnly: view,
+              })}
+            </div>
+          )}
           {inputText({
             register,
             errors,
@@ -289,7 +347,7 @@ export const FormChannelPartners = ({
             placeholder: "Blocked",
             readOnly: view,
           })}
-          {/* {view || edit ? (
+          {view || edit ? (
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
@@ -333,7 +391,7 @@ export const FormChannelPartners = ({
             </>
           ) : (
             ""
-          )} */}
+          )}
 
           {view ? (
             ""

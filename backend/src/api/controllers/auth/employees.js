@@ -28,11 +28,11 @@ export const getEmployees = async (req, res) => {
       .sort({ createdAt: -1 })
       .select('-password')
       .lean()
-      .populate('user', ['firstName','lastName','email'])
-      .populate('state', ['stateName'])
-      .populate('city', ['cityName'])
-      .populate('department', ['department'])
-      .populate('designation', ['designation'])
+      .populate('user')
+      // .populate('state', ['stateName'])
+      // .populate('city', ['cityName'])
+      // .populate('department', ['department'])
+      // .populate('designation', ['designation'])
 
     const result = await query
 
@@ -83,7 +83,7 @@ export const postEmployee = async (req, res) => {
     //   image: `https://avatars.githubusercontent.com/u/3984336?v=4`,
     // })
 
-    res.status(200).send(userObject)
+    res.status(200).send(employeeObject)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -110,11 +110,17 @@ export const putEmployee = async (req, res) => {
   try {
 
     const { id } = req.params
-    const { department, designation, name, confirmed, blocked, password, email } = req.body
+    const { department, designation, name, confirmed, blocked, password, email, address1, address2, address3, pincode, mobile, pf, esi, dob, salaryscheduletype, pan, state, city, menu, permission } = req.body
 
-    const object = await schemaName.findById(id)
-    if (!object)
-      return res.status(400).json({ error: `${schemaNameString} not found` })
+   const object = await schemaName.findById(id);
+    if (!object) {
+      return res.status(400).json({ error: `${schemaNameString} not found` });
+    }
+
+    const object1 = await User.findById(object.user._id);
+    if (!object1) {
+      return res.status(400).json({ error: `User not found` });
+    }
 
     object.department = department
     object.designation = designation
@@ -134,6 +140,9 @@ export const putEmployee = async (req, res) => {
     object.salaryscheduletype = salaryscheduletype
     object.confirmed = confirmed
     object.blocked = blocked
+   
+    object1.menu = menu && menu.length > 0 ? menu : object1.menu;
+    object1.permission = permission && permission.length > 0 ? permission : object1.permission;
 
     password && (object.password = await object.encryptPassword(password))
 
@@ -142,6 +151,7 @@ export const putEmployee = async (req, res) => {
     }
 
     await object.save()
+    await object1.save();
 
     res.status(200).json({ message: `${schemaNameString} updated` })
   } catch (error) {

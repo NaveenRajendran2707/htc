@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 const userScheme = mongoose.Schema(
   {
-    sequenceNumber: { type: Number, unique: true },
+    sequenceNumber: { type: Number },
     userID: { type: String, required: true },
     profile: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,7 +12,7 @@ const userScheme = mongoose.Schema(
     },
     userType: {
       type: String,
-      enum: ["Admin", "Client", "Channel Partner"],
+      enum: ["Admin", "Client", "Channel Partner", "Employee", "Account"],
       default: "Admin",
     },
     firstName: { type: String, required: true },

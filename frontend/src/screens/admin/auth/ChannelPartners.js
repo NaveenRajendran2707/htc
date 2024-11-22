@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
 import useChannelPartnersHook from "../../../api/channelPartners";
+import usePermissionsHook from "../../../api/permissions";
+import useMenusHook from "../../../api/menus";
 import useStatesHook from "../../../api/states";
 import useCitiesHook from "../../../api/cities";
 import useUsersHook from "../../../api/users";
@@ -60,6 +62,13 @@ const ChannelPartners = () => {
 
   const { data: users } = getUsers;
 
+  const { getPermissions } = usePermissionsHook({
+    limit: 1000000,
+  });
+  const { getMenus } = useMenusHook({
+    limit: 1000000,
+  });
+
   const {
     register,
     handleSubmit,
@@ -75,6 +84,9 @@ const ChannelPartners = () => {
   });
 
   const { data, isLoading, isError, error, refetch } = getChannelPartners;
+
+  const { data: permissionData } = getPermissions;
+  const { data: menuData } = getMenus;
 
   const {
     isLoading: isLoadingUpdate,
@@ -137,21 +149,24 @@ const ChannelPartners = () => {
           city: data.city,
           introductionID: data.introductionID,
           channelPartnerID: data.channelPartnerID,
-          userID: data.userID,
-          name: data.name,
+          userName: data.userName,
+          firstName: data.firstName,
+          lastName: data.lastName,
           address1: data.address1,
           address2: data.address2,
           address3: data.address3,
           pincode: data.pincode,
           mobileNumber: data.mobileNumber,
           phoneNumber: data.phoneNumber,
-          emailID: data.emailID,
+          email: data.email,
           panNumber: data.panNumber,
           planType: data.planType,
           bankAccountNumber: data.bankAccountNumber,
           IFSCCode: data.IFSCCode,
           profilePicture: data.profilePicture,
           blocked: data.blocked,
+          permission: data.permission,
+          menu: data.menu,
         })
       : mutateAsyncPost(data);
   };
@@ -165,21 +180,24 @@ const ChannelPartners = () => {
     setValue("city", channelpartner.city);
     setValue("introductionID", channelpartner.introductionID);
     setValue("channelPartnerID", channelpartner.channelPartnerID);
-    setValue("userID", channelpartner.userID);
-    setValue("name", channelpartner.name);
+    setValue("userName", channelpartner.userName);
+    setValue("firstName", channelpartner.user?.firstName);
+    setValue("lastName", channelpartner.user?.lastName);
     setValue("address1", channelpartner.address1);
     setValue("address2", channelpartner.address2);
     setValue("address3", channelpartner.address3);
     setValue("pincode", channelpartner.pincode);
     setValue("mobileNumber", channelpartner.mobileNumber);
     setValue("phoneNumber", channelpartner.phoneNumber);
-    setValue("emailID", channelpartner.emailID);
+    setValue("email", channelpartner.user?.email);
     setValue("panNumber", channelpartner.panNumber);
     setValue("planType", channelpartner.planType);
     setValue("bankAccountNumber", channelpartner.bankAccountNumber);
     setValue("IFSCCode", channelpartner.IFSCCode);
     setValue("profilePicture", channelpartner.profilePicture);
     setValue("blocked", channelpartner.blocked);
+    setValue("permission", channelpartner.user?.permission);
+    setValue("menu", channelpartner.user?.menu);
   };
 
   const editHandler = (channelpartner) => {
@@ -192,21 +210,24 @@ const ChannelPartners = () => {
     setValue("city", channelpartner.city);
     setValue("introductionID", channelpartner.introductionID);
     setValue("channelPartnerID", channelpartner.channelPartnerID);
-    setValue("userID", channelpartner.userID);
-    setValue("name", channelpartner.name);
+    setValue("userName", channelpartner.userName);
+    setValue("firstName", channelpartner.user?.firstName);
+    setValue("lastName", channelpartner.user?.lastName);
     setValue("address1", channelpartner.address1);
     setValue("address2", channelpartner.address2);
     setValue("address3", channelpartner.address3);
     setValue("pincode", channelpartner.pincode);
     setValue("mobileNumber", channelpartner.mobileNumber);
     setValue("phoneNumber", channelpartner.phoneNumber);
-    setValue("emailID", channelpartner.emailID);
+    setValue("email", channelpartner.user?.email);
     setValue("panNumber", channelpartner.panNumber);
     setValue("planType", channelpartner.planType);
     setValue("bankAccountNumber", channelpartner.bankAccountNumber);
     setValue("IFSCCode", channelpartner.IFSCCode);
     setValue("profilePicture", channelpartner.profilePicture);
     setValue("blocked", channelpartner.blocked);
+    setValue("permission", channelpartner.user?.permission);
+    setValue("menu", channelpartner.user?.menu);
   };
 
   return (
@@ -308,6 +329,8 @@ const ChannelPartners = () => {
                 states={getState && getState.data}
                 cities={getCity && getCity.data}
                 user={users && users.data}
+                permissionData={permissionData && permissionData.data}
+                menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}
               />
             </div>

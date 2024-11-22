@@ -22,7 +22,12 @@ export const getChannelPartners = async (req, res) => {
 
     const pages = Math.ceil(total / pageSize);
 
-    query = query.skip(skip).limit(pageSize).sort({ createdAt: -1 }).lean();
+    query = query
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .lean()
+      .populate("user");
 
     const result = await query;
 
@@ -53,8 +58,8 @@ export const getChannelPartners = async (req, res) => {
 
 export const postChannelPartner = async (req, res) => {
   try {
-    // const userObject = await User.create(req.body);
-    // req.body.user = userObject._id;
+    const userObject = await User.create(req.body);
+    req.body.user = userObject._id;
     // const employeeObject = await schemaName.create(req.body);
     // await User.create({
     //   user: object._id,
@@ -110,7 +115,7 @@ export const putChannelPartner = async (req, res) => {
       city,
       introductionID,
       channelPartnerID,
-      userID,
+      userName,
       name,
       address1,
       address2,
@@ -125,11 +130,18 @@ export const putChannelPartner = async (req, res) => {
       IFSCCode,
       profilePicture,
       blocked,
+      menu,
+      permission,
     } = req.body;
 
     const object = await schemaName.findById(id);
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` });
+
+    const object1 = await User.findById(object.user._id);
+    if (!object1) {
+      return res.status(400).json({ error: `User not found` });
+    }
 
     object.channelPartnerSerialNo = channelPartnerSerialNo;
     object.registrationDate = registrationDate;
@@ -137,7 +149,7 @@ export const putChannelPartner = async (req, res) => {
     object.city = city;
     object.introductionID = introductionID;
     object.channelPartnerID = channelPartnerID;
-    object.userID = userID;
+    object.userName = userName;
     object.name = name;
     object.address1 = address1;
     object.address2 = address2;
@@ -153,13 +165,18 @@ export const putChannelPartner = async (req, res) => {
     object.profilePicture = profilePicture;
     object.blocked = blocked;
 
+    object1.menu = menu && menu.length > 0 ? menu : object1.menu;
+    object1.permission =
+      permission && permission.length > 0 ? permission : object1.permission;
+
     // password && (object.password = await object.encryptPassword(password));
 
-    // if (name) {
-    //   await Profile.findOneAndUpdate({ user: id }, { name });
-    // }
+    if (name) {
+      await Profile.findOneAndUpdate({ user: id }, { name });
+    }
 
     await object.save();
+    await object1.save();
 
     res.status(200).json({ message: `${schemaNameString} updated` });
   } catch (error) {

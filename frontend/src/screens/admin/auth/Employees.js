@@ -165,6 +165,8 @@ const Employees = () => {
           confirmed: data.confirmed,
           blocked: data.blocked,
           password: data.password,
+          permission: data.permission,
+          menu: data.menu,
         })
       : mutateAsyncPost(data);
   };
@@ -193,12 +195,15 @@ const Employees = () => {
   };
 
   const editHandler = (employee) => {
+    console.log('employee', employee)
     setId(employee._id);
     setView(false);
     setEdit(true);
     setValue("department", employee.department);
     setValue("designation", employee.designation);
     setValue("name", employee.name);
+    setValue("firstName", employee.user?.firstName);
+    setValue("lastName", employee.user?.lastName);
     setValue("address1", employee.address1);
     setValue("address2", employee.address2);
     setValue("address3", employee.address3);
@@ -211,9 +216,11 @@ const Employees = () => {
     setValue("esi", employee.esi);
     setValue("dob", employee.dob);
     setValue("salaryscheduletype", employee.salaryscheduletype);
-    setValue("email", employee.email);
+    setValue("email", employee.user.email);
     setValue("confirmed", employee.confirmed);
     setValue("blocked", employee.blocked);
+    setValue("permission", employee.user?.permission);
+    setValue("menu", employee.user?.menu);
   };
 
   return (
