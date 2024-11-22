@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const profileScheme = mongoose.Schema(
   {
-    sequenceNumber: { type: Number, unique: true },
+    sequenceNumber: { type: Number },
     // adminUserID: { type: String, required: true},
     user: {
       type: mongoose.Schema.Types.ObjectId,
