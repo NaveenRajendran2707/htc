@@ -9,7 +9,7 @@ export const Confirm = (action) => {
           <p className="pb-3">This action cannot be reversed.</p>
           <div className="flex items-center justify-end gap-3 mt-3">
             <button
-              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50"
+              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50"
               onClick={onClose}
             >
               No, Keep it

@@ -182,10 +182,10 @@ const Departments = () => {
         transition
         className="realtive z-[1000] transition duration-100 ease-linear data-[closed]:opaDepartment-0"
       >
-        <div className="fixed z-[1000] inset-0 flex w-screen justify-end p-4">
+        <div className="fixed z-[1000] inset-0 flex w-screen justify-end p-2">
           <DialogPanel className="max-w-[800px] w-full flex flex-col rounded-xl shadow-sm bg-white">
             <DialogTitle
-              className="flex justify-between items-center py-4 px-6"
+              className="flex justify-between items-center p-3"
               as="div"
             >
               <h3 className="text-2xl font-bold">
@@ -194,7 +194,7 @@ const Departments = () => {
 
               <button
                 type="button"
-                className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-2"
+                className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-1"
                 aria-label="Close"
                 onClick={() => {
                   setIsModalOpen(false);
@@ -204,7 +204,7 @@ const Departments = () => {
                 <span className="material-symbols-rounded">close</span>
               </button>
             </DialogTitle>
-            <div className="flex-1 overflow-auto py-4 px-6">
+            <div className="flex-1 overflow-auto px-3 pb-3">
               <FormDepartments
                 edit={edit}
                 view={view}

@@ -10,6 +10,7 @@ import {
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBox,
+  inputSwitch,
 } from "../../utils/dynamicForm";
 
 const methodConversion = (methodName) => {
@@ -82,22 +83,26 @@ export const FormUsers = ({
               ),
             readOnly: true,
           })}
-          {inputText({
-            register,
-            errors,
-            label: "First Name",
-            name: "firstName",
-            placeholder: "First Name",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Last Name",
-            name: "lastName",
-            placeholder: "Last Name",
-            readOnly: view,
-          })}
+          <div className="grid grid-cols-12 gap-3">
+            {inputText({
+              register,
+              errors,
+              label: "First Name",
+              name: "firstName",
+              placeholder: "First Name",
+              readOnly: view,
+              wrapperClass: "col-span-6",
+            })}
+            {inputText({
+              register,
+              errors,
+              label: "Last Name",
+              name: "lastName",
+              placeholder: "Last Name",
+              readOnly: view,
+              wrapperClass: "col-span-6",
+            })}
+          </div>
           {inputText({
             register,
             errors,
@@ -122,52 +127,61 @@ export const FormUsers = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {dynamicInputSelect({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,
-            data: stateData && stateData,
-            value: "stateName",
-            readOnly: view,
-          })}
-          {dynamicInputSelect({
-            register,
-            errors,
-            label: "City",
-            name: "city",
-            placeholder: "City",
-            isRequired: false,
-            data: cityData && cityData,
-            value: "cityName",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Pin code",
-            name: "pincode",
-            placeholder: "600 078",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Mobile no.",
-            name: "mobile",
-            placeholder: "044 12345678",
-            readOnly: view,
-          })}
-          {inputEmail({
-            register,
-            errors,
-            label: "Email ID",
-            name: "email",
-            placeholder: "Email",
-            readOnly: view,
-          })}
+          <div className="grid grid-cols-12 gap-3">
+            {dynamicInputSelect({
+              register,
+              errors,
+              label: "State",
+              name: "state",
+              placeholder: "State",
+              isRequired: false,
+              data: stateData && stateData,
+              value: "stateName",
+              readOnly: view,
+              wrapperClass: "col-span-4",
+            })}
+            {dynamicInputSelect({
+              register,
+              errors,
+              label: "City",
+              name: "city",
+              placeholder: "City",
+              isRequired: false,
+              data: cityData && cityData,
+              value: "cityName",
+              readOnly: view,
+              wrapperClass: "col-span-4",
+            })}
+            {inputText({
+              register,
+              errors,
+              label: "Pin code",
+              name: "pincode",
+              placeholder: "600 078",
+              readOnly: view,
+              wrapperClass: "col-span-4",
+            })}
+          </div>
+          <div className="grid grid-cols-12 gap-3">
+            {inputText({
+              register,
+              errors,
+              label: "Mobile no.",
+              name: "mobile",
+              placeholder: "044 12345678",
+              readOnly: view,
+              wrapperClass: "col-span-6",
+            })}
+            {inputEmail({
+              register,
+              errors,
+              label: "Email ID",
+              name: "email",
+              placeholder: "Email",
+              readOnly: view,
+              wrapperClass: "col-span-6",
+            })}
+          </div>
           {inputText({
             register,
             errors,
@@ -204,7 +218,7 @@ export const FormUsers = ({
               })}
             </div>
           )}
-          {inputCheckBox({
+          {inputSwitch({
             register,
             errors,
             watch,
@@ -275,15 +289,15 @@ export const FormUsers = ({
           {view ? (
             ""
           ) : (
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <button
                 type="submit"
-                className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+                className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-md text-sm px-3 py-2 text-center "
                 disabled={isLoadingPost || isLoadingUpdate}
               >
                 {isLoadingPost || isLoadingUpdate ? (
                   <span
-                    className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
+                    className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full"
                     role="status"
                     aria-label="loading"
                   >
@@ -295,7 +309,7 @@ export const FormUsers = ({
               </button>
               <button
                 type="button"
-                className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                className="px-3 py-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-md border-1 border-gray-200 bg-white text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
                 onClick={() => {
                   setIsModalOpen(false);
                   formCleanHandler();

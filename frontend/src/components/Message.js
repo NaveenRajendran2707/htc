@@ -8,30 +8,45 @@ const Message = ({ variant, children }) => {
     warning: "yellow",
     info: "sky",
   };
+
   const icon = {
     danger: 'error',
     success: 'check_circle',
     warning: 'warning',
     info: 'info',
   };
+  function generateClasses(variant) {
+    const colorMap = {
+      danger: 'red',
+      success: 'green',
+      warning: 'yellow',
+      info: 'sky',
+    };
+  
+    const textColorClass = `text-${colorMap[variant]}-500`;
+    const bgColorClass = `bg-${colorMap[variant]}-100`;
+  
+    return { textColorClass, bgColorClass };
+  }
   useEffect(() => {
     const timeId = setTimeout(() => {
       setAlert(false);
-    }, 5000);
+    }, 150000);
 
     return () => {
       clearTimeout(timeId);
     };
   }, [alert]);
+  const { textColorClass, bgColorClass } = generateClasses(variant);
 
   return (
     alert && (
-      <div className={`fixed top-0 right-0 ${variant}`} role="alert">
+      <div className={`fixed z-[999999] top-0 right-0 ${variant}`} role="alert">
         <div
-          className={`flex items-center w-full max-w-xs p-4 text-gray-500 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 bg-${color[variant]}-100`}
+          className={`flex items-center w-full max-w-xs p-4 text-gray-500 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 ${bgColorClass}`}
           role="alert"
         >
-          <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-${color[variant]}-500 bg-blue-100 rounded-lg`}>
+          <div className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 ${textColorClass} bg-blue-100 rounded-lg`}>
             <span className="material-symbols-rounded">{icon[variant]}</span>
           </div>
           <div className="ms-3 text-gray-800 text-sm font-normal">

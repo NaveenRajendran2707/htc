@@ -8,11 +8,13 @@ export const inputHidden = (args) => {
     isRequired = true,
     readOnly,
     value,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -21,9 +23,9 @@ export const inputHidden = (args) => {
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         value={value}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -44,12 +46,15 @@ export const inputText = (args) => {
     isRequired = true,
     readOnly,
     value,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
+        {isRequired && <span className="text-red-500 ml-1 font-bold">*</span>}
       </label>
       <input
         {...register(name, isRequired && { required: `${label} is required` })}
@@ -57,9 +62,9 @@ export const inputText = (args) => {
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         value={value}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -81,18 +86,20 @@ export const inputSelect = (args) => {
     placeholder,
     readOnly,
     value,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <select
         {...register(name, isRequired && { required: `${label} is required` })}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
         disabled={readOnly}
         value={value}
       >
@@ -121,11 +128,13 @@ export const inputTel = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -133,9 +142,9 @@ export const inputTel = (args) => {
         type="tel"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -155,11 +164,13 @@ export const inputTextArea = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <textarea
@@ -169,9 +180,9 @@ export const inputTextArea = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -191,11 +202,13 @@ export const inputNumber = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -203,9 +216,9 @@ export const inputNumber = (args) => {
         type="number"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -217,11 +230,20 @@ export const inputNumber = (args) => {
 };
 
 export const inputEmail = (args) => {
-  const { register, placeholder, errors, label, name, readOnly } = args;
+  const {
+    register,
+    placeholder,
+    errors,
+    label,
+    name,
+    readOnly,
+    wrapperClass,
+    inputClass,
+  } = args;
 
   return (
-    <div className="mb-4">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -235,9 +257,9 @@ export const inputEmail = (args) => {
         type="email"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -259,11 +281,13 @@ export const inputPassword = (args) => {
     validate = false,
     isRequired = true,
     minLength = false,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -282,7 +306,7 @@ export const inputPassword = (args) => {
         })}
         type="password"
         placeholder={`${placeholder}`}
-        className="block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6"
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -304,11 +328,13 @@ export const dynamicInputSelect = (args) => {
     isRequired = true,
     value,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <select
@@ -316,9 +342,9 @@ export const dynamicInputSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       >
         <option value="">Select {label}</option>
         {data &&
@@ -347,11 +373,13 @@ export const staticInputSelect = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <select
@@ -359,9 +387,9 @@ export const staticInputSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       >
         <option value="">Select {label}</option>
         {data &&
@@ -391,11 +419,13 @@ export const dynaimcInputSelectField = (args) => {
     value,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <select
@@ -403,9 +433,9 @@ export const dynaimcInputSelectField = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       >
         <option value="">Select {label}</option>
         {data &&
@@ -435,11 +465,13 @@ export const staticInputSelectState = (args) => {
     isRequired = true,
     readOnly,
     onChange,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <select
@@ -448,9 +480,9 @@ export const staticInputSelectState = (args) => {
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         onChange={onChange}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       >
         <option value="">Select {label}</option>
         {data &&
@@ -470,15 +502,24 @@ export const staticInputSelectState = (args) => {
 };
 
 export const inputCheckBox = (args) => {
-  const { register, errors, name, label, isRequired = true, readOnly } = args;
+  const {
+    register,
+    errors,
+    name,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+  } = args;
 
   return (
-    <div className="mb-3">
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
       <div className="flex items-center mb-4">
         <input
           className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
             readOnly && "bg-slate-200"
-          }`}
+          } ${inputClass}`}
           type="checkbox"
           readOnly={!!readOnly}
           id={name}
@@ -503,6 +544,44 @@ export const inputCheckBox = (args) => {
   );
 };
 
+export const inputSwitch = (args) => {
+  const {
+    register,
+    errors,
+    name,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="flex items-center mb-4" htmlFor={name}>
+        <input
+          className={`sr-only peer ${readOnly && "bg-slate-200"} ${inputClass}`}
+          type="checkbox"
+          readOnly={!!readOnly}
+          id={name}
+          {...register(
+            name,
+            isRequired && { required: `${label} is required` }
+          )}
+        />
+          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+
+        <span className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300">{label}</span>
+      </label>
+      {errors && errors[name] && (
+        <span className="block text-sm text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
 export const inputMultipleCheckBoxGroups = (args) => {
   const {
     register,
@@ -512,36 +591,36 @@ export const inputMultipleCheckBoxGroups = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <div className="mb-3">
-        {data &&
-          data.map((d) => (
-            <div key={d._id} className="inline-flex w-1/4 items-center mb-4">
-              <input
-                {...register(
-                  name,
-                  isRequired && { required: `${label} is required` }
-                )}
-                readOnly={!!readOnly}
-                className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
-                  readOnly && "bg-slate-200"
-                }`}
-                type="checkbox"
-                value={d._id}
-                id={`check${d._id}`}
-              />
-              <label
-                className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"
-                htmlFor={`check${d._id}`}
-              >
-                {d.method} ({d.name})
-              </label>
-            </div>
-          ))}
-      </div>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      {data &&
+        data.map((d) => (
+          <div key={d._id} className="inline-flex w-1/4 items-center mb-4">
+            <input
+              {...register(
+                name,
+                isRequired && { required: `${label} is required` }
+              )}
+              readOnly={!!readOnly}
+              className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
+                readOnly && "bg-slate-200"
+              } ${inputClass}`}
+              type="checkbox"
+              value={d._id}
+              id={`check${d._id}`}
+            />
+            <label
+              className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"
+              htmlFor={`check${d._id}`}
+            >
+              {d.method} ({d.name})
+            </label>
+          </div>
+        ))}
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
           {errors[name].message}
@@ -560,36 +639,36 @@ export const inputMultipleCheckBox = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <div className="mb-3">
-        {data &&
-          data.map((d) => (
-            <div key={d._id} className="inline-flex w-1/2 items-center mb-4">
-              <input
-                {...register(
-                  name,
-                  isRequired && { required: `${label} is required` }
-                )}
-                className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
-                  readOnly && "bg-slate-200"
-                }`}
-                type="checkbox"
-                readOnly={!!readOnly}
-                value={d._id}
-                id={`check${d._id}`}
-              />
-              <label
-                className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"
-                htmlFor={`check${d._id}`}
-              >
-                {d.name}
-              </label>
-            </div>
-          ))}
-      </div>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      {data &&
+        data.map((d) => (
+          <div key={d._id} className="inline-flex w-1/2 items-center mb-4">
+            <input
+              {...register(
+                name,
+                isRequired && { required: `${label} is required` }
+              )}
+              className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
+                readOnly && "bg-slate-200"
+              } ${inputClass}`}
+              type="checkbox"
+              readOnly={!!readOnly}
+              value={d._id}
+              id={`check${d._id}`}
+            />
+            <label
+              className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"
+              htmlFor={`check${d._id}`}
+            >
+              {d.name}
+            </label>
+          </div>
+        ))}
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
           {errors[name].message}
@@ -609,11 +688,13 @@ export const inputFile = (args) => {
     label,
     setFile,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -621,9 +702,9 @@ export const inputFile = (args) => {
         type="file"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
         id="formFile"
         onChange={(e) => setFile(e.target.files[0])}
       />
@@ -645,11 +726,13 @@ export const inputDate = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <input
@@ -657,9 +740,9 @@ export const inputDate = (args) => {
         type="date"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -680,11 +763,13 @@ export const InputAutoCompleteSelect = (args) => {
     label,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor="dataList">
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor="dataList">
         {label}
       </label>
       <input
@@ -695,9 +780,9 @@ export const InputAutoCompleteSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       />
       <datalist id="datalistOptions">
         <option value="">-------------</option>
@@ -728,11 +813,13 @@ export const dynamicInputSelectNumber = (args) => {
     data,
     isRequired = true,
     readOnly,
+    wrapperClass,
+    inputClass,
   } = args;
 
   return (
-    <div className="mb-3">
-      <label className="block mb-1" htmlFor={name}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
       <select
@@ -740,9 +827,9 @@ export const dynamicInputSelectNumber = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
-        className={`block w-full rounded-md border-0 py-2 px-3 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-6 ${
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
-        }`}
+        } ${inputClass}`}
       >
         <option value="select">Select</option>
 

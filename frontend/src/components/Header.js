@@ -35,7 +35,7 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
       >
         <span className="material-symbols-rounded">menu</span>
       </button>
-      <div className="hidden sm:block">
+      <div className="hidden sm:block w-20">
         <form action="" method="POST">
           <div className="relative">
             <button className="absolute left-2 lg:left-0 top-1/2 w-6 h-6 -translate-y-1/2 text-slate-500">
