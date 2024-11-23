@@ -28,11 +28,11 @@ export default function Layout() {
           </aside>
         </div>
         <div className="main-wrapper flex flex-col w-full lg:ml-72">
-          <header className="sticky top-0 z-[990] flex flex-col w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
+          <header className="sticky top-0 z-[990] flex flex-col w-full bg-white shadow-md">
             <Header toggleSidebar={toggleSidebar} />
             {/* <Spinner /> */}
           </header>
-          <main className="main-container p-4 min-w-0">
+          <main className="main-container p-3 min-w-0">
               <Outlet />
           </main>
         </div>

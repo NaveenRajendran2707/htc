@@ -15,7 +15,7 @@ export const Confirm = (action) => {
               No, Keep it
             </button>
             <button
-              className="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+              className="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-lg text-sm px-4 py-2.5 text-center "
               onClick={() => {
                 action();
                 onClose();

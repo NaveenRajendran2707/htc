@@ -337,7 +337,7 @@ export const FormEmployees = ({
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="min-w-[120px] text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center "
+                className="min-w-[120px] inline-flex items-center justify-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8text-center "
                 disabled={isLoadingPost || isLoadingUpdate}
               >
                 {isLoadingPost || isLoadingUpdate ? (
@@ -356,7 +356,7 @@ export const FormEmployees = ({
               </button>
               <button
                 type="button"
-                className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
                 onClick={() => {
                   setIsModalOpen(false);
                   formCleanHandler();

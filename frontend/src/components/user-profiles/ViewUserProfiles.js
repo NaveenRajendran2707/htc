@@ -15,15 +15,15 @@ const ViewUserProfiles = ({ data, setQ, q, searchHandler }) => {
         </div>
       </div>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
-          <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-800 rounded">
+          <thead className="text-xs text-slate-800 bg-slate-200 shadow-sm border-y border-slate-300">
             <tr>
-              <th className="px-2 py-4">SI.NO</th>
-              <th className="px-2 py-4">Image</th>
-              <th className="px-2 py-4">Name</th>
-              <th className="px-2 py-4">Address</th>
-              <th className="px-2 py-4">Phone</th>
-              <th className="px-2 py-4">Email</th>
+              <th className="p-2">SI.NO</th>
+              <th className="p-2">Image</th>
+              <th className="p-2">Name</th>
+              <th className="p-2">Address</th>
+              <th className="p-2">Phone</th>
+              <th className="p-2">Email</th>
             </tr>
           </thead>
 

@@ -5,7 +5,7 @@ const Search = ({ q, setQ, placeholder, searchHandler }) => {
         <div className="relative">
           <input
             type="text"
-            className="block w-full rounded-lg border-1 border-gray-400 py-2 ps-3 pe-8 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded border-1 border-gray-400 py-1 ps-2 pe-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
             placeholder={placeholder}
             aria-label="Search"
             onChange={(e) => setQ(e.target.value)}

@@ -24,24 +24,25 @@ const ViewDepartments = ({
             searchHandler={searchHandler}
           />
           <button
-            className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
+            className="inline-flex items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-1 text-center"
             onClick={() => {
               setIsModalOpen(true);
               setView(false);
             }}
           >
-            Add New Department
+            <span className="material-symbols-rounded">add</span>
+            <span className="">New Department</span>
           </button>
         </div>
       </div>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
-          <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-800 rounded">
+          <thead className="text-xs text-slate-800 bg-slate-200 shadow-sm border-y border-slate-300">
             <tr>
-              <th className="px-2 py-4">SI.NO</th>
-              <th className="px-2 py-4">Department Code</th>
-              <th className="px-2 py-4">Department</th>
-              <th className="px-2 py-4">Actions</th>
+              <th className="p-2">SI.NO</th>
+              <th className="p-2">Department Code</th>
+              <th className="p-2">Department</th>
+              <th className="p-2">Actions</th>
             </tr>
           </thead>
 
@@ -55,7 +56,7 @@ const ViewDepartments = ({
                   <td className="p-2">
                     <div className="flex gap-2">
                       <button
-                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
+                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => {
                           setIsModalOpen(true);
                           viewHandler(department);
@@ -67,7 +68,7 @@ const ViewDepartments = ({
                       </button>
 
                       <button
-                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
+                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => {
                           setIsModalOpen(true);
                           editHandler(department);
@@ -77,7 +78,7 @@ const ViewDepartments = ({
                       </button>
 
                       <button
-                        className="inline-flex text-gray-600 hover:text-red-600 hover:bg-red-100 focus:ring-4 focus:ring-red-200 font-medium rounded-full text-sm p-2"
+                        className="inline-flex text-gray-600 hover:text-red-600 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => deleteHandler(department._id)}
                         disabled={isLoadingDelete}
                       >

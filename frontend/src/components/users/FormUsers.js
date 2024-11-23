@@ -292,7 +292,7 @@ export const FormUsers = ({
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-md text-sm px-3 py-2 text-center "
+                className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-md text-sm px-3 py-2 text-center "
                 disabled={isLoadingPost || isLoadingUpdate}
               >
                 {isLoadingPost || isLoadingUpdate ? (

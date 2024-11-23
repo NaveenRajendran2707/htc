@@ -139,7 +139,7 @@ const Login = () => {
                 })}
                 <button
                   type="submit"
-                  className="my-3 inline-flex items-center justify-center text-white bg-blue-700 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 text-base font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full"
+                  className="my-3 inline-flex items-center justify-center text-white bg-blue-700 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white text-base font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full"
                   disabled={isLoading}
                 >
                   {isLoading ? (

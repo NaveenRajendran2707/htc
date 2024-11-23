@@ -26,37 +26,38 @@ const ViewAccounts = ({
             searchHandler={searchHandler}
           />
           <button
-            className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
+            className="inline-flex items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-1 text-center"
             onClick={() => setIsModalOpen(true)}
           >
-            Add New Account
+            <span className="material-symbols-rounded">add</span>
+            <span className="">New Account</span>
           </button>
         </div>
       </div>
       <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400 rounded">
-          <thead className="text-xs text-slate-500 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-800 rounded">
+          <thead className="text-xs text-slate-800 bg-slate-200 shadow-sm border-y border-slate-300">
             <tr>
-              <th className="px-2 py-4">SI.NO</th>
-              <th className="px-2 py-4">Account Code</th>
-              <th className="px-2 py-4">Account Group</th>
-              <th className="px-2 py-4">Account Name</th>
-              <th className="px-2 py-4">Name</th>
-              <th className="px-2 py-4">Address 1</th>
-              <th className="px-2 py-4">Address 2</th>
-              <th className="px-2 py-4">Address 3</th>
-              <th className="px-2 py-4">City</th>
-              <th className="px-2 py-4">Pin code</th>
-              <th className="px-2 py-4">State</th>
-              <th className="px-2 py-4">Mobile Number</th>
-              <th className="px-2 py-4">Email ID</th>
-              <th className="px-2 py-4">GSTIN Number</th>
-              <th className="px-2 py-4">Pan Number</th>
-              <th className="px-2 py-4">Transport Name</th>
-              <th className="px-2 py-4">Opening Balance</th>
-              <th className="px-2 py-4">Password</th>
-              <th className="px-2 py-4">Blocked</th>
-              <th className="px-2 py-4">Actions</th>
+              <th className="p-2">SI.NO</th>
+              <th className="p-2">Account Code</th>
+              <th className="p-2">Account Group</th>
+              <th className="p-2">Account Name</th>
+              <th className="p-2">Name</th>
+              <th className="p-2">Address 1</th>
+              <th className="p-2">Address 2</th>
+              <th className="p-2">Address 3</th>
+              <th className="p-2">City</th>
+              <th className="p-2">Pin code</th>
+              <th className="p-2">State</th>
+              <th className="p-2">Mobile Number</th>
+              <th className="p-2">Email ID</th>
+              <th className="p-2">GSTIN Number</th>
+              <th className="p-2">Pan Number</th>
+              <th className="p-2">Transport Name</th>
+              <th className="p-2">Opening Balance</th>
+              <th className="p-2">Password</th>
+              <th className="p-2">Blocked</th>
+              <th className="p-2">Actions</th>
             </tr>
           </thead>
 
@@ -96,7 +97,7 @@ const ViewAccounts = ({
                   <td className="p-2">
                     <div className="flex gap-2">
                       <button
-                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
+                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => {
                           setIsModalOpen(true);
                           viewHandler(account);
@@ -108,7 +109,7 @@ const ViewAccounts = ({
                       </button>
 
                       <button
-                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-full text-sm p-2"
+                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onMouseOver={() => {}}
                         onClick={() => {
                           setIsModalOpen(true);
@@ -119,7 +120,7 @@ const ViewAccounts = ({
                       </button>
 
                       <button
-                        className="inline-flex text-gray-600 hover:text-red-600 hover:bg-red-100 focus:ring-4 focus:ring-red-200 font-medium rounded-full text-sm p-2"
+                        className="inline-flex text-gray-600 hover:text-red-600 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => deleteHandler(account._id)}
                         disabled={isLoadingDelete}
                       >

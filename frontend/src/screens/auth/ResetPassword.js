@@ -84,7 +84,7 @@ const ResetPassword = () => {
 
         <button
           type='submit'
-          className='text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center form-control'
+          className='inline-flex items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8text-center form-control'
           disabled={isLoading}
         >
           {isLoading ? (

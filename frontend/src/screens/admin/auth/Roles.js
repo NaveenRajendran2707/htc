@@ -243,7 +243,7 @@ const Roles = () => {
             </div>
           </DialogPanel>
         </div>
-        <DialogBackdrop className="fixed z-[999] inset-0 bg-black/30" />
+        <DialogBackdrop className="fixed z-[999] inset-0 bg-black/50" />
       </Dialog>
     </>
   );
