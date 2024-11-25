@@ -3,12 +3,13 @@ import { Message } from "../../components";
 import {
   inputHidden,
   inputCheckBox,
+  inputSwitch,
   inputEmail,
   inputText,
   staticInputSelect,
   inputDate,
   staticInputSelectState,
-  dynamicInputSelect
+  dynamicInputSelect,
 } from "../../utils/dynamicForm";
 
 // import { useState } from "react";
@@ -34,6 +35,12 @@ export const FormCompanies = ({
   cities,
   user,
 }) => {
+  const getDynamicLabel = (field, value) => {
+    if (field === "blocked") {
+      return value ? "Inactive" : "Active";
+    }
+    return field;
+  };
   const [city, setCity] = useState([]);
   const handleStateChange = (e) => {
     const id = e.target.selectedOptions[0].dataset.id;
@@ -134,13 +141,13 @@ export const FormCompanies = ({
             data: [{ name: "Proprietor" }, { name: "Partnership" }],
             readOnly: view,
           })}
-           {dynamicInputSelect({
+          {dynamicInputSelect({
             register,
             errors,
             label: "User ID",
             name: "user",
             placeholder: "User ID",
-            isRequired: true,            
+            isRequired: true,
             data: user && user,
             value: "firstName",
             readOnly: view,
@@ -292,14 +299,14 @@ export const FormCompanies = ({
             placeholder: "Watermark",
             readOnly: view,
           })}
-          {inputCheckBox({
+          {inputSwitch({
             register,
             errors,
             watch,
             name: "blocked",
-            label: "Status (Active/Inactive)",
+            label: getDynamicLabel("blocked", watch("blocked")),
             isRequired: false,
-            placeholder: "Status",
+            placeholder: "Blocked",
             readOnly: view,
           })}
           {view ? (

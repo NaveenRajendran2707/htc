@@ -3,6 +3,7 @@ import { Message } from "..";
 import {
   inputHidden,
   inputCheckBox,
+  inputSwitch,
   inputEmail,
   inputPassword,
   staticInputSelectState,
@@ -46,6 +47,12 @@ export const FormAccounts = ({
   permissionData,
   menuData,
 }) => {
+  const getDynamicLabel = (field, value) => {
+    if (field === "blocked") {
+      return value ? "Inactive" : "Active";
+    }
+    return field;
+  };
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
   const handleStateChange = (e) => {
@@ -305,12 +312,12 @@ export const FormAccounts = ({
               })}
             </div>
           )}
-          {inputCheckBox({
+          {inputSwitch({
             register,
             errors,
             watch,
             name: "blocked",
-            label: "Blocked",
+            label: getDynamicLabel("blocked", watch("blocked")),
             isRequired: false,
             placeholder: "Blocked",
             readOnly: view,

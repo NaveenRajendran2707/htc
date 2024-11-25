@@ -46,14 +46,6 @@ const FormDesignations = ({
             value: "DES"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}
-          {inputText({
-            register,
-            errors,
-            label: "Designation",
-            name: "designation",
-            placeholder: "Designation",
-            readOnly: view,
-          })}
           {dynamicInputSelect({
             register,
             errors,
@@ -63,6 +55,14 @@ const FormDesignations = ({
             isRequired: false,            
             data: departmentData && departmentData,
             value: "department",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Designation",
+            name: "designation",
+            placeholder: "Designation",
             readOnly: view,
           })}
           {view ? "" :

@@ -13,7 +13,7 @@
 // import Unit from '../../models/Unit.js'
 // import UnitConversion from '../../models/UnitConversion.js'
 // import ServiceType from '../../models/ServiceType.js'
-// import GSTTax from '../../models/GSTTax.js'
+import GSTTax from '../../models/GSTTax.js'
 // import HSN from '../../models/HSN.js'
 // import Employee from '../../models/Employee.js'
 // import AccountGroup from '../../models/AccountGroup.js'
@@ -22,7 +22,7 @@
 // import Brand from '../../models/Brand.js'
 // import Category from '../../models/Category.js'
 // import ChannelPartner from '../../models/ChannelPartner.js'
-import Account from "../../models/Account.js";
+// import Account from "../../models/Account.js";
 
 import {
   // users,
@@ -39,17 +39,17 @@ import {
   // units,
   // unitconversions,
   // servicetype,
-  // gsttax,
+  gsttax,
   // hsn,
   // employees
-  //accountgroups
+  // accountgroups
   // employees,
   // itemgroup,
   // items,
   // brand,
   // category,
   // channelpartners,
-  accounts,
+  // accounts,
 } from "../../../config/data.js";
 
 const secret = "js";
@@ -75,7 +75,7 @@ export const seed = async (req, res) => {
     // await Unit.deleteMany({})
     // await UnitConversion.deleteMany({})
     // await ServiceType.deleteMany({})
-    // await GSTTax.deleteMany({})
+    await GSTTax.deleteMany({})
     // await HSN.deleteMany({})
     // await Employee.deleteMany({})
     // await AccountGroup.deleteMany({})
@@ -84,10 +84,10 @@ export const seed = async (req, res) => {
     // await Brand.deleteMany({})
     // await Category.deleteMany({})
     // await ChannelPartner.deleteMany({})
-    await Account.deleteMany({});
+    // await Account.deleteMany({});
 
-    //Create Accounts
-    await Account.create(accounts);
+    // //Create Accounts
+    // await Account.create(accounts);
 
     // //Create Channel Partner
     // await ChannelPartner.create(channelpartners)
@@ -113,8 +113,8 @@ export const seed = async (req, res) => {
     // // Create Service Type
     // await ServiceType.create(servicetype)
 
-    // // Create GST Tax
-    // await GSTTax.create(gsttax)
+    // Create GST Tax
+    await GSTTax.create(gsttax)
 
     // // Create HSN
     // await HSN.create(hsn)

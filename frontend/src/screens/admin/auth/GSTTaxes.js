@@ -105,6 +105,7 @@ const GSTTaxes = () => {
       ? mutateAsyncUpdate({
           _id: id,
           gSTTaxSerialNo: data.gSTTaxSerialNo,
+          name:data.name,
           gSTTax: data.gSTTax,
         })
       : mutateAsyncPost(data);
@@ -114,6 +115,7 @@ const GSTTaxes = () => {
     setId(gsttax._id);
     setView(true);
     setValue("gSTTaxSerialNo", gsttax.gSTTaxSerialNo);
+    setValue("name", gsttax.name);
     setValue("gSTTax", gsttax.gSTTax);
   };
 
@@ -122,6 +124,7 @@ const GSTTaxes = () => {
     setView(false);
     setEdit(true);
     setValue("gSTTaxSerialNo", gsttax.gSTTaxSerialNo);
+    setValue("name", gsttax.name);
     setValue("gSTTax", gsttax.gSTTax);
   };
 

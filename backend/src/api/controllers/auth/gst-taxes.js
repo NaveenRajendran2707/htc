@@ -52,13 +52,14 @@ export const postGSTTax = async (req, res) => {
 export const putGSTTax = async (req, res) => {
   try {
     const { id } = req.params
-    const { gSTTaxSerialNo, gSTTax } = req.body
+    const { gSTTaxSerialNo, name, gSTTax } = req.body
 
     const object = await schemaName.findById(id)
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` })
 
     object.gSTTaxSerialNo = gSTTaxSerialNo
+    object.name = name
     object.gSTTax = gSTTax
     
     await object.save()

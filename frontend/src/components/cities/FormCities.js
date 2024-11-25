@@ -46,6 +46,17 @@ const FormCities = ({
             value: "CTY"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
             readOnly: true,
           })}
+           {dynamicInputSelect({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,            
+            data: stateData && stateData,
+            value: "stateName",
+            readOnly: view,
+          })}
           {inputText({
             register,
             errors,
@@ -60,17 +71,6 @@ const FormCities = ({
             label: "City Short Name",
             name: "cityShortName",
             placeholder: "City Short Name",
-            readOnly: view,
-          })}
-          {dynamicInputSelect({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,            
-            data: stateData && stateData,
-            value: "stateName",
             readOnly: view,
           })}
           {view ? "" :

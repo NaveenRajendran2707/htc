@@ -47,6 +47,15 @@ export const FormUsers = ({
   menuData,
   nextSequenceNumber,
 }) => {
+  const getDynamicLabel = (field, value) => {
+    if (field === "confirmed") {
+      return value ? "Unapproved" : "Approved";
+    }
+    if (field === "blocked") {
+      return value ? "Inactive" : "Active";
+    }
+    return field;
+  };
   return (
     <>
       {isLoading ? (
@@ -223,18 +232,18 @@ export const FormUsers = ({
             errors,
             watch,
             name: "confirmed",
-            label: "Confirmed",
+            label: getDynamicLabel("confirmed", watch("confirmed")),
             isRequired: false,
             placeholder: "Confirmed",
             readOnly: view,
           })}
 
-          {inputCheckBox({
+          {inputSwitch({
             register,
             errors,
             watch,
             name: "blocked",
-            label: "Blocked",
+            label: getDynamicLabel("blocked", watch("blocked")),
             isRequired: false,
             placeholder: "Blocked",
             readOnly: view,

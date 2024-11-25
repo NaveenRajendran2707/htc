@@ -1,5 +1,5 @@
 import { Spinner, Message } from "..";
-import { inputHidden, inputText } from "../../utils/dynamicForm";
+import { inputHidden, inputPercentage, inputText } from "../../utils/dynamicForm";
 
 const FormGSTTaxes = ({
   edit,
@@ -15,7 +15,7 @@ const FormGSTTaxes = ({
   submitHandler,
   error,
   setIsModalOpen,
-  nextSequenceNumber
+  nextSequenceNumber,
 }) => {
   return (
     <>
@@ -40,8 +40,21 @@ const FormGSTTaxes = ({
             label: "GST Tax Code",
             name: "gSTTaxSerialNo",
             placeholder: "GST Tax Code",
-            value: "GST"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "GST" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Name",
+            name: "name",
+            placeholder: "Name",
+            readOnly: view,
           })}
           {inputText({
             register,
@@ -50,40 +63,49 @@ const FormGSTTaxes = ({
             name: "gSTTax",
             placeholder: "GST Tax",
             readOnly: view,
-          })}          
-          {view ? "" :
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              className="min-w-[120px] inline-flex items-center justify-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8text-center "
-              disabled={isLoadingPost || isLoadingUpdate}
-            >
-              {isLoadingPost || isLoadingUpdate ? (
-                <span
-                  className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
-                  role="status"
-                  aria-label="loading"
-                >
-                  <span className="sr-only">Loading...</span>
-                </span>
-              ) : (
-                <span>
-                  {edit ? 'Update' : 'Save' }
-                </span>
-              )}
-            </button>
-            <button
-              type="button"
-              className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
-              onClick={() => {
-                setIsModalOpen(false);
-                formCleanHandler();
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        }
+          })}
+          {/* {inputPercentage({
+            register,
+            errors,
+            name: "taxPercentage",
+            label: "Tax Percentage",
+            placeholder: "Enter value",
+            wrapperClass: "w-1/2 mx-auto",
+            inputClass: "border-blue-400",
+          })} */}
+          {view ? (
+            ""
+          ) : (
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="min-w-[120px] inline-flex items-center justify-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8text-center "
+                disabled={isLoadingPost || isLoadingUpdate}
+              >
+                {isLoadingPost || isLoadingUpdate ? (
+                  <span
+                    className="animate-spin inline-block size-4 border-[2px] border-current border-t-transparent text-white rounded-full dark:text-white"
+                    role="status"
+                    aria-label="loading"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </span>
+                ) : (
+                  <span>{edit ? "Update" : "Save"}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </form>
       )}
     </>

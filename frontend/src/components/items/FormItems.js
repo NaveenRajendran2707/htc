@@ -2,6 +2,7 @@ import { Spinner, Message } from "..";
 import {
   inputHidden,
   inputCheckBox,
+  inputSwitch,
   inputText,
   dynaimcInputSelectField,
 } from "../../utils/dynamicForm";
@@ -13,6 +14,7 @@ const FormItems = ({
   isLoading,
   register,
   isError,
+  watch,
   errors,
   isLoadingUpdate,
   isLoadingPost,
@@ -28,6 +30,12 @@ const FormItems = ({
   hsn,
   gst,
 }) => {
+  const getDynamicLabel = (field, value) => {
+    if (field === "blocked") {
+      return value ? "Inactive" : "Active";
+    }
+    return field;
+  };
   return (
     <>
       {isLoading ? (
@@ -238,13 +246,14 @@ const FormItems = ({
             placeholder: "Product Image",
             readOnly: view,
           })}
-          {inputCheckBox({
+          {inputSwitch({
             register,
             errors,
+            watch,
             name: "blocked",
-            label: "Status (Active/Inactive)",
+            label: getDynamicLabel("blocked", watch("blocked")),
             isRequired: false,
-            placeholder: "Status",
+            placeholder: "Blocked",
             readOnly: view,
           })}
           {view ? (

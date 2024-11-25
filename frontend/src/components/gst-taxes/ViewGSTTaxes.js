@@ -41,6 +41,7 @@ const ViewGSTTaxes = ({
             <tr>
               <th className="p-2">SI.NO</th>
               <th className="p-2">GST Tax Code</th>
+              <th className="p-2">Name</th>
               <th className="p-2">GST Tax</th>
               <th className="p-2">Actions</th>
             </tr>
@@ -52,6 +53,7 @@ const ViewGSTTaxes = ({
                 <tr key={gsttax._id}>
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{gsttax.gSTTaxSerialNo}</td>
+                  <td className="p-2">{gsttax.name}</td>
                   <td className="p-2">{gsttax.gSTTax}</td>
                   <td className="p-2">
                     <div className="flex gap-2">

@@ -13,7 +13,7 @@ export const inputHidden = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -51,7 +51,47 @@ export const inputText = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
+        {label}
+        {isRequired && <span className="text-red-500 ml-1 font-bold">*</span>}
+      </label>
+      <input
+        {...register(name, isRequired && { required: `${label} is required` })}
+        type="text"
+        placeholder={`${placeholder}`}
+        readOnly={!!readOnly}
+        value={value}
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
+          readOnly && "bg-slate-200"
+        } ${inputClass}`}
+        autocomplete="off"
+      />
+      {errors && errors[name] && (
+        <span className="block text-sm text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
+export const inputPercentage = (args) => {
+  const {
+    register,
+    placeholder,
+    errors,
+    name,
+    label,
+    isRequired = true,
+    readOnly,
+    value,
+    wrapperClass,
+    inputClass,
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
         {isRequired && <span className="text-red-500 ml-1 font-bold">*</span>}
@@ -66,6 +106,9 @@ export const inputText = (args) => {
           readOnly && "bg-slate-200"
         } ${inputClass}`}
       />
+      <div className="input-group-append">
+        <span className="input-group-text">%</span>
+      </div>
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
           {errors[name].message}
@@ -91,7 +134,7 @@ export const inputSelect = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -133,7 +176,7 @@ export const inputTel = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -169,7 +212,7 @@ export const inputTextArea = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -207,7 +250,7 @@ export const inputNumber = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -242,7 +285,7 @@ export const inputEmail = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -286,7 +329,7 @@ export const inputPassword = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -333,7 +376,7 @@ export const dynamicInputSelect = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -378,7 +421,7 @@ export const staticInputSelect = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -424,7 +467,7 @@ export const dynaimcInputSelectField = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -470,7 +513,7 @@ export const staticInputSelectState = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -514,7 +557,7 @@ export const inputCheckBox = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <div className="flex items-center mb-4">
         <input
           className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
@@ -557,7 +600,7 @@ export const inputSwitch = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="flex items-center mb-4" htmlFor={name}>
         <input
           className={`sr-only peer ${readOnly && "bg-slate-200"} ${inputClass}`}
@@ -569,9 +612,11 @@ export const inputSwitch = (args) => {
             isRequired && { required: `${label} is required` }
           )}
         />
-          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
 
-        <span className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300">{label}</span>
+        <span className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300">
+          {label}
+        </span>
       </label>
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">
@@ -596,7 +641,7 @@ export const inputMultipleCheckBoxGroups = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       {data &&
         data.map((d) => (
           <div key={d._id} className="inline-flex w-1/4 items-center mb-4">
@@ -644,7 +689,7 @@ export const inputMultipleCheckBox = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       {data &&
         data.map((d) => (
           <div key={d._id} className="inline-flex w-1/2 items-center mb-4">
@@ -693,7 +738,7 @@ export const inputFile = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -731,7 +776,7 @@ export const inputDate = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>
@@ -768,7 +813,7 @@ export const InputAutoCompleteSelect = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor="dataList">
         {label}
       </label>
@@ -818,7 +863,7 @@ export const dynamicInputSelectNumber = (args) => {
   } = args;
 
   return (
-    <div className={`mb-2 ${wrapperClass ? wrapperClass : ''}`}>
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
         {label}
       </label>

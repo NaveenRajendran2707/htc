@@ -3,6 +3,7 @@ import { Message } from "../../components";
 import {
   inputHidden,
   inputCheckBox,
+  inputSwitch,
   inputEmail,
   inputText,
   staticInputSelect,
@@ -32,6 +33,12 @@ export const FormBranches = ({
   states,
   cities,
 }) => {
+  const getDynamicLabel = (field, value) => {
+    if (field === "blocked") {
+      return value ? "Inactive" : "Active";
+    }
+    return field;
+  };
   const [city, setCity] = useState([]);
   const handleStateChange = (e) => {
     const id = e.target.selectedOptions[0].dataset.id;
@@ -241,14 +248,14 @@ export const FormBranches = ({
             placeholder: "Watermark",
             readOnly: view,
           })}
-          {inputCheckBox({
+          {inputSwitch({
             register,
             errors,
             watch,
             name: "blocked",
-            label: "Status (Active/Inactive)",
+            label: getDynamicLabel("blocked", watch("blocked")),
             isRequired: false,
-            placeholder: "Status",
+            placeholder: "Blocked",
             readOnly: view,
           })}
           {view ? (
