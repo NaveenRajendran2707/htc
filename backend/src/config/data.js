@@ -443,11 +443,17 @@
 //   },
 // ]
 
-const gsttax = [
+// const gsttax = [
+//   {
+//     gSTTaxSerialNo: 'GST01',
+//     name: "Three Percent",
+//     gSTTax: '18%',
+//   },
+// ]
+
+const changepassword = [
   {
-    gSTTaxSerialNo: 'GST01',
-    name: "Three Percent",
-    gSTTax: '18%',
+  password :'123456'
   },
 ]
 
@@ -603,4 +609,4 @@ const gsttax = [
 
 //export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn, employees, accountgroups, itemgroup, items, brand, category, channelpartners, accounts }
 
-export { gsttax };
+export { changepassword };

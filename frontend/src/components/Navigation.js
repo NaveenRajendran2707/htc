@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-// import useAuthHook from "../api/auth";
-// import { useMutation } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
+import useAuthHook from "../api/auth";
+import { useMutation } from "react-query";
 import useAuth from "../hooks/useAuth";
 import {
   Disclosure,
@@ -9,16 +9,16 @@ import {
 } from "@headlessui/react";
 import { clsx } from "clsx";
 const Navigation = ({ toggleSidebar }) => {
-  // const navigate = useNavigate();
-  // const { postLogout } = useAuthHook();
+  const navigate = useNavigate();
+  const { postLogout } = useAuthHook();
   const { auth } = useAuth();
-  // const { mutateAsync } = useMutation(postLogout, {
-  //   onSuccess: () => navigate("/auth/login"),
-  // });
+  const { mutateAsync } = useMutation(postLogout, {
+    onSuccess: () => navigate("/auth/login"),
+  });
 
-  // const logoutHandler = () => {
-  //   mutateAsync({});
-  // };
+  const logoutHandler = () => {
+    mutateAsync({});
+  };
 
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
@@ -143,6 +143,18 @@ const Navigation = ({ toggleSidebar }) => {
       //                         </li>
       //                       )
       //                   )}
+      //                 {item === "profile" && (
+      //                   <>
+      //                     <li>
+      //                       <button
+      //                         onClick={logoutHandler}
+      //                         className="group relative flex items-center gap-2 rounded-md pl-6 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-400"
+      //                       >
+      //                         <span>Logout</span>
+      //                       </button>
+      //                     </li>
+      //                   </>
+      //                 )}
       //               </ul>
       //             </DisclosurePanel>
       //           </>
@@ -209,6 +221,18 @@ const Navigation = ({ toggleSidebar }) => {
                               </li>
                             )
                         )}
+                      {item === "profile" && (
+                        <>
+                          <li>
+                            <button
+                              onClick={logoutHandler}
+                              className="group relative flex items-center gap-2 rounded-md pl-6 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-400"
+                            >
+                              <span>Logout</span>
+                            </button>
+                          </li>
+                        </>
+                      )}
                     </ul>
                   </DisclosurePanel>
                 </>

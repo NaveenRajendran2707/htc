@@ -54,7 +54,7 @@ const ViewGSTTaxes = ({
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{gsttax.gSTTaxSerialNo}</td>
                   <td className="p-2">{gsttax.name}</td>
-                  <td className="p-2">{gsttax.gSTTax}</td>
+                  <td className="p-2">{gsttax.gSTTax}%</td>
                   <td className="p-2">
                     <div className="flex gap-2">
                       <button

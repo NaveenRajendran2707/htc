@@ -105,9 +105,10 @@ export const inputPercentage = (args) => {
         className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
         } ${inputClass}`}
+        autocomplete="off"
       />
       <div className="input-group-append">
-        <span className="input-group-text">%</span>
+      <span className="input-group-text">%</span>
       </div>
       {errors && errors[name] && (
         <span className="block text-sm text-red-600 pt-1">

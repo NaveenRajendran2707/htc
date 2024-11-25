@@ -58,6 +58,7 @@ import Search from './Search'
 import Header from './Header'
 import Footer from './Footer'
 import FormSalesVoucher from './sales-purchase/FormSalesVoucher'
+import FormChangePassword from './change-password/FormChangePassword'
 
 export {
   ViewUsers,
@@ -119,5 +120,6 @@ export {
   Search,
   Header,
   Footer,
-  FormSalesVoucher
+  FormSalesVoucher,
+  FormChangePassword
 };
