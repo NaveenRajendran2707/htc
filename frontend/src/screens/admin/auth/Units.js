@@ -108,6 +108,7 @@ const Units = () => {
           unitName: data.unitName,          
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (unit) => {

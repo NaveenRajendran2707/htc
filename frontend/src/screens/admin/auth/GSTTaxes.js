@@ -109,6 +109,7 @@ const GSTTaxes = () => {
           gSTTax: data.gSTTax,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (gsttax) => {

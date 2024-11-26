@@ -111,6 +111,7 @@ const Brand = () => {
           margin: data.margin,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (brand) => {

@@ -169,6 +169,7 @@ const Employees = () => {
           menu: data.menu,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (employee) => {

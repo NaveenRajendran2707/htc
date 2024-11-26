@@ -117,6 +117,7 @@ const UnitConversions = () => {
           conversionFactor: data.conversionFactor,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (unitConversion) => {

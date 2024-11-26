@@ -166,6 +166,7 @@ const Items = () => {
           blocked: data.blocked,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (item) => {

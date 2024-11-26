@@ -109,6 +109,7 @@ const Permissions = () => {
           auth: data.auth,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (permission) => {

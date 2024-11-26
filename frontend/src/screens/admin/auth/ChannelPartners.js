@@ -169,6 +169,7 @@ const ChannelPartners = () => {
           menu: data.menu,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (channelpartner) => {

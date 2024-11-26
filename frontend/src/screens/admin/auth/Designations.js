@@ -116,6 +116,7 @@ const Designations = () => {
           department: data.department,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (designation) => {

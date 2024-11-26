@@ -148,6 +148,7 @@ const Branches = () => {
           blocked: data.blocked,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (branch) => {

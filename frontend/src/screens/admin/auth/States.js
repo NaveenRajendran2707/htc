@@ -110,6 +110,7 @@ const States = () => {
           stateGSTCode: data.stateGSTCode,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (state) => {

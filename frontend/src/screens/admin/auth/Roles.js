@@ -116,6 +116,7 @@ const Roles = () => {
           menu: data.menu,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (role) => {

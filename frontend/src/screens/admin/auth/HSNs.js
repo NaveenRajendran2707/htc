@@ -109,6 +109,7 @@ const HSNs = () => {
           description: data.description,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (hsn) => {

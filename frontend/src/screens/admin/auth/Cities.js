@@ -117,6 +117,7 @@ const Cities = () => {
           state: data.state,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (city) => {

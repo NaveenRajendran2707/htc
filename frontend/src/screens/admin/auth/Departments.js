@@ -108,6 +108,7 @@ const Departments = () => {
           department: data.department,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (department) => {

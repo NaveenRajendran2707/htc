@@ -109,6 +109,7 @@ const ItemGroups = () => {
           itemSubGroup: data.itemSubGroup,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (itemGroup) => {

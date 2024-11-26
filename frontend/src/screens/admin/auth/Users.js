@@ -148,6 +148,7 @@ const Users = () => {
           menu: data.menu,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (user) => {

@@ -110,6 +110,7 @@ const Menus = () => {
           description: data.description,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (menu) => {

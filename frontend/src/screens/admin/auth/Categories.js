@@ -106,6 +106,7 @@ const Categories = () => {
           margin: data.margin,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (category) => {

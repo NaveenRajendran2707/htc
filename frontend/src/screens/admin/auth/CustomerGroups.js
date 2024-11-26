@@ -109,6 +109,7 @@ const CustomerGroups = () => {
           customerSubGroup: data.customerSubGroup,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (customerGroup) => {

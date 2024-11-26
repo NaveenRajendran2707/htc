@@ -120,6 +120,7 @@ const UserRoles = () => {
           role: data.role,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (userRole) => {

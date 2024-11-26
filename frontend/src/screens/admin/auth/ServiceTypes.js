@@ -111,6 +111,7 @@ const ServiceTypes = () => {
           status: data.status,
         })
       : mutateAsyncPost(data);
+      setIsModalOpen(false);
   };
 
   const viewHandler = (serviceType) => {
