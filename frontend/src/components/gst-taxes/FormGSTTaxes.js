@@ -64,7 +64,7 @@ const FormGSTTaxes = ({
             placeholder: "GST Tax",
             readOnly: view,
           })}
-          {inputPercentage({
+          {/* {inputPercentage({
             register,
             errors,
             name: "taxPercentage",
@@ -72,7 +72,7 @@ const FormGSTTaxes = ({
             placeholder: "Enter value",
             wrapperClass: "",
             inputClass: "",
-          })}
+          })} */}
           {view ? (
             ""
           ) : (

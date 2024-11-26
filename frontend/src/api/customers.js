@@ -1,28 +1,28 @@
 import dynamicAPI from "./dynamicAPI";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
-const url = "/api/auth/accounts";
+const url = "/api/auth/customers";
 
-const queryKey = "accounts";
+const queryKey = "customers";
 
-export default function useAccountsHook(props) {
+export default function useCustomersHook(props) {
   const { page = 1, id, q = "", limit = 25 } = props;
   const queryClient = useQueryClient();
 
-  const getAccounts = useQuery(
+  const getCustomers = useQuery(
     queryKey,
     async () =>
       await dynamicAPI("get", `${url}?page=${page}&q=${q}&limit=${limit}`, {}),
     { retry: 0 }
   );
 
-  const getAccountById = useQuery(
+  const getCustomerById = useQuery(
     queryKey,
     async (id) => await dynamicAPI("get", `${url}/${id}`, {}),
     { retry: 0, enabled: !!id }
   );
 
-  const updateAccount = useMutation(
+  const updateCustomer = useMutation(
     async (obj) => await dynamicAPI("put", `${url}/${obj._id}`, obj),
     {
       retry: 0,
@@ -30,7 +30,7 @@ export default function useAccountsHook(props) {
     }
   );
 
-  const deleteAccount = useMutation(
+  const deleteCustomer = useMutation(
     async (id) => await dynamicAPI("delete", `${url}/${id}`, {}),
     {
       retry: 0,
@@ -38,7 +38,7 @@ export default function useAccountsHook(props) {
     }
   );
 
-  const postAccount = useMutation(
+  const postCustomer = useMutation(
     async (obj) => await dynamicAPI("post", url, obj),
     {
       retry: 0,
@@ -47,10 +47,10 @@ export default function useAccountsHook(props) {
   );
 
   return {
-    getAccounts,
-    updateAccount,
-    deleteAccount,
-    postAccount,
-    getAccountById,
+    getCustomers,
+    updateCustomer,
+    deleteCustomer,
+    postCustomer,
+    getCustomerById,
   };
 }

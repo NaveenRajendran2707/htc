@@ -1,9 +1,9 @@
-import AccountGroup from '../../models/AccountGroup.js'
+import CustomerGroup from '../../models/CustomerGroup.js'
 
-const schemaName = AccountGroup
-const schemaNameString = 'AccountGroup'
+const schemaName = CustomerGroup
+const schemaNameString = 'CustomerGroup'
 
-export const getAccountGroups = async (req, res) => {
+export const getCustomerGroups = async (req, res) => {
   try {
     const q = req.query && req.query.q
 
@@ -40,7 +40,7 @@ export const getAccountGroups = async (req, res) => {
   }
 }
 
-export const postAccountGroup = async (req, res) => {
+export const postCustomerGroup = async (req, res) => {
   try {
     const object = await schemaName.create(req.body)
     res.status(200).send(object)
@@ -49,18 +49,18 @@ export const postAccountGroup = async (req, res) => {
   }
 }
 
-export const putAccountGroup = async (req, res) => {
+export const putCustomerGroup = async (req, res) => {
   try {
     const { id } = req.params
-    const { accountGroupSerialNo, accountGroup, accountSubGroup} = req.body
+    const { customerGroupSerialNo, customerGroup, customerSubGroup} = req.body
 
     const object = await schemaName.findById(id)
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` })
 
-    object.accountGroupSerialNo = accountGroupSerialNo
-    object.accountGroup = accountGroup
-    object.accountSubGroup = accountSubGroup
+    object.customerGroupSerialNo = customerGroupSerialNo
+    object.customerGroup = customerGroup
+    object.customerSubGroup = customerSubGroup
     
     await object.save()
     res.status(200).json({ message: `${schemaNameString} updated` })
@@ -68,7 +68,7 @@ export const putAccountGroup = async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 }
-export const deleteAccountGroup = async (req, res) => {
+export const deleteCustomerGroup = async (req, res) => {
   try {
     const { id } = req.params
     // const object = await schemaName.findById(id)

@@ -514,38 +514,37 @@ const changepassword = [
 //   },
 // ]
 
-// const accounts = [
-//   {
-//     sequenceNumber: 1,
-//     accountSerialNo: 'ACC000001',
-//     accountGroup: 'Sundry Creditors',
-//     accountName: 'Mr. H.Ram Kumar',
-//     aliasName: 'Chennai',
-//     address1: '#3',
-//     address2: 'Ramkrishna Street',
-//     address3: 'Kodambakkam',
-//     city: 'Chennai',
-//     state: 'TamilNadu',
-//     pincode: '600 078',
-//     mobileNumber: '044 12345678',
-//     emailID:'mailto:hramkumar@gmail.com',
-//     GSTINNo: 'ABCDE1234F',
-//     panNo: '',
-//     transportName: '',
-//     openingBalance: '',
-//     password: '',
-//     blocked: false,
-//   },
-// ]
+const customers = [
+  {
+    sequenceNumber: 1,
+    customerSerialNo: 'CUS000001',
+    customerGroup: 'Sundry Creditors',
+    customerName: 'Mr. H.Ram Kumar',
+    aliasName: 'Chennai',
+    address1: '#3',
+    address2: 'Ramkrishna Street',
+    address3: 'Kodambakkam',
+    city: 'Chennai',
+    state: 'TamilNadu',
+    pincode: '600 078',
+    mobileNumber: '044 12345678',
+    emailID:'mailto:hramkumar@gmail.com',
+    GSTINNo: 'ABCDE1234F',
+    panNo: '',
+    transportName: '',
+    openingBalance: '',
+    password: '',
+    blocked: false,
+  },
+]
 
 
-// const accountgroups = [
+// const customergroups = [
 //   {
 //     sequenceNumber: 1,
-//     accountGroupSerialNo: 'AGP00001',
-//     accountGroup: 'Sundry Creditors',
-//     accountSubGroup: 'MONDAY', 
-    
+//     customerGroupSerialNo: 'CGP00001',
+//     customerGroup: 'Sundry Creditors',
+//     customerSubGroup: 'MONDAY', 
 //   }
 // ];
 
@@ -607,6 +606,6 @@ const changepassword = [
 // ];
 
 
-//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn, employees, accountgroups, itemgroup, items, brand, category, channelpartners, accounts }
+//export { roles, users, profile, permissions, menus, states, cities, companies, branches, departments, designations, units, unitconversions, servicetype, gsttax, hsn, employees, customergroups, itemgroup, items, brand, category, channelpartners, customers, changepassword }
 
-export { changepassword };
+export { customers };

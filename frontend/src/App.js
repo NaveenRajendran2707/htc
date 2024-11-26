@@ -8,7 +8,7 @@ import ResetPassword from "./screens/auth/ResetPassword";
 import Profile from "./screens/account/Profile";
 import Menus from "./screens/admin/auth/Menus";
 import ServiceTypes from "./screens/admin/auth/ServiceTypes";
-import AccountGroups from "./screens/admin/auth/AccountGroups";
+import CustomerGroups from "./screens/admin/auth/CustomerGroups";
 import HSNs from "./screens/admin/auth/HSNs";
 import GSTTaxes from "./screens/admin/auth/GSTTaxes";
 import Permissions from "./screens/admin/auth/Permissions";
@@ -30,7 +30,7 @@ import ItemGroups from "./screens/admin/auth/ItemGroups";
 import Brand from "./screens/admin/auth/Brand";
 import Categories from "./screens/admin/auth/Categories";
 import ChannelPartners from "./screens/admin/auth/ChannelPartners";
-import Accounts from "./screens/admin/auth/Accounts";
+import Customers from "./screens/admin/auth/Customers";
 import { Layout, AuthLayout } from "./components";
 import SalesVoucher from "./screens/admin/auth/SalesVoucher";
 import ChangePassword from "./screens/admin/auth/ChangePassword";
@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/account/profile" element={<Profile />} />
           <Route path="/admin/auth/menus" element={<Menus />} />
           <Route path="/admin/auth/service-types" element={<ServiceTypes />} />
-          <Route path="/admin/auth/account-groups" element={<AccountGroups />} />
+          <Route path="/admin/auth/customer-groups" element={<CustomerGroups />} />
           <Route path="/admin/auth/hsns" element={<HSNs />} />
           <Route path="/admin/auth/gst-taxes" element={<GSTTaxes />} />
           <Route path="/admin/auth/departments" element={<Departments />} />
@@ -77,7 +77,7 @@ const App = () => {
           <Route path="/admin/auth/brand" element={<Brand />} />
           <Route path="/admin/auth/categories" element={<Categories />} />
           <Route path="/admin/auth/channel-partners" element={<ChannelPartners />} />
-          <Route path="/admin/auth/accounts" element={<Accounts />} />
+          <Route path="/admin/auth/customers" element={<Customers />} />
           <Route path="/admin/auth/sales-purchase" element={<SalesVoucher />} />
           <Route path="/admin/auth/change-password" element={<ChangePassword />} />
         </Route>

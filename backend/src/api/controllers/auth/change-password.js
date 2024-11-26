@@ -1,4 +1,5 @@
 import ChangePassword from "../../models/ChangePassword.js";
+import User from "../../models/User.js";
 
 const schemaName = ChangePassword;
 const schemaNameString = "ChangePassword";
@@ -57,8 +58,14 @@ export const getChangePasswords = async (req, res) => {
 
 export const postChangePassword = async (req, res) => {
   try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    await user.save();
     const object = await schemaName.create(req.body);
-    res.status(200).send(object);
+    res.status(200).send({ user: user , password: object });
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ error: error.message });

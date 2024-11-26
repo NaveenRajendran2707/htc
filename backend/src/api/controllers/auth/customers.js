@@ -1,11 +1,11 @@
-import Account from "../../models/Account.js";
+import Customer from "../../models/Customer.js";
 import User from "../../models/User.js";
 import UserRole from "../../models/UserRole.js";
 
-const schemaName = Account;
-const schemaNameString = "Account";   
+const schemaName = Customer;
+const schemaNameString = "Customer";   
 
-export const getAccounts = async (req, res) => {
+export const getCustomers = async (req, res) => {
   try {
     const q = req.query && req.query.q;
 
@@ -60,7 +60,7 @@ export const getAccounts = async (req, res) => {
   }
 };
 
-export const postAccount = async (req, res) => {
+export const postCustomer = async (req, res) => {
   try {
     const userObject = await User.create(req.body);
     req.body.user = userObject._id;
@@ -92,7 +92,7 @@ export const postAccount = async (req, res) => {
   }
 };
 
-export const getAccountById = async (req, res) => {
+export const getCustomerById = async (req, res) => {
   try {
     const { id } = req.params;
     const objects = await schemaName
@@ -109,13 +109,13 @@ export const getAccountById = async (req, res) => {
   }
 };
 
-export const putAccount = async (req, res) => {
+export const putCustomer = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      accountSerialNo,
-      accountGroup,
-      accountName,
+      customerSerialNo,
+      customerGroup,
+      customerName,
       aliasName,
       address1,
       address2,
@@ -144,9 +144,9 @@ export const putAccount = async (req, res) => {
       return res.status(400).json({ error: `User not found` });
     }
 
-    object.accountSerialNo = accountSerialNo;
-    object.accountGroup = accountGroup;
-    object.accountName = accountName;
+    object.customerSerialNo = customerSerialNo;
+    object.customerGroup = customerGroup;
+    object.customerName = customerName;
     object.aliasName = aliasName;
     object.address1 = address1;
     object.address2 = address2;
@@ -180,7 +180,7 @@ export const putAccount = async (req, res) => {
   }
 };
 
-export const deleteAccount = async (req, res) => {
+export const deleteCustomer = async (req, res) => {
   try {
     const { id } = req.params;
     const object = await schemaName.findByIdAndDelete(id);

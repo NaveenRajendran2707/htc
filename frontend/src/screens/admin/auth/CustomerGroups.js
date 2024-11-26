@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
-import useAccountGroupsHook from "../../../api/accountGroups";
+import useCustomerGroupsHook from "../../../api/customerGroups";
 import {
   Spinner,
-  ViewAccountGroups,
+  ViewCustomerGroups,
   Pagination,
-  FormAccountGroups,
+  FormCustomerGroups,
   Message,
   Confirm,
 } from "../../../components";
@@ -18,7 +18,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 
-const AccountGroups = () => {
+const CustomerGroups = () => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -27,11 +27,11 @@ const AccountGroups = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    getAccountGroups,
-    postAccountGroup,
-    updateAccountGroup,
-    deleteAccountGroup,
-  } = useAccountGroupsHook({
+    getCustomerGroups,
+    postCustomerGroup,
+    updateCustomerGroup,
+    deleteCustomerGroup,
+  } = useCustomerGroupsHook({
     page,
     q,
   });
@@ -47,7 +47,7 @@ const AccountGroups = () => {
     defaultValues: {},
   });
 
-  const { data, isLoading, isError, error, refetch } = getAccountGroups;
+  const { data, isLoading, isError, error, refetch } = getCustomerGroups;
 
   const {
     isLoading: isLoadingUpdate,
@@ -55,7 +55,7 @@ const AccountGroups = () => {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
     mutateAsync: mutateAsyncUpdate,
-  } = updateAccountGroup;
+  } = updateCustomerGroup;
 
   const {
     isLoading: isLoadingDelete,
@@ -63,7 +63,7 @@ const AccountGroups = () => {
     error: errorDelete,
     isSuccess: isSuccessDelete,
     mutateAsync: mutateAsyncDelete,
-  } = deleteAccountGroup;
+  } = deleteCustomerGroup;
 
   const {
     isLoading: isLoadingPost,
@@ -71,7 +71,7 @@ const AccountGroups = () => {
     error: errorPost,
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
-  } = postAccountGroup;
+  } = postCustomerGroup;
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -104,51 +104,51 @@ const AccountGroups = () => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          accountGroupSerialNo: data.accountGroupSerialNo,
-          accountGroup: data.accountGroup,
-          accountSubGroup: data.accountSubGroup,
+          customerGroupSerialNo: data.customerGroupSerialNo,
+          customerGroup: data.customerGroup,
+          customerSubGroup: data.customerSubGroup,
         })
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (accountGroup) => {
-    setId(accountGroup._id);
+  const viewHandler = (customerGroup) => {
+    setId(customerGroup._id);
     setView(true);
-    setValue("accountGroupSerialNo", accountGroup.accountGroupSerialNo);
-    setValue("accountGroup", accountGroup.accountGroup);
-    setValue("accountSubGroup", accountGroup.accountSubGroup);
+    setValue("customerGroupSerialNo", customerGroup.customerGroupSerialNo);
+    setValue("customerGroup", customerGroup.customerGroup);
+    setValue("customerSubGroup", customerGroup.customerSubGroup);
   };
 
-  const editHandler = (accountGroup) => {
-    setId(accountGroup._id);
+  const editHandler = (customerGroup) => {
+    setId(customerGroup._id);
     setView(false);
     setEdit(true);
-    setValue("accountGroupSerialNo", accountGroup.accountGroupSerialNo);
-    setValue("accountGroup", accountGroup.accountGroup);
-    setValue("accountSubGroup", accountGroup.accountSubGroup);
+    setValue("customerGroupSerialNo", customerGroup.customerGroupSerialNo);
+    setValue("customerGroup", customerGroup.customerGroup);
+    setValue("customerSubGroup", customerGroup.customerSubGroup);
   };
 
   return (
     <>
       <Helmet>
-        <title>Account Groups | HTC</title>
-        <meta property="og:title" content="Account Groups" key="title" />
+        <title>Customer Groups | HTC</title>
+        <meta property="og:title" content="Customer Groups" key="title" />
       </Helmet>
       {isSuccessDelete && (
         <Message variant="success">
-          Account Group has been deleted successfully.
+          Customer Group has been deleted successfully.
         </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
         <Message variant="success">
-          Account Group has been updated successfully.
+          Customer Group has been updated successfully.
         </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
         <Message variant="success">
-          Account Group has been Created successfully.
+          Customer Group has been Created successfully.
         </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
@@ -158,7 +158,7 @@ const AccountGroups = () => {
       ) : isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <ViewAccountGroups
+        <ViewCustomerGroups
           data={data}
           viewHandler={viewHandler}
           editHandler={editHandler}
@@ -192,7 +192,11 @@ const AccountGroups = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit Account Group" : view ? "View Account Group" : "Add Account Group"}
+                {edit
+                  ? "Edit Customer Group"
+                  : view
+                  ? "View Customer Group"
+                  : "Add Customer Group"}
               </h3>
 
               <button
@@ -208,7 +212,7 @@ const AccountGroups = () => {
               </button>
             </DialogTitle>
             <div className="flex-1 overflow-auto px-3 pb-3">
-              <FormAccountGroups
+              <FormCustomerGroups
                 edit={edit}
                 view={view}
                 formCleanHandler={formCleanHandler}
@@ -234,4 +238,4 @@ const AccountGroups = () => {
   );
 };
 
-export default AccountGroups;
+export default CustomerGroups;

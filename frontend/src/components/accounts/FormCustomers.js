@@ -25,7 +25,7 @@ const methodConversion = (methodName) => {
       return "Delete";
   }
 };
-export const FormAccounts = ({
+export const FormCustomers = ({
   edit,
   view,
   formCleanHandler,
@@ -43,7 +43,7 @@ export const FormAccounts = ({
   nextSequenceNumber,
   states,
   cities,
-  accounts,
+  customers,
   permissionData,
   menuData,
 }) => {
@@ -106,11 +106,11 @@ export const FormAccounts = ({
           {inputText({
             register,
             errors,
-            label: "Account Code",
-            name: "accountSerialNo",
-            placeholder: "Account Code",
+            label: "Customer Code",
+            name: "customerSerialNo",
+            placeholder: "Customer Code",
             value:
-              "ACC" +
+              "CUS" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
                 5,
                 "0"
@@ -120,19 +120,19 @@ export const FormAccounts = ({
           {dynamicInputSelect({
             register,
             errors,
-            label: "Account Group",
-            name: "accountGroup",
-            placeholder: "Account Group",
+            label: "Customer Group",
+            name: "customerGroup",
+            placeholder: "Customer Group",
             isRequired: false,
-            data: accounts && accounts,
-            value: "accountGroup",
+            data: customers && customers,
+            value: "customerGroup",
             readOnly: view,
           })}
           {inputText({
             register,
             errors,
-            label: "Account Name",
-            name: "accountName",
+            label: "Customer Name",
+            name: "customerName",
             placeholder: "Mr. H.Ram Kumar",
             isRequired: true,
             readOnly: view,
@@ -407,4 +407,4 @@ export const FormAccounts = ({
   );
 };
 
-export default FormAccounts;
+export default FormCustomers;

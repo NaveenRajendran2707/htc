@@ -6,7 +6,7 @@ import {
   inputTextArea,
 } from "../../utils/dynamicForm";
 
-const FormServiceTypes = ({
+const FormCustomerGroups = ({
   edit,
   view,
   formCleanHandler,
@@ -42,11 +42,11 @@ const FormServiceTypes = ({
           {inputText({
             register,
             errors,
-            label: "Account Code",
-            name: "accountGroupSerialNo",
-            placeholder: "Account Code",
+            label: "Customer Code",
+            name: "customerGroupSerialNo",
+            placeholder: "Customer Code",
             value:
-              "AGP" +
+              "CGP" +
               String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
                 5,
                 "0"
@@ -56,9 +56,9 @@ const FormServiceTypes = ({
           {staticInputSelect({
             register,
             errors,
-            label: "Account Group",
-            name: "accountGroup",
-            placeholder: "Account Group",
+            label: "Customer Group",
+            name: "customerGroup",
+            placeholder: "Customer Group",
             isRequired: false,
             data: [{ name: "Sundry Creditors" }],
             readOnly: view,
@@ -66,9 +66,9 @@ const FormServiceTypes = ({
           {inputText({
             register,
             errors,
-            label: "Account Sub Group",
-            name: "accountSubGroup",
-            placeholder: "Account Sub Group",
+            label: "Customer Sub Group",
+            name: "customerSubGroup",
+            placeholder: "Customer Sub Group",
             readOnly: view,
           })}
           {view ? (
@@ -110,4 +110,4 @@ const FormServiceTypes = ({
   );
 };
 
-export default FormServiceTypes;
+export default FormCustomerGroups;

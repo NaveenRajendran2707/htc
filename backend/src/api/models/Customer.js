@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const AccountScheme = mongoose.Schema(
+const CustomerScheme = mongoose.Schema(
   {
     sequenceNumber: { type: Number, unique: true },
-    accountSerialNo: { type: String, required: true, unique: true },
-    accountGroup: { type: String, required: true },
-    accountName: { type: String },
+    customerSerialNo: { type: String, required: true, unique: true },
+    customerGroup: { type: String, required: true },
+    customerName: { type: String },
     aliasName: { type: String },
     address1: { type: String },
     address2: { type: String },
@@ -29,5 +29,5 @@ const AccountScheme = mongoose.Schema(
   { timestamps: true }
 );
 
-const Account = mongoose.model("Account", AccountScheme);
-export default Account;
+const Customer = mongoose.model("Customer", CustomerScheme);
+export default Customer;

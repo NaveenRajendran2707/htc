@@ -2,18 +2,18 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { confirmAlert } from "react-confirm-alert";
 import { useForm } from "react-hook-form";
-import useAccountsHook from "../../../api/accounts";
+import useCustomersHook from "../../../api/customers";
 import usePermissionsHook from "../../../api/permissions";
 import useMenusHook from "../../../api/menus";
 import useStatesHook from "../../../api/states";
 import useCitiesHook from "../../../api/cities";
 import useUsersHook from "../../../api/users";
-import useAccountGroupsHook from "../../../api/accountGroups";
+import useCustomerGroupsHook from "../../../api/customerGroups";
 import {
-  ViewAccounts,
+  ViewCustomers,
   ViewStates,
   Pagination,
-  FormAccounts,
+  FormCustomers,
   Message,
   Confirm,
 } from "../../../components";
@@ -24,7 +24,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 
-const Accounts = () => {
+const Customers = () => {
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -32,8 +32,8 @@ const Accounts = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getAccounts, postAccount, updateAccount, deleteAccount } =
-    useAccountsHook({
+  const { getCustomers, postCustomer, updateCustomer, deleteCustomer } =
+    useCustomersHook({
       page,
       q,
     });
@@ -59,12 +59,12 @@ const Accounts = () => {
 
   const { data: users } = getUsers;
 
-  const { getAccountGroups } = useAccountGroupsHook({
+  const { getCustomerGroups } = useCustomerGroupsHook({
     page,
     q,
   });
 
-  const { data: account } = getAccountGroups;
+  const { data: customer } = getCustomerGroups;
 
   const { getPermissions } = usePermissionsHook({
     limit: 1000000,
@@ -87,7 +87,7 @@ const Accounts = () => {
     },
   });
 
-  const { data, isLoading, isError, error, refetch } = getAccounts;
+  const { data, isLoading, isError, error, refetch } = getCustomers;
   const { data: permissionData } = getPermissions;
   const { data: menuData } = getMenus;
 
@@ -97,7 +97,7 @@ const Accounts = () => {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
     mutateAsync: mutateAsyncUpdate,
-  } = updateAccount;
+  } = updateCustomer;
 
   const {
     isLoading: isLoadingDelete,
@@ -105,7 +105,7 @@ const Accounts = () => {
     error: errorDelete,
     isSuccess: isSuccessDelete,
     mutateAsync: mutateAsyncDelete,
-  } = deleteAccount;
+  } = deleteCustomer;
 
   const {
     isLoading: isLoadingPost,
@@ -113,7 +113,7 @@ const Accounts = () => {
     error: errorPost,
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
-  } = postAccount;
+  } = postCustomer;
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -146,9 +146,9 @@ const Accounts = () => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          accountSerialNo: data.accountSerialNo,
-          accountGroup: data.accountGroup,
-          accountName: data.accountName,
+          customerSerialNo: data.customerSerialNo,
+          customerGroup: data.customerGroup,
+          customerName: data.customerName,
           aliasName: data.aliasName,
           address1: data.address1,
           address2: data.address2,
@@ -170,82 +170,82 @@ const Accounts = () => {
       : mutateAsyncPost(data);
   };
 
-  const viewHandler = (account) => {
-    setId(account._id);
+  const viewHandler = (customer) => {
+    setId(customer._id);
     setView(true);
-    setValue("accountSerialNo", account.accountSerialNo);
-    setValue("accountGroup", account.accountGroup);
-    setValue("accountName", account.accountName);
-    setValue("aliasName", account.aliasName);
-    setValue("address1", account.address1);
-    setValue("address2", account.address2);
-    setValue("address3", account.address3);
-    setValue("state", account.state);
-    setValue("firstName", account.user?.firstName);
-    setValue("lastName", account.user?.lastName);
-    setValue("city", account.city);
-    setValue("pincode", account.pincode);
-    setValue("mobileNumber", account.mobileNumber);
-    setValue("email", account.user?.email);
-    setValue("GSTINNo", account.GSTINNo);
-    setValue("panNo", account.panNo);
-    setValue("transportName", account.transportName);
-    setValue("openingBalance", account.openingBalance);
-    setValue("password", account.password);
-    setValue("blocked", account.blocked);
-    setValue("permission", account.user?.permission);
-    setValue("menu", account.user?.menu);
+    setValue("customerSerialNo", customer.customerSerialNo);
+    setValue("customerGroup", customer.customerGroup);
+    setValue("customerName", customer.customerName);
+    setValue("aliasName", customer.aliasName);
+    setValue("address1", customer.address1);
+    setValue("address2", customer.address2);
+    setValue("address3", customer.address3);
+    setValue("state", customer.state);
+    setValue("firstName", customer.user?.firstName);
+    setValue("lastName", customer.user?.lastName);
+    setValue("city", customer.city);
+    setValue("pincode", customer.pincode);
+    setValue("mobileNumber", customer.mobileNumber);
+    setValue("email", customer.user?.email);
+    setValue("GSTINNo", customer.GSTINNo);
+    setValue("panNo", customer.panNo);
+    setValue("transportName", customer.transportName);
+    setValue("openingBalance", customer.openingBalance);
+    setValue("password", customer.password);
+    setValue("blocked", customer.blocked);
+    setValue("permission", customer.user?.permission);
+    setValue("menu", customer.user?.menu);
   };
 
-  const editHandler = (account) => {
-    setId(account._id);
+  const editHandler = (customer) => {
+    setId(customer._id);
     setView(false);
     setEdit(true);
-    setValue("accountSerialNo", account.accountSerialNo);
-    setValue("accountGroup", account.accountGroup);
-    setValue("accountName", account.accountName);
-    setValue("aliasName", account.aliasName);
-    setValue("firstName", account.user?.firstName);
-    setValue("lastName", account.user?.lastName);
-    setValue("address1", account.address1);
-    setValue("address2", account.address2);
-    setValue("address3", account.address3);
-    setValue("state", account.state);
-    setValue("city", account.city);
-    setValue("pincode", account.pincode);
-    setValue("mobileNumber", account.mobileNumber);
-    setValue("email", account.user?.email);
-    setValue("GSTINNo", account.GSTINNo);
-    setValue("panNo", account.panNo);
-    setValue("transportName", account.transportName);
-    setValue("openingBalance", account.openingBalance);
-    setValue("password", account.password);
-    setValue("blocked", account.blocked);
-    setValue("permission", account.user?.permission);
-    setValue("menu", account.user?.menu);
+    setValue("customerSerialNo", customer.customerSerialNo);
+    setValue("customerGroup", customer.customerGroup);
+    setValue("customerName", customer.customerName);
+    setValue("aliasName", customer.aliasName);
+    setValue("firstName", customer.user?.firstName);
+    setValue("lastName", customer.user?.lastName);
+    setValue("address1", customer.address1);
+    setValue("address2", customer.address2);
+    setValue("address3", customer.address3);
+    setValue("state", customer.state);
+    setValue("city", customer.city);
+    setValue("pincode", customer.pincode);
+    setValue("mobileNumber", customer.mobileNumber);
+    setValue("email", customer.user?.email);
+    setValue("GSTINNo", customer.GSTINNo);
+    setValue("panNo", customer.panNo);
+    setValue("transportName", customer.transportName);
+    setValue("openingBalance", customer.openingBalance);
+    setValue("password", customer.password);
+    setValue("blocked", customer.blocked);
+    setValue("permission", customer.user?.permission);
+    setValue("menu", customer.user?.menu);
   };
 
   return (
     <>
       <Helmet>
-        <title>Accounts | HTC</title>
-        <meta property="og:title" content="Accounts" key="title" />
+        <title>Customers | HTC</title>
+        <meta property="og:title" content="Customers" key="title" />
       </Helmet>
       {isSuccessDelete && (
         <Message variant="success">
-          Account has been deleted successfully.
+          Customer has been deleted successfully.
         </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
         <Message variant="success">
-          Account has been updated successfully.
+          Customer has been updated successfully.
         </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
         <Message variant="success">
-          Account has been created successfully.
+          Customer has been created successfully.
         </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
@@ -253,7 +253,7 @@ const Accounts = () => {
       {isError ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <ViewAccounts
+        <ViewCustomers
           data={data}
           viewHandler={viewHandler}
           editHandler={editHandler}
@@ -286,7 +286,7 @@ const Accounts = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit Account" : view ? "View Account" : "Add Account"}
+                {edit ? "Edit Customer" : view ? "View Customer" : "Add Customer"}
               </h3>
 
               <button
@@ -302,7 +302,7 @@ const Accounts = () => {
               </button>
             </DialogTitle>
             <div className="flex-1 overflow-auto px-3 pb-3">
-              <FormAccounts
+              <FormCustomers
                 edit={edit}
                 view={view}
                 formCleanHandler={formCleanHandler}
@@ -320,7 +320,7 @@ const Accounts = () => {
                 states={getState && getState.data}
                 cities={getCity && getCity.data}
                 user={users && users.data}
-                accounts={account && account.data}
+                customers={customer && customer.data}
                 permissionData={permissionData && permissionData.data}
                 menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}
@@ -334,4 +334,4 @@ const Accounts = () => {
   );
 };
 
-export default Accounts;
+export default Customers;

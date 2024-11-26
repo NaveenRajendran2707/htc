@@ -119,8 +119,8 @@ const Login = () => {
                     { name: "Admin" },
                     { name: "Client" },
                     { name: "Channel Partner" },
-                    { name : "Employee"},
-                    { name : "Account"},
+                    // { name : "Employee"},
+                    // { name : "Account"},
                   ],
                 })}
                 {inputEmail({

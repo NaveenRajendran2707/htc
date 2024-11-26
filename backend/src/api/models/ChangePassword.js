@@ -4,6 +4,10 @@ import bcrypt from "bcryptjs";
 
 const changePassword = mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     password: { type: String, required: true },
     resetPasswordToken: String,
     resetPasswordExpire: Date,

@@ -4,8 +4,8 @@ import ViewEmployees from './employees/ViewEmployees'
 import FormEmployees from './employees/FormEmployees'
 import ViewChannelPartners from './channel-partners/ViewChannelPartners'
 import FormChannelPartners from './channel-partners/FormChannelPartners'
-import ViewAccounts from './accounts/ViewAccounts'
-import FormAccounts from './accounts/FormAccounts'
+import ViewCustomers from './accounts/ViewCustomers'
+import FormCustomers from './accounts/FormCustomers'
 import ViewBranches from './branches/ViewBranches'
 import FormBranches from './branches/FormBranches'
 import ViewCompanies from './companies/ViewCompanies'
@@ -24,8 +24,8 @@ import ViewCities from './cities/ViewCities'
 import FormCities from './cities/FormCities'
 import ViewStates from './states/ViewStates'
 import FormStates from './states/FormStates'
-import ViewAccountGroups from './account-groups/ViewAccountGroups'
-import FormAccountGroups from './account-groups/FormAccountGroups'
+import ViewCustomerGroups from './customer-groups/ViewCustomerGroups'
+import FormCustomerGroups from './customer-groups/FormCustomerGroups'
 import ViewItems from './items/ViewItems';
 import FormItems from './items/FormItems';
 import ViewItemGroups from './item-groups/ViewItemGroups';
@@ -67,8 +67,8 @@ export {
   FormEmployees,
   ViewChannelPartners,
   FormChannelPartners,
-  ViewAccounts,
-  FormAccounts,
+  ViewCustomers,
+  FormCustomers,
   ViewBranches,
   FormBranches,
   ViewCompanies,
@@ -97,8 +97,8 @@ export {
   FormStates,
   ViewMenus,
   FormMenus,
-  ViewAccountGroups,
-  FormAccountGroups,
+  ViewCustomerGroups,
+  FormCustomerGroups,
   ViewServiceTypes,
   FormServiceTypes,
   ViewHSNs,

@@ -7,11 +7,11 @@ import {
   deleteEmployee,
 } from '../controllers/auth/employees.js'
 import {
-  getAccountGroups,
-  postAccountGroup,
-  putAccountGroup,
-  deleteAccountGroup,
-} from '../controllers/auth/account-groups.js'
+  getCustomerGroups,
+  postCustomerGroup,
+  putCustomerGroup,
+  deleteCustomerGroup,
+} from '../controllers/auth/customer-groups.js'
 import {
   getChannelPartners,
   postChannelPartner,
@@ -19,11 +19,11 @@ import {
   deleteChannelPartner,
 } from '../controllers/auth/channel-partners.js'
 import {
-  getAccounts,
-  postAccount,
-  putAccount,
-  deleteAccount,
-} from '../controllers/auth/accounts.js'
+  getCustomers,
+  postCustomer,
+  putCustomer,
+  deleteCustomer,
+} from '../controllers/auth/customers.js'
 import {
   getServiceTypes,
   postServiceType,
@@ -201,13 +201,13 @@ router
 
 // account group
 router
-  .route('/api/auth/account-groups')
-  .get(isAuth, getAccountGroups)
-  .post(isAuth, postAccountGroup)
+  .route('/api/auth/customer-groups')
+  .get(isAuth, getCustomerGroups)
+  .post(isAuth, postCustomerGroup)
 router
-  .route('/api/auth/account-groups/:id')
-  .put(isAuth, putAccountGroup)
-  .delete(isAuth, deleteAccountGroup)
+  .route('/api/auth/customer-groups/:id')
+  .put(isAuth, putCustomerGroup)
+  .delete(isAuth, deleteCustomerGroup)
 
 // channel partner
 router
@@ -221,13 +221,13 @@ router
 
 // account
 router
-  .route('/api/auth/accounts')
-  .get(isAuth, getAccounts)
-  .post(isAuth, postAccount)
+  .route('/api/auth/customers')
+  .get(isAuth, getCustomers)
+  .post(isAuth, postCustomer)
 router
-  .route('/api/auth/accounts/:id')
-  .put(isAuth, putAccount)
-  .delete(isAuth, deleteAccount)
+  .route('/api/auth/customers/:id')
+  .put(isAuth, putCustomer)
+  .delete(isAuth, deleteCustomer)
 
 
 // service type
