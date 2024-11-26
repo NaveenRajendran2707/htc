@@ -275,7 +275,7 @@ const Items = () => {
         className="realtive z-[1000] transition duration-100 ease-linear data-[closed]:opacity-0"
       >
         <div className="fixed z-[1000] inset-0 flex w-screen justify-center items-center p-2">
-          <DialogPanel className="max-w-[800px] w-full flex flex-col rounded-xl shadow-sm bg-white">
+          <DialogPanel className="w-full max-w-[800px] max-h-[calc(100vh_-_1rem)] overflow-auto flex flex-col rounded-xl shadow-sm bg-white">
             <DialogTitle
               className="flex justify-between items-center p-3"
               as="div"

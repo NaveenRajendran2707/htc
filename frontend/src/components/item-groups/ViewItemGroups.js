@@ -43,7 +43,7 @@ const ViewItemGroups = ({
               <th className="p-2">Item Group Code</th>
               <th className="p-2">Item Group</th>
               <th className="p-2">Item Sub Group</th>
-              <th className="p-2">Actions</th>
+              <th className="p-2" style={{width:'145px'}}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -55,7 +55,7 @@ const ViewItemGroups = ({
                   <td className="p-2">{itemGroup.itemGroup}</td>
                   <td className="p-2">{itemGroup.itemSubGroup}</td>
                   <td className="p-2">
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap">
                       <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => {

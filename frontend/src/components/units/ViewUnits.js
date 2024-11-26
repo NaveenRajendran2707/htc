@@ -42,7 +42,7 @@ const ViewUnits = ({
               <th className="p-2">SI.NO</th>
               <th className="p-2">Unit Code</th>
               <th className="p-2">Unit Name</th>
-              <th className="p-2">Actions</th>
+              <th className="p-2" style={{width:'145px'}}>Actions</th>
             </tr>
           </thead>
 
@@ -54,7 +54,7 @@ const ViewUnits = ({
                   <td className="p-2">{unit.unitSerialNo}</td>
                   <td className="p-2">{unit.unitName}</td>
                   <td className="p-2">
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap">
                       <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
                         onClick={() => {

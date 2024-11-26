@@ -51,7 +51,7 @@ const ViewPermissions = ({
               <th className="p-2">Method</th>
               <th className="p-2">Route</th>
               <th className="p-2">Auth</th>
-              <th className="p-2">Actions</th>
+              <th className="p-2" style={{width:'145px'}}>Actions</th>
             </tr>
           </thead>
 

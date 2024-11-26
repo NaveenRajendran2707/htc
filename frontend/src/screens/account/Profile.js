@@ -202,7 +202,7 @@ const Profile = () => {
 
         <button
           type='submit'
-          className='inline-flex items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8text-center form-control'
+          className='inline-flex items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8 text-center form-control'
           disabled={isLoadingPost || isLoadingUpload}
         >
           {isLoadingPost || isLoadingUpload ? (

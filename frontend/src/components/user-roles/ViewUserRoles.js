@@ -44,7 +44,7 @@ const ViewUserRoles = ({
               <th className="p-2">Email</th>
               <th className="p-2">Role</th>
               <th className="p-2">Role Type</th>
-              <th className="p-2">Actions</th>
+              <th className="p-2" style={{width:'145px'}}>Actions</th>
             </tr>
           </thead>
 

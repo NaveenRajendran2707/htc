@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.bundle.js'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/js/bootstrap.bundle.js'
 import './index.css'
 import App from './App'
 import 'material-symbols/rounded.css';

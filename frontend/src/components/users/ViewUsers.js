@@ -49,7 +49,7 @@ const ViewUsers = ({
               <th className="p-2" style={{width:'200px'}}>Joined Date</th>
               <th className="p-2">Confirmed</th>
               <th className="p-2">Blocked</th>
-              <th className="p-2">Actions</th>
+              <th className="p-2" style={{width:'145px'}}>Actions</th>
             </tr>
           </thead>
 
@@ -96,7 +96,7 @@ const ViewUsers = ({
                   </td>
 
                   {/* <td className="p-2">
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap">
                       <button
                           className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2 transition duration-100 ease-linear"
                           onClick={() => {
@@ -110,7 +110,7 @@ const ViewUsers = ({
                   </td> */}
 
                   <td className="p-2">
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap">
                       <button
                         className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2 transition duration-100 ease-linear"
                         onClick={() => {
