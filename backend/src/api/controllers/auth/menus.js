@@ -49,7 +49,7 @@ export const postMenu = async (req, res) => {
 export const putMenu = async (req, res) => {
   try {
     const { id } = req.params
-    const { name, menu, path, description } = req.body
+    const { name, menu, path, description, order } = req.body
 
     const object = await schemaName.findById(id)
     if (!object)
@@ -59,6 +59,7 @@ export const putMenu = async (req, res) => {
     object.menu = menu
     object.path = path
     object.description = description
+    object.order = order
     await object.save()
     res.status(200).json({ message: `${schemaNameString} updated` })
   } catch (error) {

@@ -108,6 +108,7 @@ const Menus = () => {
           menu: data.menu,
           path: data.path,
           description: data.description,
+          order: data.order
         })
       : mutateAsyncPost(data);
       setIsModalOpen(false);
@@ -120,6 +121,7 @@ const Menus = () => {
     setValue("menu", menu.menu);
     setValue("path", menu.path);
     setValue("description", menu.description);
+    setValue("order", menu.order);
   };
 
   const editHandler = (menu) => {
@@ -130,6 +132,7 @@ const Menus = () => {
     setValue("menu", menu.menu);
     setValue("path", menu.path);
     setValue("description", menu.description);
+    setValue("order", menu.order);
   };
 
   return (

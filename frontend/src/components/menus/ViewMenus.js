@@ -43,6 +43,7 @@ const ViewMenus = ({
               <th className="p-2">Name</th>
               <th className="p-2">Menu</th>
               <th className="p-2">Path</th>
+              <th className="p-2">Order</th>
               <th className="p-2">Description</th>
               <th className="p-2" style={{width:'145px'}}>Actions</th>
             </tr>
@@ -56,6 +57,7 @@ const ViewMenus = ({
                   <td className="p-2">{menu.name}</td>
                   <td className="p-2">{menu.menu}</td>
                   <td className="p-2">{menu.path}</td>
+                  <td className="p-2">{menu.order}</td>
                   <td className="p-2">{menu.description}</td>
                   <td className="p-2">
                     <div className="flex flex-wrap">

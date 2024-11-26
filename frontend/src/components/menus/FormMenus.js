@@ -48,7 +48,14 @@ const FormMenus = ({
             placeholder: "Path",
             readOnly: view,
           })}
-
+          {inputText({
+            register,
+            errors,
+            label: "Order of Menu",
+            name: "order",
+            placeholder: "Order of the Menu",
+            readOnly: view,
+          })}
           {inputTextArea({
             register,
             errors,

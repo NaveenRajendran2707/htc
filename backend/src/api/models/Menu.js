@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const MenuScheme = mongoose.Schema(
   {
@@ -6,9 +6,10 @@ const MenuScheme = mongoose.Schema(
     menu: { type: String, required: true },
     path: { type: String, required: true },
     description: String,
+    order: { type: String, required: true, unique: true },
   },
   { timestamps: true }
-)
+);
 
-const Menu = mongoose.model('Menu', MenuScheme)
-export default Menu
+const Menu = mongoose.model("Menu", MenuScheme);
+export default Menu;

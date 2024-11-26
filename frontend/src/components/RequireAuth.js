@@ -1,5 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useMenusHook from "../api/menus";
 
 const RequireAuth = () => {
   // const { auth } = useAuth()
@@ -18,17 +19,16 @@ const RequireAuth = () => {
   //     replace
   //   />
   // )
-
+  const { getMenus } = useMenusHook({ limit: 1000000 });
   const { auth } = useAuth();
   const location = useLocation();
-  const userMenuList = localStorage.getItem("userMenu")
-    ? JSON.parse(localStorage.getItem("userMenu"))
-    : null;
   const userMenus = auth?.userInfo?.menu || [];
   const menuItems =
-    userMenuList?.data?.data?.filter((menuItem) =>
-      userMenus.includes(menuItem._id)
-    ) || [];
+    (getMenus &&
+      getMenus?.data?.data?.filter((menuItem) =>
+        userMenus.includes(menuItem._id)
+      )) ||
+    [];
   console.log("MatchedMenu--->", menuItems);
 
   console.log("User Menus:", userMenus);
