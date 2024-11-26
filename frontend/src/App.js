@@ -33,6 +33,7 @@ import ChannelPartners from "./screens/admin/auth/ChannelPartners";
 import Accounts from "./screens/admin/auth/Accounts";
 import { Layout, AuthLayout } from "./components";
 import SalesVoucher from "./screens/admin/auth/SalesVoucher";
+import ChangePassword from "./screens/admin/auth/ChangePassword";
 
 const App = () => {
   return (
@@ -78,6 +79,7 @@ const App = () => {
           <Route path="/admin/auth/channel-partners" element={<ChannelPartners />} />
           <Route path="/admin/auth/accounts" element={<Accounts />} />
           <Route path="/admin/auth/sales-purchase" element={<SalesVoucher />} />
+          <Route path="/admin/auth/change-password" element={<ChangePassword />} />
         </Route>
       </Route>
 

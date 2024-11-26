@@ -56,7 +56,7 @@ const FormGSTTaxes = ({
             placeholder: "Name",
             readOnly: view,
           })}
-          {inputText({
+          {inputPercentage({
             register,
             errors,
             label: "GST Tax",

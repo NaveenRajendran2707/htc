@@ -29,7 +29,7 @@ export default function Layout() {
         </div>
         <div className="main-wrapper flex flex-col w-full lg:ml-72">
           <header className="sticky top-0 z-[990] flex flex-col w-full bg-white shadow-md">
-            <Header toggleSidebar={toggleSidebar} />
+            {/* <Header toggleSidebar={toggleSidebar} /> */}
             {/* <Spinner /> */}
           </header>
           <main className="main-container p-3 min-w-0">

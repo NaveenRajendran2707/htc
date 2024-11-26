@@ -148,6 +148,12 @@ import {
   deleteCategory,
   putCategory,
 } from '../controllers/auth/categories.js'
+import {
+  getChangePasswords,
+  postChangePassword,
+  deleteChangePassword,
+  putChangePassword,
+} from '../controllers/auth/change-password.js'
 import { getProfiles, getProfile, postProfile } from '../controllers/auth/profile.js'
 import { getUserProfiles } from '../controllers/auth/user-profiles.js'
 import { login } from '../controllers/auth/login.js'
@@ -182,6 +188,16 @@ router
   .route('/api/auth/employees/:id')
   .put(isAuth, putEmployee)
   .delete(isAuth, deleteEmployee)
+
+// Change Password
+router
+  .route('/api/auth/change-password')
+  .get(isAuth, getChangePasswords)
+  .post(isAuth, postChangePassword)
+router
+  .route('/api/auth/change-password/:id')
+  .put(isAuth, putChangePassword)
+  .delete(isAuth, deleteChangePassword)
 
 // account group
 router
