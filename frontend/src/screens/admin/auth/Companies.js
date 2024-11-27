@@ -7,6 +7,10 @@ import useServiceHook from "../../../api/serviceTypes";
 import useStatesHook from "../../../api/states";
 import useCitiesHook from "../../../api/cities";
 import useUsersHook from "../../../api/users";
+import useDepartmentsHook from "../../../api/departments";
+import useDesignationsHook from "../../../api/designations";
+import usePermissionsHook from "../../../api/permissions";
+import useMenusHook from "../../../api/menus";
 import {
   ViewCompanies,
   Pagination,
@@ -20,8 +24,10 @@ import {
   DialogTitle,
   DialogBackdrop,
 } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 const Companies = () => {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -63,6 +69,28 @@ const Companies = () => {
 
   const { data: users } = getUsers;
   console.log("users", users);
+
+  const { getDepartments } = useDepartmentsHook({
+    limit: 1000000,
+  });
+
+  const { data: departmentData } = getDepartments;
+
+  const { getDesignations } = useDesignationsHook({
+    limit: 1000000,
+  });
+
+  const { data: designationData } = getDesignations;
+
+  const { getPermissions } = usePermissionsHook({
+    limit: 1000000,
+  });
+  const { getMenus } = useMenusHook({
+    limit: 1000000,
+  });
+
+  const { data: permissionData } = getPermissions;
+  const { data: menuData } = getMenus;
 
   const {
     register,
@@ -151,16 +179,29 @@ const Companies = () => {
           address2: data.address2,
           address3: data.address3,
           pincode: data.pincode,
-          mobileNumber1: data.mobileNumber1,
+          mobile: data.mobile,
           mobileNumber2: data.mobileNumber2,
           phoneNumber: data.phoneNumber,
           email: data.email,
           logo: data.logo,
           watermark: data.watermark,
           blocked: data.blocked,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password,
+          permission: data.permission,
+          menu: data.menu,
+          department: data.department,
+          designation: data.designation,
+          pan: data.pan,
+          pf: data.pf,
+          esi: data.esi,
+          dob: data.dob,
+          salaryscheduletype: data.salaryscheduletype,
+          user: data.user,
         })
       : mutateAsyncPost(data);
-      setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const viewHandler = (company) => {
@@ -182,13 +223,27 @@ const Companies = () => {
     setValue("address2", company.address2);
     setValue("address3", company.address3);
     setValue("pincode", company.pincode);
-    setValue("mobileNumber1", company.mobileNumber1);
+    setValue("mobile", company.mobile);
     setValue("mobileNumber2", company.mobileNumber2);
     setValue("phoneNumber", company.phoneNumber);
     setValue("email", company.email);
     setValue("logo", company.logo);
     setValue("watermark", company.watermark);
     setValue("blocked", company.blocked);
+    setValue("firstName", company?.user?.firstName);
+    setValue("lastName", company?.user?.lastName);
+    setValue("permission", company?.user?.permission);
+    setValue("menu", company?.user?.menu);
+    setValue("department", company?.employee?.department);
+    setValue("designation", company?.employee?.designation);
+    setValue("pan", company?.employee?.pan);
+    setValue("pf", company?.employee?.pf);
+    setValue("esi", company?.employee?.esi);
+    setValue("dob", company?.employee?.dob);
+    setValue("user", company?.employee?.user);
+    setValue("salaryscheduletype", company?.employee?.salaryscheduletype);
+    setValue("city", company?.employee?.city);
+    setValue("state", company?.employee?.state);
   };
 
   const editHandler = (company) => {
@@ -211,13 +266,38 @@ const Companies = () => {
     setValue("address2", company.address2);
     setValue("address3", company.address3);
     setValue("pincode", company.pincode);
-    setValue("mobileNumber1", company.mobileNumber1);
+    setValue("mobile", company.mobile);
     setValue("mobileNumber2", company.mobileNumber2);
     setValue("phoneNumber", company.phoneNumber);
     setValue("email", company.email);
     setValue("logo", company.logo);
     setValue("watermark", company.watermark);
     setValue("blocked", company.blocked);
+    setValue("firstName", company?.user?.firstName);
+    setValue("lastName", company?.user?.lastName);
+    setValue("permission", company?.user?.permission);
+    setValue("menu", company?.user?.menu);
+    setValue("department", company?.employee?.department);
+    setValue("designation", company?.employee?.designation);
+    setValue("pan", company?.employee?.pan);
+    setValue("pf", company?.employee?.pf);
+    setValue("esi", company?.employee?.esi);
+    setValue("dob", company?.employee?.dob);
+    setValue("user", company?.employee?.user);
+    setValue("salaryscheduletype", company?.employee?.salaryscheduletype);
+    setValue("city", company?.employee?.city);
+    setValue("state", company?.employee?.state);
+  };
+
+  const viewCompanyHandler = (company) => {
+    console.log(
+      "companycompany",
+      company?.user?.email,
+      company?.user?.password,
+      company?.user?.userType
+    );
+    //  navigate('/auth/login')
+    window.open("/auth/login", "_blank");
   };
 
   return (
@@ -253,6 +333,7 @@ const Companies = () => {
           viewHandler={viewHandler}
           editHandler={editHandler}
           deleteHandler={deleteHandler}
+          viewCompanyHandler={viewCompanyHandler}
           isLoadingDelete={isLoadingDelete}
           setQ={setQ}
           q={q}
@@ -316,6 +397,10 @@ const Companies = () => {
                 states={getState && getState.data}
                 cities={getCity && getCity.data}
                 user={users && users.data}
+                departmentData={departmentData && departmentData.data}
+                designationData={designationData && designationData.data}
+                permissionData={permissionData && permissionData.data}
+                menuData={menuData && menuData.data}
               />
             </div>
           </DialogPanel>

@@ -94,6 +94,17 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
     console.log("Linkclicked", event);
   };
 
+  const iconMapping = {
+    home: "home",
+    users: "person",
+    master: "engineering",
+    customer: "group",
+    product: "inventory_2",
+    transaction: "point_of_sale",
+    profile: "manage_accounts",
+    configurations: "settings",
+  };
+
   const authItems = () => {
     function togglePanels(newPanel) {
       if (activeDisclosurePanel) {
@@ -245,7 +256,7 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
                         }}
                       >
                         <span className="material-symbols-rounded">
-                          shield_person
+                          {iconMapping[item] || "shield_person"}
                         </span>
                         <span>
                           {item === "profile"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Message } from "../../components";
 import {
   inputHidden,
@@ -10,9 +10,19 @@ import {
   inputDate,
   staticInputSelectState,
   dynamicInputSelect,
+  inputPassword,
+  inputMultipleCheckBoxGroups,
+  inputMultipleCheckBox
 } from "../../utils/dynamicForm";
 
-// import { useState } from "react";
+const methodConversion = (methodName) => {
+  switch(methodName){
+    case 'GET': return 'List';
+    case 'POST': return 'Add';
+    case 'PUT': return 'Edit';
+    case 'DELETE': return 'Delete';
+  }  
+}
 
 export const FormCompanies = ({
   view,
@@ -34,8 +44,15 @@ export const FormCompanies = ({
   states,
   cities,
   user,
+  departmentData,
+  designationData,
+  permissionData,
+  menuData,
 }) => {
   const getDynamicLabel = (field, value) => {
+    if (field === "confirmed") {
+      return value ? "Unapproved" : "Approved";
+    }
     if (field === "blocked") {
       return value ? "Inactive" : "Active";
     }
@@ -53,7 +70,11 @@ export const FormCompanies = ({
       setCity([]);
     }
   };
-
+  const [checkedPermissions, setCheckedPermissions] = useState([]);
+  useEffect(() => {
+    const currentPermissions = watch("permission") || [];
+    setCheckedPermissions(currentPermissions);
+  }, [watch("permission")]);
   return (
     <>
       {isLoading ? (
@@ -76,6 +97,24 @@ export const FormCompanies = ({
             value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
             readOnly: true,
           })}
+           {inputHidden({
+            register,
+            errors,
+            label: "",
+            name: "userID",
+            placeholder: "User ID",
+            value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            readOnly: true,
+          })} 
+          {inputHidden({
+            register,
+            errors,
+            label: "",
+            name: "employeeID",
+            placeholder: "Employee ID",
+            value: "EMP"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            readOnly: true,
+          })} 
           {inputText({
             register,
             errors,
@@ -114,6 +153,28 @@ export const FormCompanies = ({
             label: "Company ID",
             name: "companyID",
             placeholder: "TNCHN12345CO",
+            readOnly: view,
+          })}
+          {dynamicInputSelect({
+            register,
+            errors,
+            label: "Department",
+            name: "department",
+            placeholder: "Department",
+            isRequired: false,
+            data: departmentData && departmentData,
+            value: "department",
+            readOnly: view,
+          })}
+          {dynamicInputSelect({
+            register,
+            errors,
+            label: "Designation",
+            name: "designation",
+            placeholder: "Designation",
+            isRequired: false,
+            data: designationData && designationData,
+            value: "designation",
             readOnly: view,
           })}
           {staticInputSelect({
@@ -184,6 +245,22 @@ export const FormCompanies = ({
             placeholder: "Company Admin Name",
             readOnly: view,
           })}
+           {inputText({
+            register,
+            errors,
+            label: "First Name",
+            name: "firstName",
+            placeholder: "First Name",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Last Name",
+            name: "lastName",
+            placeholder: "Last Name",
+            readOnly: view,
+          })}
           {inputText({
             register,
             errors,
@@ -211,7 +288,7 @@ export const FormCompanies = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {staticInputSelectState({
+          {/* {staticInputSelectState({
             register,
             errors,
             label: "State",
@@ -236,6 +313,28 @@ export const FormCompanies = ({
             isRequired: false,
             data: city && city,
             readOnly: view,
+          })} */}
+           {dynamicInputSelect({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,            
+            data: states && states,
+            value: "stateName",
+            readOnly: view,
+          })}
+          {dynamicInputSelect({
+            register,
+            errors,
+            label: "City",
+            name: "city",
+            placeholder: "City",
+            isRequired: false,            
+            data: cities && cities,
+            value: "cityName",
+            readOnly: view,
           })}
           {inputText({
             register,
@@ -250,7 +349,7 @@ export const FormCompanies = ({
             register,
             errors,
             label: "Mobile Number 1",
-            name: "mobileNumber1",
+            name: "mobile",
             isRequired: true,
             placeholder: "9876543210",
             readOnly: view,
@@ -284,6 +383,73 @@ export const FormCompanies = ({
           {inputText({
             register,
             errors,
+            label: "Pan No.",
+            name: "pan",
+            placeholder: "AAAAA1234Z",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "PF No.",
+            name: "pf",
+            placeholder: "KN/PY/1234567/987",
+            readOnly: view,
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "ESI No.",
+            name: "esi",
+            placeholder: "31-00-123456-000-0001",
+            readOnly: view,
+          })}
+          {inputDate({
+            register,
+            errors,
+            label: "DOB",
+            name: "dob",
+            placeholder: "11/11/1999",
+            readOnly: view,
+          })}
+          {staticInputSelect({
+            register,
+            errors,
+            label: "Salary Schedule Type",
+            name: "salaryscheduletype",
+            placeholder: "Salary Schedule Type",
+            isRequired: false,
+            data: [{ name: "Weekly" }, { name: "Monthly" }],
+            readOnly: view,
+          })}
+           {view || edit ? <div></div> : <div>
+            {inputPassword({
+              register,
+              errors,
+              label: "Password",
+              name: "password",
+              minLength: true,
+              isRequired: false,
+              placeholder: "Password",
+              readOnly: view,
+            })}
+            {inputPassword({
+              register,
+              errors,
+              watch,
+              name: "confirmPassword",
+              label: "Confirm Password",
+              validate: true,
+              minLength: true,
+              isRequired: false,
+              placeholder: "Confirm Password",
+              readOnly: view,
+            })}
+            </div>
+          }
+          {inputText({
+            register,
+            errors,
             label: "Logo",
             name: "logo",
             placeholder: "Logo",
@@ -299,6 +465,16 @@ export const FormCompanies = ({
             placeholder: "Watermark",
             readOnly: view,
           })}
+           {inputSwitch({
+            register,
+            errors,
+            watch,
+            name: "confirmed",
+            label: getDynamicLabel("confirmed", watch("confirmed")),
+            isRequired: false,
+            placeholder: "Confirmed",
+            readOnly: view,
+          })}
           {inputSwitch({
             register,
             errors,
@@ -309,6 +485,49 @@ export const FormCompanies = ({
             placeholder: "Blocked",
             readOnly: view,
           })}
+           {view || edit ? 
+            <>
+              <div className="mb-3 p-3 border border-gray-400 rounded-md">
+                <h4 className="font-medium text-base mb-3">Permissions</h4>
+                {inputMultipleCheckBoxGroups({
+                  register,
+                  errors,
+                  label: "Permission",
+                  name: "permission",
+                  placeholder: "Permission",
+                  data:
+                    permissionData &&                
+                    permissionData.filter(item => item.show).map((item) => ({                  
+                        name: `${item.name}`,
+                        method: methodConversion(item.method),
+                        _id: item._id,
+                    })),
+                  isRequired: false,
+                  readOnly: view,
+                  checkedValues: checkedPermissions,
+                })}
+              </div>
+
+              <div className="mb-3 p-3 border border-gray-400 rounded-md">
+              <h4 className="font-medium text-base mb-3">Menus</h4>
+              {inputMultipleCheckBox({
+                register,
+                errors,
+                label: "Menu",
+                name: "menu",
+                placeholder: "Menu",
+                data:
+                  menuData &&
+                  menuData.map((item) => ({
+                    name: `${item.menu} - ${item.path}`,
+                    _id: item._id,
+                  })),
+                isRequired: false,
+              })}
+              </div>
+            </>
+          : ""
+          }
           {view ? (
             ""
           ) : (

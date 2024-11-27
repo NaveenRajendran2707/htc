@@ -11,6 +11,7 @@ const ViewCompany = ({
   setQ,
   q,
   searchHandler,
+  viewCompanyHandler
 }) => {
   return (
     <>
@@ -51,7 +52,9 @@ const ViewCompany = ({
               <th className="p-2">Email</th>
               <th className="p-2">Service Type</th>
               <th className="p-2">Status</th>
-              <th className="p-2" style={{width:'145px'}}>Actions</th>
+              <th className="p-2" style={{ width: "145px" }}>
+                Actions
+              </th>
             </tr>
           </thead>
 
@@ -120,6 +123,13 @@ const ViewCompany = ({
                         }}
                       >
                         <span className="material-symbols-rounded ">edit</span>
+                      </button>
+                      <button onClick={()=>{viewCompanyHandler(company)}}>
+                        <img
+                          src="https://cdn-icons-png.freepik.com/256/3328/3328224.png?ga=GA1.1.42440995.1721449048&semt=ais_hybrid"
+                          alt="Company Icon"
+                          style={{ width: '24px', height: '24px' }}
+                        />
                       </button>
 
                       <button

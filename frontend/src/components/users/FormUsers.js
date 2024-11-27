@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Message } from "../../components";
 import {
   inputHidden,
@@ -9,6 +10,7 @@ import {
   inputDate,
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
+  inputMultipleCheckBoxSwitchGroups,
   inputMultipleCheckBox,
   inputSwitch,
 } from "../../utils/dynamicForm";
@@ -56,6 +58,12 @@ export const FormUsers = ({
     }
     return field;
   };
+  const [checkedPermissions, setCheckedPermissions] = useState([]);
+  useEffect(() => {
+    const currentPermissions = watch("permission") || [];
+    setCheckedPermissions(currentPermissions);
+  }, [watch("permission")]);
+
   return (
     <>
       {isLoading ? (
@@ -253,7 +261,7 @@ export const FormUsers = ({
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
-                {inputMultipleCheckBoxGroups({
+                {inputMultipleCheckBoxSwitchGroups({
                   register,
                   errors,
                   label: "Permission",
@@ -270,6 +278,7 @@ export const FormUsers = ({
                       })),
                   isRequired: false,
                   readOnly: view,
+                  checkedValues: checkedPermissions,
                 })}
               </div>
 

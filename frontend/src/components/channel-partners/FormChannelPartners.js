@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Message } from "..";
 import {
   inputHidden,
@@ -56,6 +56,11 @@ export const FormChannelPartners = ({
     }
     return field;
   };
+  const [checkedPermissions, setCheckedPermissions] = useState([]);
+  useEffect(() => {
+    const currentPermissions = watch("permission") || [];
+    setCheckedPermissions(currentPermissions);
+  }, [watch("permission")]);
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
   const handleStateChange = (e) => {
@@ -375,6 +380,7 @@ export const FormChannelPartners = ({
                       })),
                   isRequired: false,
                   readOnly: view,
+                  checkedValues: checkedPermissions,
                 })}
               </div>
 

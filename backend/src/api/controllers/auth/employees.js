@@ -1,6 +1,7 @@
 import Employee from '../../models/Employee.js'
 import User from '../../models/User.js'
 import UserRole from '../../models/UserRole.js'
+import Profile from "../../models/Profile.js";
 
 const schemaName = Employee
 const schemaNameString = 'Employee'
