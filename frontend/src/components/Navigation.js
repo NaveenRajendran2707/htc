@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuthHook from "../api/auth";
 import { useMutation } from "react-query";
+import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import {
   Disclosure,
@@ -9,7 +10,7 @@ import {
 } from "@headlessui/react";
 import { clsx } from "clsx";
 import useMenusHook from "../api/menus";
-const Navigation = ({ toggleSidebar, menu }) => {
+const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
   const navigate = useNavigate();
   const { postLogout } = useAuthHook();
   const { auth } = useAuth();
@@ -29,6 +30,7 @@ const Navigation = ({ toggleSidebar, menu }) => {
     const location = useLocation();
     return location.pathname;
   };
+  const [activeDisclosurePanel, setActiveDisclosurePanel] = useState(null);
 
   const guestItems = () => {
     return (
@@ -93,6 +95,21 @@ const Navigation = ({ toggleSidebar, menu }) => {
   };
 
   const authItems = () => {
+    function togglePanels(newPanel) {
+      if (activeDisclosurePanel) {
+        if (
+          activeDisclosurePanel.key !== newPanel.key &&
+          activeDisclosurePanel.open
+        ) {
+          activeDisclosurePanel.close();
+        }
+      }
+
+      setActiveDisclosurePanel({
+        ...newPanel,
+        open: !newPanel.open,
+      });
+    }
 
     const currentPath = UseCurrentPath();
 
@@ -210,65 +227,82 @@ const Navigation = ({ toggleSidebar, menu }) => {
             })
             .map((item) => (
               <Disclosure as="li" key={item}>
-                {({ open }) => (
-                  <>
-                    <DisclosureButton className="group relative flex justify-between items-center gap-2 w-full rounded p-2 text-slate-200 duration-200 ease-in-out hover:bg-slate-700 dark:hover:bg-slate-600 data-[open]:bg-slate-700">
-                      <span className="material-symbols-rounded">
-                        shield_person
-                      </span>
-                      <span>
-                        {item === "profile"
-                          ? user()?.firstName + " " + user()?.lastName
-                          : item.charAt(0).toUpperCase() + item.substring(1)}
-                      </span>
-                      <span
-                        className={clsx(
-                          "material-symbols-rounded ml-auto",
-                          open && "rotate-180"
-                        )}
+                {(panel) => {
+                  const { open, close } = panel;
+                  return (
+                    <>
+                      <DisclosureButton
+                        className="group relative flex justify-between items-center gap-2 w-full rounded p-2 text-slate-200 duration-200 ease hover:bg-slate-700 dark:hover:bg-slate-600 data-[open]:bg-slate-700"
+                        onClick={() => {
+                          if (!open) {
+                            // On the first click, the panel is opened but the "open" prop's value is still false. Therefore the falsey verification
+                            // This will make so the panel close itself when we click it while open
+                            close();
+                          }
+
+                          // Now we call the function to close the other opened panels (if any)
+                          togglePanels({ ...panel, key: item });
+                        }}
                       >
-                        keyboard_arrow_down
-                      </span>
-                    </DisclosureButton>
-                    <DisclosurePanel>
-                      <ul className="pb-4 pt-2 flex flex-col border-l border-slate-700 ml-4">
-                        {menus() &&
-                          menus()
-                            .menuItems?.sort((a, b) => a.order - b.order)
-                            .map(
-                              (menu) =>
-                                menu.menu === item && (
-                                  <li key={menu._id}>
-                                    <Link
-                                      to={menu.path}
-                                      onClick={() => handleLinkClick(menu.path)}
-                                      className={`group relative flex items-center gap-2 -ml-px border-l hover:border-current pl-9 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-300 ${
-                                        currentPath === menu.path
-                                          ? "border-current text-blue-300 font-semibold"
-                                          : "border-transparent"
-                                      }`}
-                                    >
-                                      {menu.name}
-                                    </Link>
-                                  </li>
-                                )
-                            )}
-                        {item === "profile" && (
-                          <>
-                            <li>
-                              <button
-                                onClick={logoutHandler}
-                                className="group relative flex items-center gap-2 rounded-md pl-6 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-400"
-                              >
-                                <span>Logout</span>
-                              </button>
-                            </li>
-                          </>
-                        )}
-                      </ul>
-                    </DisclosurePanel>
-                  </>
-                )}
+                        <span className="material-symbols-rounded">
+                          shield_person
+                        </span>
+                        <span>
+                          {item === "profile"
+                            ? user()?.firstName + " " + user()?.lastName
+                            : item.charAt(0).toUpperCase() + item.substring(1)}
+                        </span>
+                        <span
+                          className={clsx(
+                            "material-symbols-rounded ml-auto",
+                            open && "rotate-180"
+                          )}
+                        >
+                          keyboard_arrow_down
+                        </span>
+                      </DisclosureButton>
+                      <DisclosurePanel>
+                        <ul className="pb-4 pt-2 flex flex-col border-l border-slate-700 ml-4">
+                          {menus() &&
+                            menus()
+                              .menuItems?.sort((a, b) => a.order - b.order)
+                              .map(
+                                (menu) =>
+                                  menu.menu === item && (
+                                    <li key={menu._id}>
+                                      <Link
+                                        to={menu.path}
+                                        onClick={() =>
+                                          handleLinkClick(menu.path)
+                                        }
+                                        className={`group relative flex items-center gap-2 -ml-px border-l-2 hover:border-current pl-5 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-300 ${
+                                          currentPath === menu.path
+                                            ? "border-current text-blue-300 font-semibold"
+                                            : "border-transparent"
+                                        }`}
+                                      >
+                                        {menu.name}
+                                      </Link>
+                                    </li>
+                                  )
+                              )}
+                          {item === "profile" && (
+                            <>
+                              <li>
+                                <button
+                                  onClick={logoutHandler}
+                                  className="group relative flex items-center gap-2 -ml-px border-l hover:border-current pl-9 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-300 "
+                                >
+                                  <span>Logout</span>
+                                </button>
+                              </li>
+                            </>
+                          )}
+                        </ul>
+                      </DisclosurePanel>
+                    </>
+                  );
+                }}
               </Disclosure>
             ))}
       </>
@@ -281,11 +315,11 @@ const Navigation = ({ toggleSidebar, menu }) => {
         <img src="/htc-white.svg" width="80" className="max-w-full" alt="HTC" />
         <button
           type="button"
-          className="inline-flex lg:hidden text-gray-400 rounded-full hover:text-gray-200 focus-visible:ring-4 transition duration-150 ease-linear p-2"
+          className={`inline-flex text-gray-400 rounded-full hover:text-gray-200 focus-visible:ring-4 transition duration-150 ease-linear p-2`}
           aria-label="Close"
           onClick={toggleSidebar}
         >
-          <span className="material-symbols-rounded">close</span>
+          <span className="material-symbols-rounded">left_panel_close</span>
         </button>
       </div>
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-200 ease-linear">

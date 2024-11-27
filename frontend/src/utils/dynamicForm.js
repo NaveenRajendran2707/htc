@@ -28,7 +28,7 @@ export const inputHidden = (args) => {
         } ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -68,7 +68,7 @@ export const inputText = (args) => {
         autocomplete="off"
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -116,7 +116,7 @@ export const inputPercentage = (args) => {
         </div>
       </div>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -160,7 +160,7 @@ export const inputSelect = (args) => {
         ))}
       </select>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -196,7 +196,7 @@ export const inputTel = (args) => {
         } ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -234,7 +234,7 @@ export const inputTextArea = (args) => {
         } ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -270,7 +270,7 @@ export const inputNumber = (args) => {
         } ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -311,7 +311,7 @@ export const inputEmail = (args) => {
         } ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -358,7 +358,7 @@ export const inputPassword = (args) => {
         className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -404,7 +404,7 @@ export const dynamicInputSelect = (args) => {
           ))}
       </select>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -449,7 +449,7 @@ export const staticInputSelect = (args) => {
           ))}
       </select>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -495,7 +495,7 @@ export const dynaimcInputSelectField = (args) => {
           ))}
       </select>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -542,7 +542,7 @@ export const staticInputSelectState = (args) => {
           ))}
       </select>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -585,7 +585,7 @@ export const inputCheckBox = (args) => {
         </label>
       </div>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -625,7 +625,7 @@ export const inputSwitch = (args) => {
         </span>
       </label>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -673,7 +673,7 @@ export const inputMultipleCheckBoxGroups = (args) => {
           </div>
         ))}
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -721,7 +721,7 @@ export const inputMultipleCheckBox = (args) => {
           </div>
         ))}
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -760,7 +760,7 @@ export const inputFile = (args) => {
         onChange={(e) => setFile(e.target.files[0])}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -796,7 +796,7 @@ export const inputDate = (args) => {
         } ${inputClass}`}
       />
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -846,7 +846,7 @@ export const InputAutoCompleteSelect = (args) => {
       </datalist>
 
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}
@@ -891,7 +891,7 @@ export const dynamicInputSelectNumber = (args) => {
         ))}
       </select>
       {errors && errors[name] && (
-        <span className="block text-sm text-red-600 pt-1">
+        <span className="block text-xs text-red-600 pt-1">
           {errors[name].message}
         </span>
       )}

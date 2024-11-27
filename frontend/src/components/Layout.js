@@ -24,7 +24,7 @@ export default function Layout() {
           }`}
         >
           <aside className="flex h-screen w-full flex-col overflow-y-hidden bg-slate-800 dark:bg-slate-900">
-            <Navigation toggleSidebar={toggleSidebar} />
+            <Navigation toggleSidebar={toggleSidebar}  isSidebarOpen={isSidebarOpen} />
           </aside>
         </div>
         <div className="main-wrapper flex flex-col w-full lg:ml-72">

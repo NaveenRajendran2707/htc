@@ -22,6 +22,9 @@ export default {
         "left-right": "0% 50%",
       },
     },
+    transitionTimingFunction: {
+      'smooth-ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
+    },
   },
   plugins: [],
 };
