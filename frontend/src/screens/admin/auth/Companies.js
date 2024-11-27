@@ -24,8 +24,10 @@ import {
   DialogTitle,
   DialogBackdrop,
 } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 const Companies = () => {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -196,7 +198,7 @@ const Companies = () => {
           esi: data.esi,
           dob: data.dob,
           salaryscheduletype: data.salaryscheduletype,
-          user:data.user
+          user: data.user,
         })
       : mutateAsyncPost(data);
     setIsModalOpen(false);
@@ -287,6 +289,17 @@ const Companies = () => {
     setValue("state", company?.employee?.state);
   };
 
+  const viewCompanyHandler = (company) => {
+    console.log(
+      "companycompany",
+      company?.user?.email,
+      company?.user?.password,
+      company?.user?.userType
+    );
+    //  navigate('/auth/login')
+    window.open("/auth/login", "_blank");
+  };
+
   return (
     <>
       <Helmet>
@@ -320,6 +333,7 @@ const Companies = () => {
           viewHandler={viewHandler}
           editHandler={editHandler}
           deleteHandler={deleteHandler}
+          viewCompanyHandler={viewCompanyHandler}
           isLoadingDelete={isLoadingDelete}
           setQ={setQ}
           q={q}

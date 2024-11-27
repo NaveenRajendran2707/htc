@@ -644,6 +644,7 @@ export const inputMultipleCheckBoxGroups = (args) => {
     readOnly,
     wrapperClass,
     inputClass,
+    checkedValues = [],
   } = args;
 
   return (
@@ -663,6 +664,7 @@ export const inputMultipleCheckBoxGroups = (args) => {
               type="checkbox"
               value={d._id}
               id={`check${d._id}`}
+              checked={checkedValues.includes(d._id)}
             />
             <label
               className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"

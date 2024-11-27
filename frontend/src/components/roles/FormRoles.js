@@ -5,6 +5,7 @@ import {
   inputMultipleCheckBox,
   inputMultipleCheckBoxGroups,
 } from "../../utils/dynamicForm";
+import { useEffect, useState } from "react";
 
 const methodConversion = (methodName) => {
   switch(methodName){
@@ -31,7 +32,13 @@ const FormRoles = ({
   permissionData,
   menuData,
   setIsModalOpen,
+  watch
 }) => {
+  const [checkedPermissions, setCheckedPermissions] = useState([]);
+  useEffect(() => {
+    const currentPermissions = watch("permission") || [];
+    setCheckedPermissions(currentPermissions);
+  }, [watch("permission")]);
   return (
     <>
       {isLoading ? (
@@ -80,6 +87,7 @@ const FormRoles = ({
                 })),
               isRequired: false,
               readOnly: view,
+              checkedValues: checkedPermissions,
             })}
           </div>
 

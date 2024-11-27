@@ -92,8 +92,18 @@ const Navigation = ({ toggleSidebar, menu }) => {
     console.log("Linkclicked", event);
   };
 
-  const authItems = () => {
+  const iconMapping = {
+    home: "home",
+    users: "person",
+    master: "engineering",
+    customer: "group",
+    product: "inventory_2",
+    transaction: "point_of_sale",
+    profile: "manage_accounts",
+    configurations: "settings",
+  };
 
+  const authItems = () => {
     const currentPath = UseCurrentPath();
 
     return (
@@ -214,7 +224,7 @@ const Navigation = ({ toggleSidebar, menu }) => {
                   <>
                     <DisclosureButton className="group relative flex justify-between items-center gap-2 w-full rounded p-2 text-slate-200 duration-200 ease-in-out hover:bg-slate-700 dark:hover:bg-slate-600 data-[open]:bg-slate-700">
                       <span className="material-symbols-rounded">
-                        shield_person
+                        {iconMapping[item] || "shield_person"}
                       </span>
                       <span>
                         {item === "profile"

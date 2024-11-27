@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Message } from "../../components";
 import {
   inputHidden,
@@ -70,7 +70,11 @@ export const FormCompanies = ({
       setCity([]);
     }
   };
-
+  const [checkedPermissions, setCheckedPermissions] = useState([]);
+  useEffect(() => {
+    const currentPermissions = watch("permission") || [];
+    setCheckedPermissions(currentPermissions);
+  }, [watch("permission")]);
   return (
     <>
       {isLoading ? (
@@ -500,6 +504,7 @@ export const FormCompanies = ({
                     })),
                   isRequired: false,
                   readOnly: view,
+                  checkedValues: checkedPermissions,
                 })}
               </div>
 

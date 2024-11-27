@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Message } from "../../components";
 import {
   inputHidden,
@@ -56,6 +57,12 @@ export const FormUsers = ({
     }
     return field;
   };
+  const [checkedPermissions, setCheckedPermissions] = useState([]);
+  useEffect(() => {
+    const currentPermissions = watch("permission") || [];
+    setCheckedPermissions(currentPermissions);
+  }, [watch("permission")]);
+
   return (
     <>
       {isLoading ? (
@@ -270,6 +277,7 @@ export const FormUsers = ({
                       })),
                   isRequired: false,
                   readOnly: view,
+                  checkedValues: checkedPermissions,
                 })}
               </div>
 
