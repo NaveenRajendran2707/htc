@@ -110,9 +110,9 @@ export const inputPercentage = (args) => {
             readOnly && "bg-slate-200"
           } ${inputClass}`}
           autocomplete="off"
-      />
+        />
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-        <span className="text-gray-500 sm:text-sm">%</span>
+          <span className="text-gray-500 sm:text-sm">%</span>
         </div>
       </div>
       {errors && errors[name] && (

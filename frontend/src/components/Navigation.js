@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuthHook from "../api/auth";
 import { useMutation } from "react-query";
 import useAuth from "../hooks/useAuth";
@@ -9,7 +9,7 @@ import {
 } from "@headlessui/react";
 import { clsx } from "clsx";
 import useMenusHook from "../api/menus";
-const Navigation = ({ toggleSidebar }) => {
+const Navigation = ({ toggleSidebar, menu }) => {
   const navigate = useNavigate();
   const { postLogout } = useAuthHook();
   const { auth } = useAuth();
@@ -24,6 +24,11 @@ const Navigation = ({ toggleSidebar }) => {
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
+
+  const UseCurrentPath = () => {
+    const location = useLocation();
+    return location.pathname;
+  };
 
   const guestItems = () => {
     return (
@@ -88,6 +93,9 @@ const Navigation = ({ toggleSidebar }) => {
   };
 
   const authItems = () => {
+
+    const currentPath = UseCurrentPath();
+
     return (
       // <>
       //   {menus() &&
@@ -223,7 +231,7 @@ const Navigation = ({ toggleSidebar }) => {
                       </span>
                     </DisclosureButton>
                     <DisclosurePanel>
-                      <ul className="pb-4 pt-2 flex flex-col pl-4 space-y-2">
+                      <ul className="pb-4 pt-2 flex flex-col border-l border-slate-700 ml-4">
                         {menus() &&
                           menus()
                             .menuItems?.sort((a, b) => a.order - b.order)
@@ -234,7 +242,11 @@ const Navigation = ({ toggleSidebar }) => {
                                     <Link
                                       to={menu.path}
                                       onClick={() => handleLinkClick(menu.path)}
-                                      className="group relative flex items-center gap-2 rounded-md pl-6 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-400"
+                                      className={`group relative flex items-center gap-2 -ml-px border-l hover:border-current pl-9 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-300 ${
+                                        currentPath === menu.path
+                                          ? "border-current text-blue-300 font-semibold"
+                                          : "border-transparent"
+                                      }`}
                                     >
                                       {menu.name}
                                     </Link>

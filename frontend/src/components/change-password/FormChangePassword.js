@@ -48,7 +48,7 @@ const FormChangePassword = ({
         </button> */}
         <button
           type="submit"
-          className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-md text-sm px-3 py-2 text-center "
+          className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-md text-sm px-3 py-1 text-center "
           disabled={isLoadingPost}
         >
           {isLoadingPost ? (
@@ -66,7 +66,7 @@ const FormChangePassword = ({
         <button
           type="button"
           onClick={reset}
-          className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+          className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
         >
           Clear
         </button>

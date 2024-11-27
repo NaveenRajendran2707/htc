@@ -298,10 +298,10 @@ export const FormUsers = ({
           {view ? (
             ""
           ) : (
-            <div className="flex flex-wrap">
+            <div className="flex gap-2">
               <button
                 type="submit"
-                className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-md text-sm px-3 py-2 text-center "
+                className="min-w-[120px] text-white bg-blue-600 border-1 border-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-md text-sm px-3 py-1 text-center "
                 disabled={isLoadingPost || isLoadingUpdate}
               >
                 {isLoadingPost || isLoadingUpdate ? (
@@ -318,7 +318,7 @@ export const FormUsers = ({
               </button>
               <button
                 type="button"
-                className="px-3 py-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-md border-1 border-gray-200 bg-white text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                className="px-3 py-1 inline-flex items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
                 onClick={() => {
                   setIsModalOpen(false);
                   formCleanHandler();
