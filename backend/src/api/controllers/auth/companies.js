@@ -1,6 +1,6 @@
 import Company from '../../models/Company.js'
-import Profile from '../../models/Profile.js'
-import UserRole from '../../models/UserRole.js'
+import Employee from '../../models/Employee.js'
+import User from '../../models/User.js'
 
 const schemaName = Company
 const schemaNameString = 'Company'
@@ -28,6 +28,8 @@ export const getCompanies = async (req, res) => {
       .sort({ createdAt: -1 })
       .select('-password')
       .lean()
+      .populate('employee')
+      .populate('user')
 
     const result = await query
 
@@ -51,6 +53,10 @@ export const getCompanies = async (req, res) => {
 
 export const postCompany = async (req, res) => {
   try {
+    const userObject = await User.create(req.body)
+    req.body.user = userObject._id
+    const employeeObject = await Employee.create(req.body)
+    req.body.employee = employeeObject._id
     const object = await schemaName.create(req.body)
 
     // await Profile.create({
@@ -99,18 +105,34 @@ export const getCompanyById = async (req, res) => {
 export const putCompany = async (req, res) => {
   try {
     const { id } = req.params
-    const { companySerialNo, registrationDate, introductionID, city, companyID, typeofService, companyType, user, 
-      companyName, companyShortName, gSTINNumber, companyAdminName, address1, address2, address3, pincode, mobileNumber1, 
-      mobileNumber2, phoneNumber, email, logo, watermark, blocked} = req.body
+    const { companySerialNo, registrationDate, introductionID, companyID, typeofService, companyType, user, 
+      companyName, companyShortName, gSTINNumber, companyAdminName, address1, address2, address3, pincode, mobile, 
+      mobileNumber2, phoneNumber, email, logo, watermark, blocked, menu, permission , password,pan,
+      pf,
+      esi,
+      dob,
+      salaryscheduletype,
+      department,
+      designation,} = req.body
 
     const object = await schemaName.findById(id)
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` })
 
+    const object1 = await Employee.findById(object.employee._id);
+    if (!object1) {
+      return res.status(400).json({ error: `${schemaNameString} not found` });
+    }
+
+    const object2 = await User.findById(object.user._id);
+    if (!object2) {
+      return res.status(400).json({ error: `User not found` });
+    }
+
     object.companySerialNo = companySerialNo
     object.registrationDate = registrationDate
     object.introductionID = introductionID
-    object.city = city
+    // object.city = city
     object.companyID = companyID
     object.typeofService = typeofService
     object.companyType = companyType
@@ -123,7 +145,7 @@ export const putCompany = async (req, res) => {
     object.address2 = address2
     object.address3 = address3
     object.pincode = pincode
-    object.mobileNumber1 = mobileNumber1
+    object.mobile = mobile
     object.mobileNumber2 = mobileNumber2
     object.phoneNumber = phoneNumber
     object.email = email
@@ -131,7 +153,25 @@ export const putCompany = async (req, res) => {
     object.watermark = watermark
     object.blocked = blocked
 
+    object1.pan = pan
+    object1.pf = pf
+    object1.esi = esi
+    object1.dob = dob
+    object1.salaryscheduletype = salaryscheduletype
+    object2.department = department
+    object2.designation = designation
+
+    object2.menu = menu && menu.length > 0 ? menu : object2.menu;
+    object2.permission = permission && permission.length > 0 ? permission : object2.permission;
+
+    password && (object.password = await object.encryptPassword(password))
+
+    // if (name) {
+    //   await Profile.findOneAndUpdate({ user: id }, { name })
+    // }
+
     await object.save()
+    await object2.save();
 
     res.status(200).json({ message: `${schemaNameString} updated` })
   } catch (error) {

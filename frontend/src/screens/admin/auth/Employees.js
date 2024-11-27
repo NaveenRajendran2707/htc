@@ -193,6 +193,8 @@ const Employees = () => {
     setValue("email", employee.email);
     setValue("confirmed", employee.confirmed);
     setValue("blocked", employee.blocked);
+    setValue("permission", employee.user?.permission);
+    setValue("menu", employee.user?.menu);
   };
 
   const editHandler = (employee) => {
