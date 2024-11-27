@@ -74,7 +74,7 @@ const FormDepartments = ({
             </button>
             <button
               type="button"
-              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-100  hover:shadow focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opaDepartment-50 disabled:pointer-events-none "
+              className="px-4 py-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded border-1 border-gray-300 bg-white text-gray-800 hover:bg-gray-100  hover:shadow focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opaDepartment-50 disabled:pointer-events-none "
               onClick={() => {
                 setIsModalOpen(false);
                 formCleanHandler();
