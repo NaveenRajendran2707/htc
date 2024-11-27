@@ -619,7 +619,6 @@ export const inputSwitch = (args) => {
           )}
         />
         <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-
         <span className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300">
           {label}
         </span>
@@ -632,6 +631,80 @@ export const inputSwitch = (args) => {
     </div>
   );
 };
+
+export const inputMultipleCheckBoxSwitchGroups = (args) => {
+  const {
+    register,
+    errors,
+    name,
+    data,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+    checkedValues = [],
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+    {data &&
+      // Group data by name
+      Object.entries(
+        data.reduce((acc, d) => {
+          if (!acc[d.name]) {
+            acc[d.name] = [];
+          }
+          acc[d.name].push(d);
+          return acc;
+        }, {})
+      ).map(([groupName, groupItems]) => (
+        <div key={groupName}>
+          {/* Group name */}          
+          <div className="flex flex-wrap">
+            {/* Render items in the group */}
+            {groupName}
+            {groupItems.map((d) => (
+              <div key={d._id} className="inline-flex w-1/4 items-center mb-4">
+                <label
+                  className="flex items-center mb-4"
+                  htmlFor={`check${d._id}${d.name
+                    .toLowerCase()
+                    .replace(/ /g, "_")}`}
+                >
+                  <input
+                    className={`sr-only peer ${readOnly && "bg-slate-200"} ${
+                      inputClass || ""
+                    }`}
+                    type="checkbox"
+                    readOnly={!!readOnly}
+                    id={`check${d._id}${d.name
+                      .toLowerCase()
+                      .replace(/ /g, "_")}`}
+                    {...register(
+                      name,
+                      isRequired && { required: `${label} is required` }
+                    )}
+                  />
+                  <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                  <span className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300">
+                    {/* {d.name.toLowerCase().replace(/ /g, "_")} */}
+                  </span>
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      {errors && errors[name] && (
+        <span className="block text-sm text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>  
+  );
+};
+
 
 export const inputMultipleCheckBoxGroups = (args) => {
   const {

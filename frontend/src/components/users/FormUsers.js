@@ -10,6 +10,7 @@ import {
   inputDate,
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
+  inputMultipleCheckBoxSwitchGroups,
   inputMultipleCheckBox,
   inputSwitch,
 } from "../../utils/dynamicForm";
@@ -260,7 +261,7 @@ export const FormUsers = ({
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
-                {inputMultipleCheckBoxGroups({
+                {inputMultipleCheckBoxSwitchGroups({
                   register,
                   errors,
                   label: "Permission",
