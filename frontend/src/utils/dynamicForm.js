@@ -756,6 +756,58 @@ export const inputMultipleCheckBoxGroups = (args) => {
   );
 };
 
+export const inputMultipleCheckBoxGroupsChange = (args) => {
+  const {
+    register,
+    errors,
+    name,
+    data,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+    checkedValues = [],
+    onChange
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+      {data &&
+        data.map((d) => (
+          <div key={d._id} className="inline-flex w-1/4 items-center mb-4">
+            <input
+              {...register(
+                name,
+                isRequired && { required: `${label} is required` }
+              )}
+              readOnly={!!readOnly}
+              className={`w-4 h-4 text-blue-600 bg-white border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:outline-none dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ${
+                readOnly && "bg-slate-200"
+              } ${inputClass}`}
+              type="checkbox"
+              value={d._id}
+              id={`check${d._id}`}
+              // checked={checkedValues.includes(d._id)}
+              onChange={onChange}
+            />
+            <label
+              className="ms-2 text-sm font-medium text-gray-800 dark:text-gray-300"
+              htmlFor={`check${d._id}`}
+            >
+              {d.method} ({d.name})
+            </label>
+          </div>
+        ))}
+      {errors && errors[name] && (
+        <span className="block text-xs text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
 export const inputMultipleCheckBox = (args) => {
   const {
     register,

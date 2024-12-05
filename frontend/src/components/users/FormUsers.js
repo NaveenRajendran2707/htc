@@ -11,6 +11,7 @@ import {
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBoxSwitchGroups,
+  inputMultipleCheckBoxGroupsChange,
   inputMultipleCheckBox,
   inputSwitch,
 } from "../../utils/dynamicForm";
@@ -58,11 +59,62 @@ export const FormUsers = ({
     }
     return field;
   };
+  const permissions = watch("permission") || [];
   const [checkedPermissions, setCheckedPermissions] = useState([]);
+
   useEffect(() => {
-    const currentPermissions = watch("permission") || [];
-    setCheckedPermissions(currentPermissions);
-  }, [watch("permission")]);
+    setCheckedPermissions(permission);
+  }, [permissions]);
+
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const permission_get = localStorage.getItem("permission_get")
+    ? JSON.parse(localStorage.getItem("permission_get"))
+    : null;
+  const [permission, setPermission] = useState(permission_get || []);
+  const menu_get = localStorage.getItem("menu_get")
+    ? JSON.parse(localStorage.getItem("menu_get"))
+    : null;
+  const [menu, setMenu] = useState(menu_get || []);
+  const [checkTrue, setCheckTrue] = useState(false);
+  useEffect(() => {
+    if (!checkTrue && menu_get) {
+      localStorage.setItem("menu_post", JSON.stringify(menu_get));
+      setMenu(menu_get);
+    }
+  }, [checkTrue, menu_get]);
+  const handleCheckBox = (e) => {
+    setCheckTrue(true);
+    const selectedPermissionId = e.target.value;
+    setCheckTrue(true);
+    setPermission((prevPermissions) => [
+      ...prevPermissions,
+      selectedPermissionId,
+    ]);
+    const selectedPermission = permissionData?.find(
+      (item) => item._id === selectedPermissionId
+    );
+    if (selectedPermission) {
+      const matchingMenus = menuData?.filter(
+        (menuItem) => menuItem.name === selectedPermission.name
+      );
+      setFilteredMenus((prevFilteredMenus) => {
+        const newFilteredMenus = [...prevFilteredMenus];
+        matchingMenus?.forEach((menuItem) => {
+          if (!newFilteredMenus.some((menu) => menu._id === menuItem._id)) {
+            newFilteredMenus.push({ _id: menuItem._id });
+          }
+        });
+        return newFilteredMenus;
+      });
+      const menuIds = matchingMenus?.map((menu) => menu._id) || [];
+      setMenu((prevMenu) => {
+        const updatedMenu = Array.from(new Set([...prevMenu, ...menuIds]));
+        console.log("Updated Menu:", updatedMenu);
+        localStorage.setItem("menu_post", JSON.stringify(updatedMenu));
+        return updatedMenu;
+      });
+    }
+  };
 
   return (
     <>
@@ -261,7 +313,7 @@ export const FormUsers = ({
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
-                {inputMultipleCheckBoxSwitchGroups({
+                {inputMultipleCheckBoxGroupsChange({
                   register,
                   errors,
                   label: "Permission",
@@ -279,10 +331,11 @@ export const FormUsers = ({
                   isRequired: false,
                   readOnly: view,
                   checkedValues: checkedPermissions,
+                  onChange: handleCheckBox,
                 })}
               </div>
 
-              <div className="mb-3 p-3 border border-gray-400 rounded-md">
+              {/* <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Menus</h4>
                 {inputMultipleCheckBox({
                   register,
@@ -298,7 +351,7 @@ export const FormUsers = ({
                     })),
                   isRequired: false,
                 })}
-              </div>
+              </div> */}
             </>
           ) : (
             ""
@@ -329,6 +382,9 @@ export const FormUsers = ({
                 type="button"
                 className="px-3 py-1 inline-flex items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-50 active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
                 onClick={() => {
+                  localStorage.removeItem("menu_post");
+                  localStorage.removeItem("menu_get");
+                  localStorage.removeItem("permission_get");
                   setIsModalOpen(false);
                   formCleanHandler();
                 }}

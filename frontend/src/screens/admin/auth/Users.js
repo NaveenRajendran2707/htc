@@ -122,12 +122,15 @@ const Users = () => {
     confirmAlert(Confirm(() => mutateAsyncDelete(id)));
   };
 
-  const submitHandler = (data) => {
+  const submitHandler =async (data) => {
     console.log("edit", edit);
     console.log("adminnnnn", data);
-
+    const menu = localStorage.getItem("menu_post")
+      ? JSON.parse(localStorage.getItem("menu_post"))
+      : null;
+    console.log("dataaaaa", data,menu);
     edit
-      ? mutateAsyncUpdate({
+      ?await mutateAsyncUpdate({
           _id: id,
           sequenceNumber: data.sequenceNumber,
           firstName: data.firstName,
@@ -145,10 +148,13 @@ const Users = () => {
           blocked: data.blocked,
           password: data.password,
           permission: data.permission,
-          menu: data.menu,
+          menu: menu && menu,
         })
-      : mutateAsyncPost(data);
-      setIsModalOpen(false);
+      :mutateAsyncPost(data);
+      localStorage.removeItem('menu_post')
+      localStorage.removeItem('menu_get')
+      localStorage.removeItem('permission_get')
+    setIsModalOpen(false);
   };
 
   const viewHandler = (user) => {
@@ -164,7 +170,7 @@ const Users = () => {
     setValue("pincode", user.profile?.pincode);
     setValue("state", user.profile?.state);
     setValue("mobile", user.profile?.mobile);
-    setValue("pan", user.profile?.pan);    
+    setValue("pan", user.profile?.pan);
     setValue("email", user.email);
     setValue("confirmed", user.confirmed);
     setValue("blocked", user.blocked);
@@ -186,12 +192,14 @@ const Users = () => {
     setValue("pincode", user.profile?.pincode);
     setValue("state", user.profile?.state);
     setValue("mobile", user.profile?.mobile);
-    setValue("pan", user.profile?.pan);    
+    setValue("pan", user.profile?.pan);
     setValue("email", user.email);
     setValue("confirmed", user.confirmed);
     setValue("blocked", user.blocked);
     setValue("permission", user.permission);
     setValue("menu", user.menu);
+    localStorage.setItem("permission_get",JSON.stringify(user.permission))
+    localStorage.setItem("menu_get",JSON.stringify(user.menu))
   };
 
   return (
