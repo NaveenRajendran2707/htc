@@ -277,10 +277,21 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
                           {menus() &&
                             menus()
                               .menuItems?.sort((a, b) => a.order - b.order)
-                              .map(
-                                (menu) =>
-                                  menu.menu === item && (
-                                    <li key={menu._id}>
+                              .map((menu) =>
+                                menu.menu === item ? (
+                                  <li key={menu._id}>
+                                    {menu.name === "Logout" ? (
+                                      <button
+                                        onClick={logoutHandler}
+                                        className={`group relative flex items-center gap-2 -ml-px border-l-2 hover:border-current pl-5 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-300 ${
+                                          currentPath === menu.path
+                                            ? "border-current text-blue-300 font-semibold"
+                                            : "border-transparent"
+                                        }`}
+                                      >
+                                        <span>{menu.name}</span>
+                                      </button>
+                                    ) : (
                                       <Link
                                         to={menu.path}
                                         onClick={() =>
@@ -294,21 +305,10 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
                                       >
                                         {menu.name}
                                       </Link>
-                                    </li>
-                                  )
+                                    )}
+                                  </li>
+                                ) : null
                               )}
-                          {item === "profile" && (
-                            <>
-                              <li>
-                                <button
-                                  onClick={logoutHandler}
-                                  className="group relative flex items-center gap-2 -ml-px border-l hover:border-current pl-9 py-1 text-slate-200 duration-200 ease-in-out hover:text-blue-300 "
-                                >
-                                  <span>Logout</span>
-                                </button>
-                              </li>
-                            </>
-                          )}
                         </ul>
                       </DisclosurePanel>
                     </>
