@@ -1,30 +1,47 @@
 import React, { useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { inputText, inputSelect, inputDate } from "../../utils/dynamicForm";
+import { useForm } from "react-hook-form";
+import {
+  inputText,
+  inputSelect,
+  inputDate,
+  inputPaymentSelect,
+} from "../../utils/dynamicForm";
 
-const FormReceipts = () => {
+const FormReceipt = () => {
   const [paymentType, setPaymentType] = useState("Cash");
-  const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
+  console.log("paymentType", paymentType);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
+      companyAddress: "",
+      date: "",
       receiptNo: "",
-      receiptDate: "",
       receivedFrom: "",
+      rupeeSumOf: "",
+      paymentFor: "",
+      fromName: "",
+      toName: "",
+      paymentType: "Cash",
+      chequeNo: "",
+      bankName: "",
+      chequeDate: "",
+      branchName: "",
       amountDue: "",
       paidAmount: "",
       balance: "",
-      paymentType: "Cash",
-      bankName: "",
-      chequeNo: "",
-      customerName: "",
-      customerAddress: "",
-      gstNo: "",
-      narration: "",
+      preparedBy: "",
+      cashReceivedBy: "",
+      authorizedSign: "",
     },
   });
 
   const submitHandler = (data) => {
     console.log("Form Data:", data);
-    alert("Receipt Voucher Submitted Successfully");
+    alert("Receipt Form Submitted Successfully");
     reset();
   };
 
@@ -33,24 +50,103 @@ const FormReceipts = () => {
       {inputText({
         register,
         errors,
-        label: "Receipt No",
-        name: "receiptNo",
-        placeholder: "Enter Receipt No",
+        label: "Company Full Address",
+        name: "companyAddress",
+        placeholder: "Enter Company Full Address",
+        type: "textarea",
       })}
       {inputDate({
         register,
         errors,
-        label: "Receipt Date",
-        name: "receiptDate",
-        placeholder: "11/11/1999",
+        label: "Date",
+        name: "date",
+        placeholder: "Select Date",
       })}
       {inputText({
         register,
         errors,
-        label: "Received From",
-        name: "receivedFrom",
-        placeholder: "Enter Received From",
+        label: "Receipt No",
+        name: "receiptNo",
+        placeholder: "Enter Receipt No",
       })}
+      {inputText({
+        register,
+        errors,
+        label: "Received from M/s. / Mr.",
+        name: "receivedFrom",
+        placeholder: "Enter Name",
+      })}
+      {inputText({
+        register,
+        errors,
+        label: "Rupee Sum of",
+        name: "rupeeSumOf",
+        placeholder: "Enter Amount in Words",
+      })}
+      {inputText({
+        register,
+        errors,
+        label: "For Payment of",
+        name: "paymentFor",
+        placeholder: "Enter Reason for Payment",
+      })}
+      {inputText({
+        register,
+        errors,
+        label: "From",
+        name: "fromName",
+        placeholder: "Enter Sender's Name",
+      })}
+      {inputText({
+        register,
+        errors,
+        label: "To",
+        name: "toName",
+        placeholder: "Enter Receiver's Name",
+      })}
+      {inputPaymentSelect({
+        register,
+        errors,
+        label: "Payment Made Type",
+        name: "paymentType",
+        options: [
+          { label: "Cash", value: "Cash" },
+          { label: "Cheque", value: "Cheque" },
+        ],
+        onChange: (e) => setPaymentType(e.target.value),
+      })}
+      {paymentType === "Cheque" && (
+        <div>
+          {inputText({
+            register,
+            errors,
+            label: "Cheque No.",
+            name: "chequeNo",
+            placeholder: "Enter Cheque No.",
+          })}
+          {inputDate({
+            register,
+            errors,
+            label: "Cheque Date",
+            name: "chequeDate",
+            placeholder: "Select Cheque Date",
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Bank Name",
+            name: "bankName",
+            placeholder: "Enter Bank Name",
+          })}
+          {inputText({
+            register,
+            errors,
+            label: "Branch Name",
+            name: "branchName",
+            placeholder: "Enter Branch Name",
+          })}
+        </div>
+      )}
       {inputText({
         register,
         errors,
@@ -70,71 +166,35 @@ const FormReceipts = () => {
         errors,
         label: "Balance",
         name: "balance",
-        placeholder: "Balance",
+        placeholder: "Enter Balance",
         isReadOnly: true,
       })}
-
-      {inputSelect({
-        register,
-        errors,
-        label: "Payment Type",
-        name: "paymentType",
-        options: [
-          { label: "Cash", value: "Cash" },
-          { label: "Cheque", value: "Cheque" },
-        ],
-        onChange: (e) => setPaymentType(e.target.value),
-      })}
-
-      {paymentType === "Cheque" && (
-        <>
-          {inputText({
-            register,
-            errors,
-            label: "Bank Name",
-            name: "bankName",
-            placeholder: "Enter Bank Name",
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Cheque No.",
-            name: "chequeNo",
-            placeholder: "Enter Cheque No.",
-          })}
-        </>
-      )}
-
       {inputText({
         register,
         errors,
-        label: "Customer Name",
-        name: "customerName",
-        placeholder: "Enter Customer Name",
+        label: "Receipt Prepared by",
+        name: "preparedBy",
+        placeholder: "Enter Preparer's Name",
       })}
       {inputText({
         register,
         errors,
-        label: "Customer Address",
-        name: "customerAddress",
-        placeholder: "Enter Customer Address",
+        label: "Cash Received by",
+        name: "cashReceivedBy",
+        placeholder: "Enter Receiver's Name",
       })}
-      {inputText({
-        register,
-        errors,
-        label: "GST No",
-        name: "gstNo",
-        placeholder: "Enter GST No",
-      })}
-      {inputText({
-        register,
-        errors,
-        label: "Narration",
-        name: "narration",
-        placeholder: "Enter Narration",
-        type: "textarea",
-      })}
-
+      <div>
+        <label htmlFor="authorizedSign">Authorized Sign</label>
+        <input
+          {...register("authorizedSign", { required: true })}
+          type="file"
+          id="authorizedSign"
+          className="block mt-2"
+        />
+        {errors.authorizedSign && (
+          <p className="text-red-600 text-sm">This field is required</p>
+        )}
+      </div>
       <div className="flex gap-3 mt-4">
         <button
           type="submit"
@@ -145,7 +205,7 @@ const FormReceipts = () => {
         <button
           type="button"
           onClick={() => reset()}
-          className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-gray-300 bg-white text-gray-800 hover:bg-gray-100  hover:shadow focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-white active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+          className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-gray-300 bg-white text-gray-800 hover:bg-gray-100 hover:shadow focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-white active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
         >
           Clear
         </button>
@@ -154,4 +214,4 @@ const FormReceipts = () => {
   );
 };
 
-export default FormReceipts;
+export default FormReceipt;

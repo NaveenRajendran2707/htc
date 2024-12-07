@@ -168,6 +168,52 @@ export const inputSelect = (args) => {
   );
 };
 
+export const inputPaymentSelect = (args) => {
+  const {
+    register,
+    name,
+    label,
+    options,
+    errors,
+    isRequired = true,
+    placeholder,
+    readOnly,
+    value,
+    wrapperClass,
+    inputClass,
+    onChange
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
+        {label}
+      </label>
+      <select
+        {...register(name, isRequired && { required: `${label} is required` })}
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
+          readOnly && "bg-slate-200"
+        } ${inputClass}`}
+        disabled={readOnly}
+        value={value}
+        onChange={onChange}
+      >
+        <option value="">{placeholder || `Select ${label}`}</option>
+        {options?.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      {errors && errors[name] && (
+        <span className="block text-xs text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
 export const inputTel = (args) => {
   const {
     register,
