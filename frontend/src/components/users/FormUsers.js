@@ -355,7 +355,27 @@ export const FormUsers = ({
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
-                {inputMultipleCheckBoxGroupsChange({
+                {/* {inputMultipleCheckBoxGroupsChange({
+                  register,
+                  errors,
+                  label: "Permission",
+                  name: "permission",
+                  placeholder: "Permission",
+                  data:
+                    permissionData &&
+                    permissionData
+                      .filter((item) => item.show)
+                      .map((item) => ({
+                        name: `${item.name}`,
+                        method: methodConversion(item.method),
+                        _id: item._id,
+                      })),
+                  isRequired: false,
+                  readOnly: view,
+                  checkedValues: checkedPermissions,
+                  onChange: handleCheckBox,
+                })} */}
+                {inputMultipleCheckBoxSwitchGroups({
                   register,
                   errors,
                   label: "Permission",

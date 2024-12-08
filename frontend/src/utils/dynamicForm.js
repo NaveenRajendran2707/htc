@@ -690,6 +690,7 @@ export const inputMultipleCheckBoxSwitchGroups = (args) => {
     wrapperClass,
     inputClass,
     checkedValues = [],
+    onChange
   } = args;
 
   return (
@@ -724,6 +725,7 @@ export const inputMultipleCheckBoxSwitchGroups = (args) => {
                     }`}
                     type="checkbox"
                     readOnly={!!readOnly}
+                    onChange={onChange}
                     id={`check${d._id}${d.name
                       .toLowerCase()
                       .replace(/ /g, "_")}`}
