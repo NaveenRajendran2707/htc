@@ -14,6 +14,7 @@ import {
   inputMultipleCheckBoxGroupsChange,
   inputMultipleCheckBox,
   inputSwitch,
+  staticInputSelectState
 } from "../../utils/dynamicForm";
 
 const methodConversion = (methodName) => {
@@ -81,7 +82,7 @@ export const FormUsers = ({
       localStorage.setItem("menu_post", JSON.stringify(menu_get));
       setMenu(menu_get);
     }
-  }, [checkTrue, menu_get]);
+  }, [checkTrue]);
   const handleCheckBox = (e) => {
     setCheckTrue(true);
     const selectedPermissionId = e.target.value;
@@ -115,7 +116,20 @@ export const FormUsers = ({
       });
     }
   };
-
+  const [city, setCity] = useState([]);
+  const [getTrue, setTrue] = useState(false);
+  const handleStateChange = (e) => {
+    setTrue(true);
+    const id = e.target.selectedOptions[0].dataset.id;
+    if (id !== "") {
+      const filteredCities = cityData
+        .filter((item) => item?.state?._id === id)
+        .map((item) => ({ name: item.cityName }));
+      setCity(filteredCities);
+    } else {
+      setCity([]);
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -197,7 +211,35 @@ export const FormUsers = ({
             readOnly: view,
           })}
           <div className="grid grid-cols-12 gap-3">
-            {dynamicInputSelect({
+          {staticInputSelectState({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,
+            data:
+              stateData &&
+              stateData.map((item) => ({
+                name: item.stateName,
+                _id: item._id,
+              })),
+            onChange: handleStateChange,
+            readOnly: view,
+            wrapperClass: "col-span-4",
+          })}
+          {staticInputSelect({
+            register,
+            errors,
+            label: "City",
+            name: "city",
+            placeholder: "City",
+            isRequired: false,
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
+            readOnly: view,
+            wrapperClass: "col-span-4",
+          })}
+            {/* {dynamicInputSelect({
               register,
               errors,
               label: "State",
@@ -220,7 +262,7 @@ export const FormUsers = ({
               value: "cityName",
               readOnly: view,
               wrapperClass: "col-span-4",
-            })}
+            })} */}
             {inputText({
               register,
               errors,

@@ -100,7 +100,7 @@ export const putBranch = async (req, res) => {
   try {
 
     const { id } = req.params
-    const { branchSerialNo, registrationDate, companyID, city, branchID, user, 
+    const { branchSerialNo, registrationDate, companyID, city, state, branchID, user, 
       branchName, branchShortName, gSTINNumber, address1, address2, address3, pincode, mobileNumber, 
       phoneNumber, email, logo, watermark, blocked} = req.body
 
@@ -112,6 +112,7 @@ export const putBranch = async (req, res) => {
     object.registrationDate = registrationDate    
     object.companyID = companyID
     object.city = city
+    object.state = state
     object.branchID = branchID
     object.user = user
     object.branchName = branchName

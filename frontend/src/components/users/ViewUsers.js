@@ -12,7 +12,7 @@ const ViewUsers = ({
   q,
   searchHandler,
 }) => {
-  console.log("data", data);
+  // console.log("data", data);
   return (
     <>
       <div className="flex flex-wrap items-center justify-between mb-3">

@@ -33,10 +33,11 @@ const Employees = () => {
   const [q, setQ] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getEmployees, postEmployee, updateEmployee, deleteEmployee } = useEmployeesHook({
-    page,
-    q,
-  });
+  const { getEmployees, postEmployee, updateEmployee, deleteEmployee } =
+    useEmployeesHook({
+      page,
+      q,
+    });
 
   const { getPermissions } = usePermissionsHook({
     limit: 1000000,
@@ -63,7 +64,7 @@ const Employees = () => {
   const { data: permissionData } = getPermissions;
   const { data: menuData } = getMenus;
 
-  console.log("data", data)
+  // console.log("data", data)
 
   const {
     isLoading: isLoadingUpdate,
@@ -101,7 +102,6 @@ const Employees = () => {
 
   const { data: designationData } = getDesignations;
 
-
   const { getStates } = useStatesHook({
     limit: 1000000,
   });
@@ -113,7 +113,6 @@ const Employees = () => {
   });
 
   const { data: cityData } = getCities;
-
 
   const formCleanHandler = () => {
     setEdit(false);
@@ -169,7 +168,7 @@ const Employees = () => {
           menu: data.menu,
         })
       : mutateAsyncPost(data);
-      setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const viewHandler = (employee) => {
@@ -198,10 +197,18 @@ const Employees = () => {
   };
 
   const editHandler = (employee) => {
-    console.log('employee', employee)
+    // console.log("employee", employee);
     setId(employee._id);
     setView(false);
     setEdit(true);
+    const selectedState = stateData?.data?.find(
+      (state) => state._id === employee?.state
+    );
+    const selectedCity = cityData?.data?.find(
+      (city) => city._id === employee?.city
+    );
+    setValue("state", selectedState?.stateName || "");
+    setValue("city", selectedCity?.cityName || "");
     setValue("department", employee.department);
     setValue("designation", employee.designation);
     setValue("name", employee.name);
@@ -210,9 +217,9 @@ const Employees = () => {
     setValue("address1", employee.address1);
     setValue("address2", employee.address2);
     setValue("address3", employee.address3);
-    setValue("city", employee.city);
+    // setValue("city", employee.city);
     setValue("pincode", employee.pincode);
-    setValue("state", employee.state);
+    // setValue("state", employee.state);
     setValue("mobile", employee.mobile);
     setValue("pan", employee.pan);
     setValue("pf", employee.pf);
@@ -233,15 +240,21 @@ const Employees = () => {
         <meta property="og:title" content="Employees" key="title" />
       </Helmet>
       {isSuccessDelete && (
-        <Message variant="success">Employee has been deleted successfully.</Message>
+        <Message variant="success">
+          Employee has been deleted successfully.
+        </Message>
       )}
       {isErrorDelete && <Message variant="danger">{errorDelete}</Message>}
       {isSuccessUpdate && (
-        <Message variant="success">Employee has been updated successfully.</Message>
+        <Message variant="success">
+          Employee has been updated successfully.
+        </Message>
       )}
       {isErrorUpdate && <Message variant="danger">{errorUpdate}</Message>}
       {isSuccessPost && (
-        <Message variant="success">Employee has been created successfully.</Message>
+        <Message variant="success">
+          Employee has been created successfully.
+        </Message>
       )}
       {isErrorPost && <Message variant="danger">{errorPost}</Message>}
 
@@ -281,14 +294,21 @@ const Employees = () => {
               as="div"
             >
               <h3 className="text-2xl font-bold">
-                {edit ? "Edit Employee" : view ? "View Employee" : "Add Employee"}
+                {edit
+                  ? "Edit Employee"
+                  : view
+                  ? "View Employee"
+                  : "Add Employee"}
               </h3>
 
               <button
                 type="button"
                 className="inline-flex text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-600 focus-visible:ring-4 transition duration-150 ease-linear p-1"
                 aria-label="Close"
-                onClick={() => {setIsModalOpen(false); formCleanHandler()}}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  formCleanHandler();
+                }}
               >
                 <span className="material-symbols-rounded">close</span>
               </button>

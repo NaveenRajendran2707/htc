@@ -183,6 +183,7 @@ const Branches = () => {
     setValue("registrationDate", branch.registrationDate);
     setValue("companyID", branch.companyID);
     setValue("city", branch.city);
+    setValue("state", branch.state);
     setValue("branchID", branch.branchID);
     setValue("user", branch.user);
     setValue("branchName", branch.branchName);

@@ -1,6 +1,6 @@
-import crypto from 'crypto'
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
+import crypto from "crypto";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const branchScheme = mongoose.Schema(
   {
@@ -8,29 +8,29 @@ const branchScheme = mongoose.Schema(
     branchSerialNo: { type: String },
     registrationDate: { type: String },
     companyID: { type: String },
-    branchID: { type: String },    
+    branchID: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,      
+      ref: "User",
     },
     branchName: { type: String },
     branchShortName: { type: String },
-    gSTINNumber: { type: String },    
+    gSTINNumber: { type: String },
     address1: { type: String },
     address2: { type: String },
     address3: { type: String },
     city: { type: String },
+    state: { type: String },
     pincode: { type: String },
-    mobileNumber: { type: String },    
+    mobileNumber: { type: String },
     phoneNumber: { type: String },
     email: { type: String },
     logo: { type: String },
-    watermark: { type: String },    
+    watermark: { type: String },
     blocked: { type: Boolean, default: false },
   },
   { timestamps: true }
-)
+);
 
 // branchScheme.methods.matchPassword = async function (enteredPassword) {
 //   return await bcrypt.compare(enteredPassword, this.password)
@@ -63,5 +63,5 @@ const branchScheme = mongoose.Schema(
 //   return resetToken
 // }
 
-const Branch = mongoose.model('Branch', branchScheme)
-export default Branch
+const Branch = mongoose.model("Branch", branchScheme);
+export default Branch;

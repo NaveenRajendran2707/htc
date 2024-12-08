@@ -86,7 +86,7 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
     // console.log("MatchedMenu", menuItems);
     const uniqueDropdowns = [...new Set(menuItems.map((menu) => menu.menu))];
     // console.log("UniqueDropdowns", uniqueDropdowns);
-    console.log("uniqueDropdowns", uniqueDropdowns, menuItems);
+    // console.log("uniqueDropdowns", uniqueDropdowns, menuItems);
     return { uniqueDropdowns, menuItems };
   };
 
@@ -276,7 +276,17 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
                         <ul className="pb-4 pt-2 flex flex-col border-l border-slate-700 ml-4">
                           {menus() &&
                             menus()
-                              .menuItems?.sort((a, b) => a.order - b.order)
+                              .menuItems?.map((menu) => {
+                                if (menu.menu === "profile") {
+                                  return {
+                                    ...menu,
+                                    order:
+                                      menu.name === "Profile" ? -1 : menu.order,
+                                  };
+                                }
+                                return menu;
+                              })
+                              ?.sort((a, b) => a.order - b.order)
                               .map((menu) =>
                                 menu.menu === item ? (
                                   <li key={menu._id}>

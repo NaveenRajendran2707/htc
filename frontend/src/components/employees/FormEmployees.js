@@ -11,7 +11,8 @@ import {
   inputDate,
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
-  inputMultipleCheckBox
+  inputMultipleCheckBox,
+  staticInputSelectState
 } from "../../utils/dynamicForm";
 
 const methodConversion = (methodName) => {
@@ -60,6 +61,20 @@ export const FormEmployees = ({
     const currentPermissions = watch("permission") || [];
     setCheckedPermissions(currentPermissions);
   }, [watch("permission")]);
+  const [city, setCity] = useState([]);
+  const [getTrue, setTrue] = useState(false);
+  const handleStateChange = (e) => {
+    setTrue(true);
+    const id = e.target.selectedOptions[0].dataset.id;
+    if (id !== "") {
+      const filteredCities = cityData
+        .filter((item) => item?.state?._id === id)
+        .map((item) => ({ name: item.cityName }));
+      setCity(filteredCities);
+    } else {
+      setCity([]);
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -171,7 +186,35 @@ export const FormEmployees = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {dynamicInputSelect({
+           {staticInputSelectState({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,
+            data:
+              stateData &&
+              stateData.map((item) => ({
+                name: item.stateName,
+                _id: item._id,
+              })),
+            onChange: handleStateChange,
+            readOnly: view,
+            wrapperClass: "col-span-4",
+          })}
+          {staticInputSelect({
+            register,
+            errors,
+            label: "City",
+            name: "city",
+            placeholder: "City",
+            isRequired: false,
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
+            readOnly: view,
+            wrapperClass: "col-span-4",
+          })}
+          {/* {dynamicInputSelect({
             register,
             errors,
             label: "State",
@@ -192,7 +235,7 @@ export const FormEmployees = ({
             data: cityData && cityData,
             value: "cityName",
             readOnly: view,
-          })}
+          })} */}
           {inputText({
             register,
             errors,

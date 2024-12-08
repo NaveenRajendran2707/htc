@@ -68,7 +68,7 @@ const Companies = () => {
   });
 
   const { data: users } = getUsers;
-  console.log("users", users);
+  // console.log("users", users);
 
   const { getDepartments } = useDepartmentsHook({
     limit: 1000000,
@@ -247,13 +247,23 @@ const Companies = () => {
   };
 
   const editHandler = (company) => {
+    console.log("company", company);
     setId(company._id);
     setView(false);
     setEdit(true);
+    const selectedState = getState?.data?.find(
+      (state) => state._id === company?.employee?.state
+    );
+    // console.log("selectedState",getState)
+    const selectedCity = getCity?.data?.find(
+      (city) => city._id === company?.employee?.city
+    );
+    setValue("state", selectedState?.stateName || "");
+    setValue("city", selectedCity?.cityName || "");
     setValue("companySerialNo", company.companySerialNo);
     setValue("registrationDate", company.registrationDate);
     setValue("introductionID", company.introductionID);
-    setValue("city", company.city);
+    // setValue("city", company.city);
     setValue("companyID", company.companyID);
     setValue("typeofService", company.typeofService);
     setValue("companyType", company.companyType);
@@ -285,8 +295,8 @@ const Companies = () => {
     setValue("dob", company?.employee?.dob);
     setValue("user", company?.employee?.user);
     setValue("salaryscheduletype", company?.employee?.salaryscheduletype);
-    setValue("city", company?.employee?.city);
-    setValue("state", company?.employee?.state);
+    // setValue("city", company?.employee?.city);
+    // setValue("state", company?.employee?.state);
   };
 
   const viewCompanyHandler = (company) => {

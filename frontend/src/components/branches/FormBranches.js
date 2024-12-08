@@ -40,7 +40,9 @@ export const FormBranches = ({
     return field;
   };
   const [city, setCity] = useState([]);
+  const [getTrue, setTrue] = useState(false);
   const handleStateChange = (e) => {
+    setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
     if (id !== "") {
       const filteredCities = cities
@@ -197,7 +199,7 @@ export const FormBranches = ({
             name: "city",
             placeholder: "City",
             isRequired: false,
-            data: city && city,
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
             readOnly: view,
           })}
           {inputText({

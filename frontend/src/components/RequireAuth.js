@@ -29,10 +29,10 @@ const RequireAuth = () => {
         userMenus.includes(menuItem._id)
       )) ||
     [];
-  console.log("MatchedMenu--->", menuItems);
+  // console.log("MatchedMenu--->", menuItems);
 
-  console.log("User Menus:", userMenus);
-  console.log("Current Path:", location.pathname);
+  // console.log("User Menus:", userMenus);
+  // console.log("Current Path:", location.pathname);
 
   return menuItems?.map((path) => path?.path)?.includes(location.pathname) ? (
     <Outlet />

@@ -122,15 +122,15 @@ const Users = () => {
     confirmAlert(Confirm(() => mutateAsyncDelete(id)));
   };
 
-  const submitHandler =async (data) => {
+  const submitHandler = async (data) => {
     console.log("edit", edit);
     console.log("adminnnnn", data);
     const menu = localStorage.getItem("menu_post")
       ? JSON.parse(localStorage.getItem("menu_post"))
       : null;
-    console.log("dataaaaa", data,menu);
+    console.log("dataaaaa", data, menu);
     edit
-      ?await mutateAsyncUpdate({
+      ? await mutateAsyncUpdate({
           _id: id,
           sequenceNumber: data.sequenceNumber,
           firstName: data.firstName,
@@ -150,10 +150,10 @@ const Users = () => {
           permission: data.permission,
           menu: menu && menu,
         })
-      :mutateAsyncPost(data);
-      localStorage.removeItem('menu_post')
-      localStorage.removeItem('menu_get')
-      localStorage.removeItem('permission_get')
+      : mutateAsyncPost(data);
+    localStorage.removeItem("menu_post");
+    localStorage.removeItem("menu_get");
+    localStorage.removeItem("permission_get");
     setIsModalOpen(false);
   };
 
@@ -179,18 +179,27 @@ const Users = () => {
   };
 
   const editHandler = (user) => {
-    console.log("editHandler", user);
+    // console.log("editHandler", user);
     setId(user._id);
     setView(false);
     setEdit(true);
+    const selectedState = stateData?.data?.find(
+      (state) => state._id === user?.profile?.state
+    );
+    // console.log("selectedState",selectedState)
+    const selectedCity = cityData?.data?.find(
+      (city) => city._id === user?.profile?.city
+    );
+    setValue("state", selectedState?.stateName || "");
+    setValue("city", selectedCity?.cityName || "");
     setValue("firstName", user.firstName);
     setValue("lastName", user.lastName);
     setValue("address1", user.profile?.address1);
     setValue("address2", user.profile?.address2);
     setValue("address3", user.profile?.address3);
-    setValue("city", user.profile?.city);
+    // setValue("city", user.profile?.city);
     setValue("pincode", user.profile?.pincode);
-    setValue("state", user.profile?.state);
+    // setValue("state", user.profile?.state);
     setValue("mobile", user.profile?.mobile);
     setValue("pan", user.profile?.pan);
     setValue("email", user.email);
@@ -198,8 +207,8 @@ const Users = () => {
     setValue("blocked", user.blocked);
     setValue("permission", user.permission);
     setValue("menu", user.menu);
-    localStorage.setItem("permission_get",JSON.stringify(user.permission))
-    localStorage.setItem("menu_get",JSON.stringify(user.menu))
+    localStorage.setItem("permission_get", JSON.stringify(user.permission));
+    localStorage.setItem("menu_get", JSON.stringify(user.menu));
   };
 
   return (

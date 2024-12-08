@@ -12,17 +12,21 @@ import {
   dynamicInputSelect,
   inputPassword,
   inputMultipleCheckBoxGroups,
-  inputMultipleCheckBox
+  inputMultipleCheckBox,
 } from "../../utils/dynamicForm";
 
 const methodConversion = (methodName) => {
-  switch(methodName){
-    case 'GET': return 'List';
-    case 'POST': return 'Add';
-    case 'PUT': return 'Edit';
-    case 'DELETE': return 'Delete';
-  }  
-}
+  switch (methodName) {
+    case "GET":
+      return "List";
+    case "POST":
+      return "Add";
+    case "PUT":
+      return "Edit";
+    case "DELETE":
+      return "Delete";
+  }
+};
 
 export const FormCompanies = ({
   view,
@@ -59,7 +63,9 @@ export const FormCompanies = ({
     return field;
   };
   const [city, setCity] = useState([]);
+  const [getTrue, setTrue] = useState(false);
   const handleStateChange = (e) => {
+    setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
     if (id !== "") {
       const filteredCities = cities
@@ -97,24 +103,34 @@ export const FormCompanies = ({
             value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
             readOnly: true,
           })}
-           {inputHidden({
+          {inputHidden({
             register,
             errors,
             label: "",
             name: "userID",
             placeholder: "User ID",
-            value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "USR" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
-          })} 
+          })}
           {inputHidden({
             register,
             errors,
             label: "",
             name: "employeeID",
             placeholder: "Employee ID",
-            value: "EMP"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "EMP" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
-          })} 
+          })}
           {inputText({
             register,
             errors,
@@ -245,7 +261,7 @@ export const FormCompanies = ({
             placeholder: "Company Admin Name",
             readOnly: view,
           })}
-           {inputText({
+          {inputText({
             register,
             errors,
             label: "First Name",
@@ -288,7 +304,7 @@ export const FormCompanies = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {/* {staticInputSelectState({
+          {staticInputSelectState({
             register,
             errors,
             label: "State",
@@ -311,10 +327,10 @@ export const FormCompanies = ({
             name: "city",
             placeholder: "City",
             isRequired: false,
-            data: city && city,
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
             readOnly: view,
-          })} */}
-           {dynamicInputSelect({
+          })}
+          {/* {dynamicInputSelect({
             register,
             errors,
             label: "State",
@@ -335,7 +351,7 @@ export const FormCompanies = ({
             data: cities && cities,
             value: "cityName",
             readOnly: view,
-          })}
+          })} */}
           {inputText({
             register,
             errors,
@@ -422,31 +438,34 @@ export const FormCompanies = ({
             data: [{ name: "Weekly" }, { name: "Monthly" }],
             readOnly: view,
           })}
-           {view || edit ? <div></div> : <div>
-            {inputPassword({
-              register,
-              errors,
-              label: "Password",
-              name: "password",
-              minLength: true,
-              isRequired: false,
-              placeholder: "Password",
-              readOnly: view,
-            })}
-            {inputPassword({
-              register,
-              errors,
-              watch,
-              name: "confirmPassword",
-              label: "Confirm Password",
-              validate: true,
-              minLength: true,
-              isRequired: false,
-              placeholder: "Confirm Password",
-              readOnly: view,
-            })}
+          {view || edit ? (
+            <div></div>
+          ) : (
+            <div>
+              {inputPassword({
+                register,
+                errors,
+                label: "Password",
+                name: "password",
+                minLength: true,
+                isRequired: false,
+                placeholder: "Password",
+                readOnly: view,
+              })}
+              {inputPassword({
+                register,
+                errors,
+                watch,
+                name: "confirmPassword",
+                label: "Confirm Password",
+                validate: true,
+                minLength: true,
+                isRequired: false,
+                placeholder: "Confirm Password",
+                readOnly: view,
+              })}
             </div>
-          }
+          )}
           {inputText({
             register,
             errors,
@@ -465,7 +484,7 @@ export const FormCompanies = ({
             placeholder: "Watermark",
             readOnly: view,
           })}
-           {inputSwitch({
+          {inputSwitch({
             register,
             errors,
             watch,
@@ -485,7 +504,7 @@ export const FormCompanies = ({
             placeholder: "Blocked",
             readOnly: view,
           })}
-           {view || edit ? 
+          {view || edit ? (
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
@@ -496,12 +515,14 @@ export const FormCompanies = ({
                   name: "permission",
                   placeholder: "Permission",
                   data:
-                    permissionData &&                
-                    permissionData.filter(item => item.show).map((item) => ({                  
+                    permissionData &&
+                    permissionData
+                      .filter((item) => item.show)
+                      .map((item) => ({
                         name: `${item.name}`,
                         method: methodConversion(item.method),
                         _id: item._id,
-                    })),
+                      })),
                   isRequired: false,
                   readOnly: view,
                   checkedValues: checkedPermissions,
@@ -509,25 +530,26 @@ export const FormCompanies = ({
               </div>
 
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
-              <h4 className="font-medium text-base mb-3">Menus</h4>
-              {inputMultipleCheckBox({
-                register,
-                errors,
-                label: "Menu",
-                name: "menu",
-                placeholder: "Menu",
-                data:
-                  menuData &&
-                  menuData.map((item) => ({
-                    name: `${item.menu} - ${item.path}`,
-                    _id: item._id,
-                  })),
-                isRequired: false,
-              })}
+                <h4 className="font-medium text-base mb-3">Menus</h4>
+                {inputMultipleCheckBox({
+                  register,
+                  errors,
+                  label: "Menu",
+                  name: "menu",
+                  placeholder: "Menu",
+                  data:
+                    menuData &&
+                    menuData.map((item) => ({
+                      name: `${item.menu} - ${item.path}`,
+                      _id: item._id,
+                    })),
+                  isRequired: false,
+                })}
               </div>
             </>
-          : ""
-          }
+          ) : (
+            ""
+          )}
           {view ? (
             ""
           ) : (

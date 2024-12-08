@@ -97,7 +97,7 @@ export const FormChannelPartners = ({
             value: nextSequenceNumber > 0 ? nextSequenceNumber : 1,
             readOnly: true,
           })}
-           {inputHidden({
+          {inputHidden({
             register,
             errors,
             label: "",
@@ -157,14 +157,7 @@ export const FormChannelPartners = ({
             name: "city",
             placeholder: "City",
             isRequired: false,
-            data:
-              !edit || getTrue
-                ? city && city
-                : cities &&
-                  cities.map((item) => ({
-                    name: item.cityName,
-                    _id: item._id,
-                  })),
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
             readOnly: view,
           })}
           {inputText({
@@ -276,7 +269,7 @@ export const FormChannelPartners = ({
             isRequired: true,
             readOnly: view,
           })}
-             {view || edit ? (
+          {view || edit ? (
             <div></div>
           ) : (
             <div>
@@ -349,7 +342,7 @@ export const FormChannelPartners = ({
             isRequired: false,
             readOnly: view,
           })}
-         {inputSwitch({
+          {inputSwitch({
             register,
             errors,
             watch,

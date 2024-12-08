@@ -48,6 +48,7 @@ const Menus = () => {
   });
 
   const { data, isLoading, isError, error, refetch } = getMenus;
+  console.log('data', data)
 
   const {
     isLoading: isLoadingUpdate,
