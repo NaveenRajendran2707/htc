@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { inputText, inputSelect, inputDate } from "../../utils/dynamicForm";
 
 const FormSalesVoucher = () => {
   const [isPOSOpen, setIsPOSOpen] = useState(false);
   const [saleType, setSaleType] = useState("Cash Sale");
+
   const {
     register,
     handleSubmit,
@@ -42,17 +42,6 @@ const FormSalesVoucher = () => {
     name: "products",
   });
 
-  const calculateAmount = (product) => {
-    const price = parseFloat(product.price || 0);
-    const quantity = parseFloat(product.quantity || 0);
-    const discount = parseFloat(product.discount || 0);
-    const gstRate = parseFloat(product.gstRate || 0);
-    const discountedPrice = price - (price * discount) / 100;
-    const taxableAmount = discountedPrice * quantity;
-    const gstAmount = (taxableAmount * gstRate) / 100;
-    return taxableAmount + gstAmount;
-  };
-
   const submitHandler = (data) => {
     console.log("Form Data:", data);
     alert("Sales Voucher Submitted Successfully");
@@ -64,246 +53,260 @@ const FormSalesVoucher = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
-      {inputSelect({
-        register,
-        errors,
-        label: "Sale Type",
-        name: "saleType",
-        options: [
-          { label: "Cash Sale", value: "Cash Sale" },
-          { label: "Credit Sale", value: "Credit Sale" },
-        ],
-        onChange: (e) => setSaleType(e.target.value),
-      })}
+    <div className="bg-gray-100 p-6 min-h-screen">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-xl font-semibold text-gray-700 border-b pb-4 mb-6">
+          Sales Voucher
+        </h2>
 
-      {inputText({
-        register,
-        errors,
-        label: "Invoice No",
-        name: "invoiceNo",
-        placeholder: "Invoice No",
-      })}
-      {inputDate({
-        register,
-        errors,
-        label: "Invoice Date",
-        name: "invoiceDate",
-        placeholder: "11/11/1999",
-      })}
-      <button
-        type="button"
-        onClick={togglePOS}
-        className="min-w-[120px] inline-flex items-center justify-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8 text-center "
-      >
-        {isPOSOpen ? "Close P.O.S" : "Open P.O.S"}
-      </button>
-      {isPOSOpen && (
-        <>
-          <h3 className="font-bold">P.O.S</h3>
-          {inputText({
-            register,
-            errors,
-            label: "Customer Name",
-            name: "customerNamePOS",
-            placeholder: "Customer Name",
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "GST No",
-            name: "gstNoPOS",
-            placeholder: "GST No",
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Address",
-            name: "customerAddressPOS",
-            placeholder: "Address",
-          })}
-        </>
-      )}
-      {fields.map((item, index) => (
-        <div key={item.id} className="mb-4 border p-2">
-          <div className="grid grid-cols-1 gap-4">
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.productName`,
-              label: "Product Name",
-              placeholder: "Product Name",
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.hsnCode`,
-              label: "HSN Code",
-              placeholder: "HSN Code",
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.quantity`,
-              label: "Quantity",
-              placeholder: "Quantity",
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.unit`,
-              label: "Unit",
-              placeholder: "Unit",
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.price`,
-              label: "Price",
-              placeholder: "Price",
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.discount`,
-              label: "Discount %",
-              placeholder: "Discount %",
-            })}
-            {inputSelect({
-              register,
-              errors,
-              name: `products.${index}.gstRate`,
-              label: "GST Rate %",
-              options: [
-                { label: "5%", value: "5" },
-                { label: "12%", value: "12" },
-                { label: "18%", value: "18" },
-                { label: "28%", value: "28" },
-              ],
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.amount`,
-              label: "Amount",
-              placeholder: "Amount",
-              isReadOnly: true,
-            })}
-            {inputText({
-              register,
-              errors,
-              name: `products.${index}.description`,
-              label: "Description",
-              type: "textarea",
-              placeholder: "Description",
-            })}
-          </div>
-          {index > 0 && (
-            <button
-              type="button"
-              onClick={() => remove(index)}
-              className="text-red-600 mt-2"
+        {/* Sale Type and Invoice Details */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-gray-600 mb-2">Sale Type</label>
+            <select
+              {...register("saleType")}
+              className="w-full p-2 border rounded"
+              onChange={(e) => setSaleType(e.target.value)}
             >
-              Remove Product
-            </button>
-          )}
+              <option value="Cash Sale">Cash Sale</option>
+              <option value="Credit Sale">Credit Sale</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-gray-600 mb-2">Invoice No</label>
+            <input
+              type="text"
+              {...register("invoiceNo")}
+              placeholder="Invoice No"
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-600 mb-2">Invoice Date</label>
+            <input
+              type="date"
+              {...register("invoiceDate")}
+              className="w-full p-2 border rounded"
+            />
+          </div>
         </div>
-      ))}
-      <button
-        type="button"
-        onClick={() => append({})}
-        className="text-blue-600 mb-4"
-      >
-        Add Product
-      </button>
-      {inputText({
-        register,
-        errors,
-        name: "taxableAmount",
-        label: "Taxable Amount",
-        placeholder: "Taxable Amount",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "cgst",
-        label: "CGST",
-        placeholder: "CGST",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "sgst",
-        label: "SGST",
-        placeholder: "SGST",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "igst",
-        label: "IGST",
-        placeholder: "IGST",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "packingCharge",
-        label: "Packing Charge",
-        placeholder: "packingCharge",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "roundOff",
-        label: "Round Off",
-        placeholder: "roundOff",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "totalAmount",
-        label: "Total Amount",
-        placeholder: "totalAmount",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        name: "grandTotal",
-        label: "Grand Total",
-        placeholder: "grandTotal",
-        isReadOnly: true,
-      })}
-      {inputText({
-        register,
-        errors,
-        label: "Narration",
-        name: "narration",
-        placeholder: "Narration",
-        type: "textarea",
-      })}
-      <div className="flex gap-3 mt-4">
-        <button
-          type="submit"
-          className="min-w-[120px] inline-flex items-center justify-center gap-1 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded text-sm px-3 py-0 h-8 text-center "
-        >
-          Save
-        </button>
+
+        {/* P.O.S Section */}
         <button
           type="button"
-          onClick={() => reset()}
-          className="px-3 py-0 h-8 inline-flex items-center gap-x-2 text-sm font-medium rounded border border-gray-300 bg-white text-gray-800 hover:bg-gray-100  hover:shadow focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-white active:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+          onClick={togglePOS}
+          className="bg-blue-600 text-white px-4 py-2 rounded mb-6"
         >
-          Clear
+          {isPOSOpen ? "Close P.O.S" : "Open P.O.S"}
         </button>
+        {isPOSOpen && (
+          <div className="bg-gray-50 p-4 rounded border mb-6">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">
+              P.O.S Details
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-600 mb-2">Customer Name</label>
+                <input
+                  type="text"
+                  {...register("customerNamePOS")}
+                  placeholder="Customer Name"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600 mb-2">GST No</label>
+                <input
+                  type="text"
+                  {...register("gstNoPOS")}
+                  placeholder="GST No"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600 mb-2">Address</label>
+                <input
+                  type="text"
+                  {...register("customerAddressPOS")}
+                  placeholder="Address"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600 mb-2">Contact Number</label>
+                <input
+                  type="text"
+                  {...register("customerContactPOS")}
+                  placeholder="Contact Number"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Product Table */}
+        <h3 className="text-lg font-semibold text-gray-700 mb-4">Products</h3>
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 px-4 py-2">#</th>
+                <th className="border border-gray-300 px-4 py-2">Product Name</th>
+                <th className="border border-gray-300 px-4 py-2">HSN Code</th>
+                <th className="border border-gray-300 px-4 py-2">Quantity</th>
+                <th className="border border-gray-300 px-4 py-2">Unit</th>
+                <th className="border border-gray-300 px-4 py-2">Price</th>
+                <th className="border border-gray-300 px-4 py-2">Discount %</th>
+                <th className="border border-gray-300 px-4 py-2">GST Rate %</th>
+                <th className="border border-gray-300 px-4 py-2">Amount</th>
+                <th className="border border-gray-300 px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fields.map((item, index) => (
+                <tr key={item.id}>
+                  <td className="border border-gray-300 px-4 py-2 text-center">
+                    {index + 1}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="text"
+                      {...register(`products.${index}.productName`)}
+                      placeholder="Product Name"
+                      className="w-full p-2 border rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="text"
+                      {...register(`products.${index}.hsnCode`)}
+                      placeholder="HSN Code"
+                      className="w-full p-2 border rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="number"
+                      {...register(`products.${index}.quantity`)}
+                      placeholder="Quantity"
+                      className="w-full p-2 border rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="text"
+                      {...register(`products.${index}.unit`)}
+                      placeholder="Unit"
+                      className="w-full p-2 border rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="number"
+                      {...register(`products.${index}.price`)}
+                      placeholder="Price"
+                      className="w-full p-2 border rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="number"
+                      {...register(`products.${index}.discount`)}
+                      placeholder="Discount %"
+                      className="w-full p-2 border rounded"
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <select
+                      {...register(`products.${index}.gstRate`)}
+                      className="w-full p-2 border rounded"
+                    >
+                      <option value="5">5%</option>
+                      <option value="12">12%</option>
+                      <option value="18">18%</option>
+                      <option value="28">28%</option>
+                    </select>
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input
+                      type="text"
+                      {...register(`products.${index}.amount`)}
+                      placeholder="Amount"
+                      className="w-full p-2 border rounded"
+                      readOnly
+                    />
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">
+                    {index > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => remove(index)}
+                        className="bg-red-500 text-white px-2 py-1 rounded"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => append({})}
+          className="bg-green-600 text-white px-4 py-2 rounded mt-4"
+        >
+          Add Product
+        </button>
+
+        {/* Summary Section */}
+        <h3 className="text-lg font-semibold text-gray-700 mt-6 mb-4">
+          Summary
+        </h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-600 mb-2">Total Amount</label>
+            <input
+              type="text"
+              {...register("totalAmount")}
+              placeholder="Total Amount"
+              className="w-full p-2 border rounded"
+              readOnly
+            />
+          </div>
+          <div>
+            <label className="block text-gray-600 mb-2">Grand Total</label>
+            <input
+              type="text"
+              {...register("grandTotal")}
+              placeholder="Grand Total"
+              className="w-full p-2 border rounded"
+              readOnly
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-4 mt-6">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-6 py-2 rounded"
+            onClick={handleSubmit(submitHandler)}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className="bg-gray-300 text-gray-800 px-6 py-2 rounded"
+            onClick={() => reset()}
+          >
+            Clear
+          </button>
+        </div>
       </div>
-    </form>
+    </div>
   );
 };
 

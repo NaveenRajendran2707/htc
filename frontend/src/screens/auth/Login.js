@@ -35,7 +35,7 @@ const Login = () => {
 
   const { getMenus } = useMenusHook({ limit: 1000000 });
 
-  console.log("postLogin", postLogin);
+  // console.log("postLogin", postLogin);
 
   const { isLoading, isError, error, mutateAsync, isSuccess, data } = postLogin;
   const {

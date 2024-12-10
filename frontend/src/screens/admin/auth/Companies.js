@@ -25,9 +25,13 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
+import useAuthHook from "../../../api/auth";
+import useAuth from "../../../hooks/useAuth";
+import useUserRolesHook from "../../../api/userRoles";
 
 const Companies = () => {
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
   const [page, setPage] = useState(1);
   const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
@@ -91,6 +95,30 @@ const Companies = () => {
 
   const { data: permissionData } = getPermissions;
   const { data: menuData } = getMenus;
+
+  const { postLogin } = useAuthHook();
+
+  const {
+    isLoading: isLoad,
+    isError: isErr,
+    error: err,
+    mutateAsync,
+    isSuccess,
+    data: datas,
+  } = postLogin;
+
+  const { postUserRoleById } = useUserRolesHook({
+    page: 1,
+    q: "",
+    limit: 10000000,
+  });
+  
+  const {
+    mutateAsync: userRoleMutateAsync,
+    data: userRole,
+    error: errorUserRole,
+    isError: isErrorUserRole,
+  } = postUserRoleById;
 
   const {
     register,
@@ -298,16 +326,43 @@ const Companies = () => {
     // setValue("city", company?.employee?.city);
     // setValue("state", company?.employee?.state);
   };
+  const clearAuthData = () => {
+    setAuth(null);
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userMenu");
+  };
 
-  const viewCompanyHandler = (company) => {
-    console.log(
-      "companycompany",
-      company?.user?.email,
-      company?.user?.password,
-      company?.user?.userType
-    );
-    //  navigate('/auth/login')
-    window.open("/auth/login", "_blank");
+  const viewCompanyHandler = async (company) => {
+    const email = company?.user?.email;
+    // const password = company?.user?.password;
+    const password = "123456";
+    const userType = company?.user?.userType;
+    if (!email || !password || !userType) {
+      console.error("Invalid user data");
+      return;
+    }
+    try {
+      clearAuthData();
+      const payload = { email, password, usertype: userType };
+      const data = await postLogin.mutateAsync(payload);
+      if (data) {
+        const userRole = await userRoleMutateAsync(data._id);
+        if (userRole) {
+          localStorage.setItem("userRole", JSON.stringify(userRole));
+          localStorage.setItem("userInfo", JSON.stringify(data));
+          localStorage.setItem("userMenu", JSON.stringify(getMenus));
+          setAuth({
+            userInfo: data,
+            userRole: userRole,
+          });
+          const newTabUrl = "/";
+          window.open(newTabUrl, "_blank");
+        }
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
   };
 
   return (

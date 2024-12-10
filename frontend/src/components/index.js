@@ -59,7 +59,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import FormSalesVoucher from "./sales-purchase/FormSalesVoucher";
 import FormChangePassword from "./change-password/FormChangePassword";
-import FormReceipt from "./receipts/FormReceipts";
 
 export {
   ViewUsers,
@@ -123,5 +122,4 @@ export {
   Footer,
   FormSalesVoucher,
   FormChangePassword,
-  FormReceipt,
 };
