@@ -87,6 +87,7 @@ const ChannelPartners = () => {
 
   const { data: permissionData } = getPermissions;
   const { data: menuData } = getMenus;
+  const { data: channelId } = getChannelPartners;
 
   const {
     isLoading: isLoadingUpdate,
@@ -169,7 +170,7 @@ const ChannelPartners = () => {
           menu: data.menu,
         })
       : mutateAsyncPost(data);
-      setIsModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const viewHandler = (channelpartner) => {
@@ -333,6 +334,7 @@ const ChannelPartners = () => {
                 permissionData={permissionData && permissionData.data}
                 menuData={menuData && menuData.data}
                 nextSequenceNumber={data && data.nextSequenceNumber}
+                channelId={channelId && channelId.data}
               />
             </div>
           </DialogPanel>
