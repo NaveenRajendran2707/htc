@@ -36,6 +36,56 @@ export const inputHidden = (args) => {
   );
 };
 
+export const inputImgFile = (args) => {
+  const {
+    register,
+    errors,
+    name,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+    defaultImage = "",
+    onChange
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
+        {label}
+        {isRequired && <span className="text-red-500 ml-1 font-bold">*</span>}
+      </label>
+      <input
+        {...register(name, isRequired && { required: `${label} is required` })}
+        type="file"
+        accept="image/*"
+        readOnly={!!readOnly}
+        onChange={onChange}
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
+          readOnly && "bg-slate-200"
+        } ${inputClass}`}
+        id="formFile"
+      />
+      {defaultImage && (
+        <div className="mt-2">
+          <img
+            src={defaultImage}
+            alt="Uploaded logo"
+            className="w-16 h-16 object-cover rounded"
+          />
+        </div>
+      )}
+      {errors && errors[name] && (
+        <span className="block text-xs text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
+
 export const inputText = (args) => {
   const {
     register,
@@ -425,6 +475,7 @@ export const dynamicInputSelect = (args) => {
     readOnly,
     wrapperClass,
     inputClass,
+    onChange
   } = args;
 
   return (
@@ -437,6 +488,7 @@ export const dynamicInputSelect = (args) => {
         type="text"
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
+        onChange={onChange}
         className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
           readOnly && "bg-slate-200"
         } ${inputClass}`}
@@ -490,6 +542,53 @@ export const staticInputSelect = (args) => {
         {data &&
           data.map((d) => (
             <option key={d.name} value={d.name}>
+              {d.name}
+            </option>
+          ))}
+      </select>
+      {errors && errors[name] && (
+        <span className="block text-xs text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
+export const staticInputSelectCity = (args) => {
+  const {
+    register,
+    placeholder,
+    errors,
+    name,
+    data,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+    onChange
+  } = args;
+
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
+        {label}
+      </label>
+      <select
+        {...register(name, isRequired && { required: `${label} is required` })}
+        type="text"
+        placeholder={`${placeholder}`}
+        readOnly={!!readOnly}
+        onChange={onChange}
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
+          readOnly && "bg-slate-200"
+        } ${inputClass}`}
+      >
+        <option value="">Select {label}</option>
+        {data &&
+          data.map((d) => (
+            <option key={d.name} value={d.name} data-shortname={d.shortName}>
               {d.name}
             </option>
           ))}
@@ -582,7 +681,7 @@ export const staticInputSelectState = (args) => {
         <option value="">Select {label}</option>
         {data &&
           data.map((d) => (
-            <option key={d._id} value={d.name} data-id={d._id}>
+            <option key={d._id} value={d.name} data-id={d._id} data-shortname={d.shortName}>
               {d.name}
             </option>
           ))}
@@ -956,6 +1055,8 @@ export const inputDate = (args) => {
     inputClass,
   } = args;
 
+  const today = new Date().toISOString().split("T")[0];
+  
   return (
     <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
       <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
@@ -964,6 +1065,7 @@ export const inputDate = (args) => {
       <input
         {...register(name, isRequired && { required: `${label} is required` })}
         type="date"
+        defaultValue={today}
         placeholder={`${placeholder}`}
         readOnly={!!readOnly}
         className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
@@ -978,6 +1080,47 @@ export const inputDate = (args) => {
     </div>
   );
 };
+
+export const inputDOB = (args) => {
+  const {
+    register,
+    placeholder,
+    errors,
+    name,
+    label,
+    isRequired = true,
+    readOnly,
+    wrapperClass,
+    inputClass,
+  } = args;
+  const currentYear = new Date().getFullYear();
+  const maxYear = currentYear - 20;
+  const minYear = currentYear - 100;
+  return (
+    <div className={`mb-2 ${wrapperClass ? wrapperClass : ""}`}>
+      <label className="block mb-0.5 text-xs font-medium" htmlFor={name}>
+        {label}
+      </label>
+      <input
+        {...register(name, isRequired && { required: `${label} is required` })}
+        type="date"
+        placeholder={`${placeholder}`}
+        readOnly={!!readOnly}
+        className={`block w-full rounded-[4px] border-0 p-2 text-gray-800 focus:shadow-sm ring-1 ring-inset ring-slate-400 placeholder:text-gray-400 hover:ring-slate-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:outline-none sm:text-sm sm:leading-4 ${
+          readOnly && "bg-slate-200"
+        } ${inputClass}`}
+        min={`${minYear}-01-01`}
+        max={`${maxYear}-12-31`}
+      />
+      {errors && errors[name] && (
+        <span className="block text-xs text-red-600 pt-1">
+          {errors[name].message}
+        </span>
+      )}
+    </div>
+  );
+};
+
 
 export const InputAutoCompleteSelect = (args) => {
   const {

@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthHook from "../../../api/auth";
 import useAuth from "../../../hooks/useAuth";
 import useUserRolesHook from "../../../api/userRoles";
+import useChannelPartnersHook from "../../../api/channelPartners";
 
 const Companies = () => {
   const navigate = useNavigate();
@@ -95,6 +96,25 @@ const Companies = () => {
 
   const { data: permissionData } = getPermissions;
   const { data: menuData } = getMenus;
+  const { getChannelPartners } = useChannelPartnersHook({
+    page,
+    q,
+  });
+  const { data: channelId } = getChannelPartners;
+  const { data: companyId } = getCompanies;
+
+  const mergedData = [
+    ...(companyId?.data || []).map((item) => ({
+      introductionID: item.companyID,
+      _id: item._id,
+    })),
+    ...(channelId?.data || []).map((item) => ({
+      introductionID: item.channelPartnerID,
+      _id: item._id,
+    })),
+  ];
+
+  // console.log("mergedData", mergedData);
 
   const { postLogin } = useAuthHook();
 
@@ -112,7 +132,7 @@ const Companies = () => {
     q: "",
     limit: 10000000,
   });
-  
+
   const {
     mutateAsync: userRoleMutateAsync,
     data: userRole,
@@ -187,7 +207,20 @@ const Companies = () => {
     confirmAlert(Confirm(() => mutateAsyncDelete(id)));
   };
 
+  const generateRandomPassword = (length = 8) => {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%!";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+  };
+
   const submitHandler = (data) => {
+    const password = generateRandomPassword();
+    console.log("password", password, data);
+
     edit
       ? mutateAsyncUpdate({
           _id: id,
@@ -216,7 +249,7 @@ const Companies = () => {
           blocked: data.blocked,
           firstName: data.firstName,
           lastName: data.lastName,
-          password: data.password,
+          password: password,
           permission: data.permission,
           menu: data.menu,
           department: data.department,
@@ -228,7 +261,7 @@ const Companies = () => {
           salaryscheduletype: data.salaryscheduletype,
           user: data.user,
         })
-      : mutateAsyncPost(data);
+      : mutateAsyncPost({ ...data, password: password });
     setIsModalOpen(false);
   };
 
@@ -466,6 +499,7 @@ const Companies = () => {
                 designationData={designationData && designationData.data}
                 permissionData={permissionData && permissionData.data}
                 menuData={menuData && menuData.data}
+                company={mergedData && mergedData}
               />
             </div>
           </DialogPanel>

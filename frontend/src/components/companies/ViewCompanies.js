@@ -11,7 +11,7 @@ const ViewCompany = ({
   setQ,
   q,
   searchHandler,
-  viewCompanyHandler
+  viewCompanyHandler,
 }) => {
   return (
     <>
@@ -124,13 +124,23 @@ const ViewCompany = ({
                       >
                         <span className="material-symbols-rounded ">edit</span>
                       </button>
-                      <button onClick={()=>{viewCompanyHandler(company)}}>
+                      <button
+                        className="inline-flex text-gray-600 hover:text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"
+                        onClick={() => {
+                          viewCompanyHandler(company);
+                        }}
+                      >
+                        <span className="material-symbols-rounded ">
+                          source_environment
+                        </span>
+                      </button>
+                      {/* <button onClick={()=>{viewCompanyHandler(company)}}>
                         <img
                           src="https://cdn-icons-png.freepik.com/256/3328/3328224.png?ga=GA1.1.42440995.1721449048&semt=ais_hybrid"
                           alt="Company Icon"
                           style={{ width: '24px', height: '24px' }}
                         />
-                      </button>
+                      </button> */}
 
                       <button
                         className="inline-flex text-gray-600 hover:text-red-600 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-white font-medium rounded-full text-sm p-2"

@@ -11,9 +11,14 @@ import {
   staticInputSelectState,
   dynamicInputSelect,
   inputPassword,
+  inputDOB,
+  inputFile,
+  inputImgFile,
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBox,
+  staticInputSelectCity,
 } from "../../utils/dynamicForm";
+import useUploadHook from "../../api/upload";
 
 const methodConversion = (methodName) => {
   switch (methodName) {
@@ -48,6 +53,7 @@ export const FormCompanies = ({
   states,
   cities,
   user,
+  company,
   departmentData,
   designationData,
   permissionData,
@@ -62,20 +68,124 @@ export const FormCompanies = ({
     }
     return field;
   };
+  const [file, setFile] = useState(null);
+  console.log("file", file);
+  const [fileLink, setFileLink] = useState(null);
+  console.log("fileLink", fileLink);
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
+  const [stateShortName, setStateShortName] = useState("");
+  const [cityShortName, setCityShortName] = useState("");
+  const [sequenceNumber, setSequenceNumber] = useState(1);
+  const [companyID, setCompanyID] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [filteredDesignations, setFilteredDesignations] = useState([]);
+  const [getDefaultImage, setDefaultImage] = useState([]);
+  const { postUpload } = useUploadHook();
+  const {
+    data: dataUpload,
+    isLoading: isLoadingUpload,
+    isError: isErrorUpload,
+    error: errorUpload,
+    mutateAsync: mutateAsyncUpload,
+    isSuccess: isSuccessUpload,
+  } = postUpload;
+
+  const handleDepartmentChange = (e) => {
+    const selectedDept = e.target.value;
+    setSelectedDepartment(selectedDept);
+    const filtered = designationData.filter(
+      (designation) => designation.department._id === selectedDept
+    );
+    setFilteredDesignations(filtered);
+  };
+
   const handleStateChange = (e) => {
     setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
+    const shortName = e.target.selectedOptions[0].dataset.shortname;
     if (id !== "") {
+      setStateShortName(shortName);
       const filteredCities = cities
         .filter((item) => item?.state?._id === id)
-        .map((item) => ({ name: item.cityName }));
+        .map((item) => ({
+          name: item.cityName,
+          shortName: item.cityShortName,
+        }));
       setCity(filteredCities);
     } else {
       setCity([]);
     }
   };
+
+  const handleCityChange = (e) => {
+    const cityShortName = e.target.selectedOptions[0].dataset.shortname;
+    setCityShortName(cityShortName);
+  };
+
+  const generateIntroductionID = () => {
+    if (stateShortName && cityShortName && sequenceNumber > 0) {
+      const formattedSequenceNumber = String(sequenceNumber).padStart(5, "0");
+      const newCompanyID = `${stateShortName}${cityShortName}${formattedSequenceNumber}CO`;
+      setCompanyID(newCompanyID);
+      setSequenceNumber(sequenceNumber + 1);
+    }
+  };
+
+  useEffect(() => {
+    if (stateShortName && cityShortName) {
+      generateIntroductionID();
+    }
+  }, [stateShortName, cityShortName]);
+
+  // useEffect(() => {
+  //   if (file) {
+  //     const formData = new FormData();
+  //     console.log("formData", formData);
+  //     formData.append("file", file);
+  //     mutateAsyncUpload({ type: "image", formData });
+  //     setFileLink(
+  //       dataUpload &&
+  //         dataUpload.filePaths &&
+  //         dataUpload.filePaths[0] &&
+  //         dataUpload.filePaths[0].path
+  //     );
+  //   }
+  // }, [file]);
+
+  const handleFile = (e) => {
+    console.log('Event data:', e, e.target.files);
+    const file = e.target.files && e.target.files[0];
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }    
+    console.log('Event data:', file);
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    console.log('Event data:');
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ':', pair[1]);
+    }
+    mutateAsyncUpload({ type: "image", formData })
+      .then((response) => {
+        console.log('Event data:', response);
+        if (
+          response &&
+          response.filePaths &&
+          response.filePaths[0] &&
+          response.filePaths[0].path
+        ) {
+          setFileLink(response.filePaths[0].path);
+        }
+      })
+      .catch((error) => {
+        console.error('Event data:', error);
+      });
+  };
+  
+
   const [checkedPermissions, setCheckedPermissions] = useState([]);
   useEffect(() => {
     const currentPermissions = watch("permission") || [];
@@ -160,7 +270,40 @@ export const FormCompanies = ({
             name: "introductionID",
             placeholder: "Introduction ID",
             isRequired: false,
-            data: [{ name: "TNCHN56789CP" }],
+            data:
+              company &&
+              company.map((item) => ({
+                name: item.introductionID,
+                _id: item._id,
+              })),
+            readOnly: view,
+          })}
+          {staticInputSelectState({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: true,
+            data:
+              states &&
+              states.map((item) => ({
+                name: item.stateName,
+                _id: item._id,
+                shortName: item.stateShortName,
+              })),
+            onChange: handleStateChange,
+            readOnly: view,
+          })}
+          {staticInputSelectCity({
+            register,
+            errors,
+            label: "City",
+            name: "city",
+            placeholder: "City",
+            isRequired: true,
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
+            onChange: handleCityChange,
             readOnly: view,
           })}
           {inputText({
@@ -168,8 +311,9 @@ export const FormCompanies = ({
             errors,
             label: "Company ID",
             name: "companyID",
+            value: companyID || "TNCHN12345CO",
             placeholder: "TNCHN12345CO",
-            readOnly: view,
+            readOnly: true,
           })}
           {dynamicInputSelect({
             register,
@@ -180,6 +324,7 @@ export const FormCompanies = ({
             isRequired: false,
             data: departmentData && departmentData,
             value: "department",
+            onChange: handleDepartmentChange,
             readOnly: view,
           })}
           {dynamicInputSelect({
@@ -189,7 +334,7 @@ export const FormCompanies = ({
             name: "designation",
             placeholder: "Designation",
             isRequired: false,
-            data: designationData && designationData,
+            data: filteredDesignations.length > 0 ? filteredDesignations : [],
             value: "designation",
             readOnly: view,
           })}
@@ -218,7 +363,7 @@ export const FormCompanies = ({
             data: [{ name: "Proprietor" }, { name: "Partnership" }],
             readOnly: view,
           })}
-          {dynamicInputSelect({
+          {/* {dynamicInputSelect({
             register,
             errors,
             label: "User ID",
@@ -228,7 +373,7 @@ export const FormCompanies = ({
             data: user && user,
             value: "firstName",
             readOnly: view,
-          })}
+          })} */}
           {inputText({
             register,
             errors,
@@ -251,14 +396,6 @@ export const FormCompanies = ({
             label: "GSTIN Number",
             name: "gSTINNumber",
             placeholder: "GSTIN Number",
-            readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Company Admin Name",
-            name: "companyAdminName",
-            placeholder: "Company Admin Name",
             readOnly: view,
           })}
           {inputText({
@@ -304,54 +441,6 @@ export const FormCompanies = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {staticInputSelectState({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,
-            data:
-              states &&
-              states.map((item) => ({
-                name: item.stateName,
-                _id: item._id,
-              })),
-            onChange: handleStateChange,
-            readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "City",
-            name: "city",
-            placeholder: "City",
-            isRequired: false,
-            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
-            readOnly: view,
-          })}
-          {/* {dynamicInputSelect({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,            
-            data: states && states,
-            value: "stateName",
-            readOnly: view,
-          })}
-          {dynamicInputSelect({
-            register,
-            errors,
-            label: "City",
-            name: "city",
-            placeholder: "City",
-            isRequired: false,            
-            data: cities && cities,
-            value: "cityName",
-            readOnly: view,
-          })} */}
           {inputText({
             register,
             errors,
@@ -420,7 +509,7 @@ export const FormCompanies = ({
             placeholder: "31-00-123456-000-0001",
             readOnly: view,
           })}
-          {inputDate({
+          {inputDOB({
             register,
             errors,
             label: "DOB",
@@ -438,7 +527,7 @@ export const FormCompanies = ({
             data: [{ name: "Weekly" }, { name: "Monthly" }],
             readOnly: view,
           })}
-          {view || edit ? (
+          {/* {view || edit ? (
             <div></div>
           ) : (
             <div>
@@ -465,14 +554,15 @@ export const FormCompanies = ({
                 readOnly: view,
               })}
             </div>
-          )}
-          {inputText({
+          )} */}
+          {inputImgFile({
             register,
             errors,
             label: "Logo",
             name: "logo",
             placeholder: "Logo",
             isRequired: false,
+            onChange: handleFile,
             readOnly: view,
           })}
           {inputText({
