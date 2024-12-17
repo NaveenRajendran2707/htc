@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Message } from "../../components";
 import {
   inputHidden,
@@ -9,7 +9,10 @@ import {
   staticInputSelect,
   staticInputSelectState,
   inputDate,
+  staticInputSelectCity,
+  inputImgFile,
 } from "../../utils/dynamicForm";
+import useUploadHook from "../../api/upload";
 
 // import { useState } from "react";
 
@@ -39,20 +42,86 @@ export const FormBranches = ({
     }
     return field;
   };
+  const [fileLink, setFileLink] = useState(null);
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
+  const [stateShortName, setStateShortName] = useState("");
+  const [cityShortName, setCityShortName] = useState("");
+  const [sequenceNumber, setSequenceNumber] = useState(1);
+  const [companyID, setCompanyID] = useState("");
+  const { postUpload } = useUploadHook();
+  const {
+    data: dataUpload,
+    isLoading: isLoadingUpload,
+    isError: isErrorUpload,
+    error: errorUpload,
+    mutateAsync: mutateAsyncUpload,
+    isSuccess: isSuccessUpload,
+  } = postUpload;
   const handleStateChange = (e) => {
     setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
+    const shortName = e.target.selectedOptions[0].dataset.shortname;
     if (id !== "") {
+      setStateShortName(shortName);
       const filteredCities = cities
         .filter((item) => item?.state?._id === id)
-        .map((item) => ({ name: item.cityName }));
+        .map((item) => ({
+          name: item.cityName,
+          shortName: item.cityShortName,
+        }));
       setCity(filteredCities);
     } else {
       setCity([]);
     }
   };
+  const handleCityChange = (e) => {
+    const cityShortName = e.target.selectedOptions[0].dataset.shortname;
+    setCityShortName(cityShortName);
+  };
+  const handleFile = (e) => {
+    console.log("Event data:", e, e.target.files);
+    const file = e.target.files && e.target.files[0];
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+    console.log("Event data:", file);
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log("Event data:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ":", pair[1]);
+    }
+    mutateAsyncUpload({ type: "image", formData })
+      .then((response) => {
+        console.log("Event data:", response);
+        if (
+          response &&
+          response.filePaths &&
+          response.filePaths[0] &&
+          response.filePaths[0].path
+        ) {
+          setFileLink(response.filePaths[0].path);
+        }
+      })
+      .catch((error) => {
+        console.error("Event data:", error);
+      });
+  };
+  const generateIntroductionID = () => {
+    if (stateShortName && cityShortName && sequenceNumber > 0) {
+      const formattedSequenceNumber = String(sequenceNumber).padStart(5, "0");
+      const newCompanyID = `${stateShortName}${cityShortName}${formattedSequenceNumber}CB`;
+      setCompanyID(newCompanyID);
+      setSequenceNumber(sequenceNumber + 1);
+    }
+  };
+  useEffect(() => {
+    if (stateShortName && cityShortName) {
+      generateIntroductionID();
+    }
+  }, [stateShortName, cityShortName]);
   return (
     <>
       {isLoading ? (
@@ -112,13 +181,42 @@ export const FormBranches = ({
               })),
             readOnly: view,
           })}
+          {staticInputSelectState({
+            register,
+            errors,
+            label: "State",
+            name: "state",
+            placeholder: "State",
+            isRequired: false,
+            data:
+              states &&
+              states.map((item) => ({
+                name: item.stateName,
+                _id: item._id,
+                shortName: item.stateShortName,
+              })),
+            onChange: handleStateChange,
+            readOnly: view,
+          })}
+          {staticInputSelectCity({
+            register,
+            errors,
+            label: "City",
+            name: "city",
+            placeholder: "City",
+            isRequired: true,
+            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
+            onChange: handleCityChange,
+            readOnly: view,
+          })}
           {inputText({
             register,
             errors,
             label: "Branch ID",
             name: "branchID",
+            value: companyID || "TNCHN12345CO",
             placeholder: "TNCHN12345CO",
-            readOnly: view,
+            readOnly: true,
           })}
           {/* {inputText({
             register,
@@ -176,32 +274,6 @@ export const FormBranches = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-          {staticInputSelectState({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,
-            data:
-              states &&
-              states.map((item) => ({
-                name: item.stateName,
-                _id: item._id,
-              })),
-            onChange: handleStateChange,
-            readOnly: view,
-          })}
-          {staticInputSelect({
-            register,
-            errors,
-            label: "City",
-            name: "city",
-            placeholder: "City",
-            isRequired: false,
-            data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
-            readOnly: view,
-          })}
           {inputText({
             register,
             errors,
@@ -234,12 +306,22 @@ export const FormBranches = ({
             placeholder: "Email",
             readOnly: view,
           })}
-          {inputText({
+          {/* {inputText({
             register,
             errors,
             label: "Logo",
             name: "logo",
             placeholder: "Logo",
+            readOnly: view,
+          })} */}
+          {inputImgFile({
+            register,
+            errors,
+            label: "Logo",
+            name: "logo",
+            placeholder: "Logo",
+            isRequired: false,
+            onChange: handleFile,
             readOnly: view,
           })}
           {inputText({

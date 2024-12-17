@@ -68,10 +68,7 @@ export const FormCompanies = ({
     }
     return field;
   };
-  const [file, setFile] = useState(null);
-  console.log("file", file);
   const [fileLink, setFileLink] = useState(null);
-  console.log("fileLink", fileLink);
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
   const [stateShortName, setStateShortName] = useState("");
