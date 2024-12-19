@@ -61,16 +61,17 @@ export const FormCompanies = ({
 }) => {
   const getDynamicLabel = (field, value) => {
     if (field === "confirmed") {
-      return value ? "Unapproved" : "Approved";
+      return value ? "Approved" : "Unapproved";
     }
     if (field === "blocked") {
-      return value ? "Inactive" : "Active";
+      return value ? "Active" : "Inactive";
     }
     return field;
   };
   const [fileLink, setFileLink] = useState(null);
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
+  const [getDepTrue, setDepTrue] = useState(false);
   const [stateShortName, setStateShortName] = useState("");
   const [cityShortName, setCityShortName] = useState("");
   const [sequenceNumber, setSequenceNumber] = useState(1);
@@ -89,6 +90,7 @@ export const FormCompanies = ({
   } = postUpload;
 
   const handleDepartmentChange = (e) => {
+    setDepTrue(true);
     const selectedDept = e.target.value;
     setSelectedDepartment(selectedDept);
     const filtered = designationData.filter(
@@ -151,23 +153,23 @@ export const FormCompanies = ({
   // }, [file]);
 
   const handleFile = (e) => {
-    console.log('Event data:', e, e.target.files);
+    console.log("Event data:", e, e.target.files);
     const file = e.target.files && e.target.files[0];
     if (!file) {
-      console.error('No file selected');
+      console.error("No file selected");
       return;
-    }    
-    console.log('Event data:', file);
+    }
+    console.log("Event data:", file);
     const formData = new FormData();
     formData.append("file", file);
-  
-    console.log('Event data:');
+
+    console.log("Event data:");
     for (let pair of formData.entries()) {
-      console.log(pair[0] + ':', pair[1]);
+      console.log(pair[0] + ":", pair[1]);
     }
     mutateAsyncUpload({ type: "image", formData })
       .then((response) => {
-        console.log('Event data:', response);
+        console.log("Event data:", response);
         if (
           response &&
           response.filePaths &&
@@ -178,10 +180,9 @@ export const FormCompanies = ({
         }
       })
       .catch((error) => {
-        console.error('Event data:', error);
+        console.error("Event data:", error);
       });
   };
-  
 
   const [checkedPermissions, setCheckedPermissions] = useState([]);
   useEffect(() => {
@@ -267,12 +268,26 @@ export const FormCompanies = ({
             name: "introductionID",
             placeholder: "Introduction ID",
             isRequired: false,
-            data:
-              company &&
-              company.map((item) => ({
-                name: item.introductionID,
-                _id: item._id,
-              })),
+            data: edit
+              ? [
+                  { name: watch("introductionID") },
+                  ...(company
+                    ? company
+                        .filter(
+                          (item) =>
+                            item.introductionID !== watch("introductionID")
+                        )
+                        .map((item) => ({
+                          name: item.introductionID,
+                          _id: item._id,
+                        }))
+                    : []),
+                ]
+              : company &&
+                company.map((item) => ({
+                  name: item.introductionID,
+                  _id: item._id,
+                })),
             readOnly: view,
           })}
           {staticInputSelectState({
@@ -303,15 +318,36 @@ export const FormCompanies = ({
             onChange: handleCityChange,
             readOnly: view,
           })}
-          {inputText({
-            register,
-            errors,
-            label: "Company ID",
-            name: "companyID",
-            value: companyID || "TNCHN12345CO",
-            placeholder: "TNCHN12345CO",
-            readOnly: true,
-          })}
+          {view || edit ? (
+            <>
+              {inputText({
+                register,
+                errors,
+                label: "Company ID",
+                name: "companyID",
+                isRequired: false,
+                readOnly: true,
+              })}
+            </>
+          ) : (
+            <>
+              {inputText({
+                register,
+                errors,
+                label: "Company ID",
+                name: "companyID",
+                // value: companyID || "TNCHN12345CO",
+                value:
+                  `${stateShortName}${cityShortName}` +
+                  String(
+                    nextSequenceNumber > 0 ? nextSequenceNumber : 1
+                  ).padStart(5, "0") +
+                  "CO",
+                placeholder: "TNCHN12345CO",
+                readOnly: true,
+              })}{" "}
+            </>
+          )}
           {dynamicInputSelect({
             register,
             errors,
@@ -331,7 +367,12 @@ export const FormCompanies = ({
             name: "designation",
             placeholder: "Designation",
             isRequired: false,
-            data: filteredDesignations.length > 0 ? filteredDesignations : [],
+            data:
+              edit && !getDepTrue
+                ? designationData && designationData
+                : filteredDesignations.length > 0
+                ? filteredDesignations
+                : [],
             value: "designation",
             readOnly: view,
           })}

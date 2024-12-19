@@ -122,7 +122,20 @@ const Users = () => {
     confirmAlert(Confirm(() => mutateAsyncDelete(id)));
   };
 
+  const generateRandomPassword = (length = 8) => {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%!";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+  };
+
   const submitHandler = async (data) => {
+    const password = generateRandomPassword();
+    console.log("password", password, data);
+
     console.log("edit", edit);
     console.log("adminnnnn", data);
     const menu = localStorage.getItem("menu_post")
@@ -146,11 +159,13 @@ const Users = () => {
           email: data.email,
           confirmed: data.confirmed,
           blocked: data.blocked,
-          password: data.password,
+          // password: password,
+          password: "123456",
           permission: data.permission,
           menu: menu && menu,
         })
-      : mutateAsyncPost(data);
+      : mutateAsyncPost({ ...data, password: "123456" });
+    // : mutateAsyncPost({ ...data, password: password });
     localStorage.removeItem("menu_post");
     localStorage.removeItem("menu_get");
     localStorage.removeItem("permission_get");

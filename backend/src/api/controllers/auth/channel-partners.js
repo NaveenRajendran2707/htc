@@ -58,6 +58,7 @@ export const getChannelPartners = async (req, res) => {
 
 export const postChannelPartner = async (req, res) => {
   try {
+    req.body.userType = "ChannelPartner"
     const userObject = await User.create(req.body);
     req.body.user = userObject._id;
     // const employeeObject = await schemaName.create(req.body);
@@ -115,7 +116,7 @@ export const putChannelPartner = async (req, res) => {
       city,
       introductionID,
       channelPartnerID,
-      userName,
+      // userName,
       name,
       address1,
       address2,
@@ -149,7 +150,7 @@ export const putChannelPartner = async (req, res) => {
     object.city = city;
     object.introductionID = introductionID;
     object.channelPartnerID = channelPartnerID;
-    object.userName = userName;
+    // object.userName = userName;
     object.name = name;
     object.address1 = address1;
     object.address2 = address2;

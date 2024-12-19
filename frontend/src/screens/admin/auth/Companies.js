@@ -249,7 +249,8 @@ const Companies = () => {
           blocked: data.blocked,
           firstName: data.firstName,
           lastName: data.lastName,
-          password: password,
+          // password: password,
+          password: "123456",
           permission: data.permission,
           menu: data.menu,
           department: data.department,
@@ -261,7 +262,8 @@ const Companies = () => {
           salaryscheduletype: data.salaryscheduletype,
           user: data.user,
         })
-      : mutateAsyncPost({ ...data, password: password });
+      : mutateAsyncPost({ ...data, password: "123456" });
+    // : mutateAsyncPost({ ...data, password: password });
     setIsModalOpen(false);
   };
 

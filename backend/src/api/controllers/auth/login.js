@@ -26,6 +26,7 @@ export const login = async (req, res) => {
         token: generateToken(user._id),
         permission: user.permission,
         menu: user.menu,
+        userType: user.userType,
       })
     } else {
       return res.status(401).send({ error: 'Invalid credentials' })

@@ -56,7 +56,7 @@ export const FormChannelPartners = ({
 }) => {
   const getDynamicLabel = (field, value) => {
     if (field === "blocked") {
-      return value ? "Inactive" : "Active";
+      return value ? "Active" : "Inactive";
     }
     return field;
   };
@@ -108,34 +108,34 @@ export const FormChannelPartners = ({
   }, [stateShortName, cityShortName]);
 
   //upload API
-    const { postUpload } = useUploadHook();
-    const {
-      data: dataUpload,
-      isLoading: isLoadingUpload,
-      isError: isErrorUpload,
-      error: errorUpload,
-      mutateAsync: mutateAsyncUpload,
-      isSuccess: isSuccessUpload,
-    } = postUpload;
+  const { postUpload } = useUploadHook();
+  const {
+    data: dataUpload,
+    isLoading: isLoadingUpload,
+    isError: isErrorUpload,
+    error: errorUpload,
+    mutateAsync: mutateAsyncUpload,
+    isSuccess: isSuccessUpload,
+  } = postUpload;
 
   const handleFile = (e) => {
-    console.log('Event data:', e, e.target.files);
+    console.log("Event data:", e, e.target.files);
     const file = e.target.files && e.target.files[0];
     if (!file) {
-      console.error('No file selected');
+      console.error("No file selected");
       return;
-    }    
-    console.log('Event data:', file);
+    }
+    console.log("Event data:", file);
     const formData = new FormData();
     formData.append("file", file);
-  
-    console.log('Event data:');
+
+    console.log("Event data:");
     for (let pair of formData.entries()) {
-      console.log(pair[0] + ':', pair[1]);
+      console.log(pair[0] + ":", pair[1]);
     }
     mutateAsyncUpload({ type: "image", formData })
       .then((response) => {
-        console.log('Event data:', response);
+        console.log("Event data:", response);
         if (
           response &&
           response.filePaths &&
@@ -146,7 +146,7 @@ export const FormChannelPartners = ({
         }
       })
       .catch((error) => {
-        console.error('Event data:', error);
+        console.error("Event data:", error);
       });
   };
   return (
@@ -252,25 +252,60 @@ export const FormChannelPartners = ({
             name: "introductionID",
             placeholder: "Introduction ID",
             isRequired: false,
-            data:
-              channelId &&
-              channelId.map((item) => ({
-                name: item.channelPartnerID,
-                _id: item._id,
-              })),
+            data: edit
+              ? [
+                  { name: watch("introductionID") },
+                  ...(channelId
+                    ? channelId
+                        .filter(
+                          (item) =>
+                            item.channelPartnerID !== watch("introductionID")
+                        )
+                        .map((item) => ({
+                          name: item.channelPartnerID,
+                          _id: item._id,
+                        }))
+                    : []),
+                ]
+              : channelId &&
+                channelId.map((item) => ({
+                  name: item.channelPartnerID,
+                  _id: item._id,
+                })),
             readOnly: view,
           })}
-          {inputText({
-            register,
-            errors,
-            label: "Channel Partner ID",
-            name: "channelPartnerID",
-            value: companyID || "TNCHN12345CP",
-            placeholder: "TNCHN12345CP",
-            isRequired: true,
-            readOnly: true,
-          })}
-          {dynamicInputSelect({
+          {view || edit ? (
+            <>
+              {inputText({
+                register,
+                errors,
+                label: "Channel Partner ID",
+                name: "channelPartnerID",
+                isRequired: false,
+                readOnly: true,
+              })}
+            </>
+          ) : (
+            <>
+              {inputText({
+                register,
+                errors,
+                label: "Channel Partner ID",
+                name: "channelPartnerID",
+                // value: companyID || "TNCHN12345CP",
+                value:
+                  `${stateShortName}${cityShortName}` +
+                  String(
+                    nextSequenceNumber > 0 ? nextSequenceNumber : 1
+                  ).padStart(5, "0") +
+                  "CP",
+                placeholder: "TNCHN12345CP",
+                isRequired: true,
+                readOnly: true,
+              })}
+            </>
+          )}
+          {/* {dynamicInputSelect({
             register,
             errors,
             label: "User ID",
@@ -280,7 +315,7 @@ export const FormChannelPartners = ({
             data: user && user,
             value: "firstName",
             readOnly: view,
-          })}
+          })} */}
           {inputText({
             register,
             errors,
@@ -361,7 +396,7 @@ export const FormChannelPartners = ({
             isRequired: true,
             readOnly: view,
           })}
-          {view || edit ? (
+          {/* {view || edit ? (
             <div></div>
           ) : (
             <div>
@@ -388,7 +423,7 @@ export const FormChannelPartners = ({
                 readOnly: view,
               })}
             </div>
-          )}
+          )} */}
           {inputText({
             register,
             errors,

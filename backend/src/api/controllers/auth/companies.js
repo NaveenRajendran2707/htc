@@ -53,7 +53,8 @@ export const getCompanies = async (req, res) => {
 
 export const postCompany = async (req, res) => {
   try {
-    const userObject = await User.create(req.body)
+    req.body.userType = "Employee"
+    const userObject = await User.create(req.body)   
     req.body.user = userObject._id
     const employeeObject = await Employee.create(req.body)
     req.body.employee = employeeObject._id

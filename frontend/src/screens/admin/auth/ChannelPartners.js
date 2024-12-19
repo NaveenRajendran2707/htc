@@ -140,7 +140,20 @@ const ChannelPartners = () => {
     confirmAlert(Confirm(() => mutateAsyncDelete(id)));
   };
 
+  const generateRandomPassword = (length = 8) => {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%!";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+  };
+
   const submitHandler = (data) => {
+    const password = generateRandomPassword();
+    console.log("password", password, data);
+
     edit
       ? mutateAsyncUpdate({
           _id: id,
@@ -169,7 +182,8 @@ const ChannelPartners = () => {
           permission: data.permission,
           menu: data.menu,
         })
-      : mutateAsyncPost(data);
+      : mutateAsyncPost({ ...data, password: "123456" });
+    // : mutateAsyncPost({ ...data, password: password });
     setIsModalOpen(false);
   };
 

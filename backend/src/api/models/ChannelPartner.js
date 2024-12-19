@@ -13,7 +13,7 @@ const ChannelPartnerScheme = mongoose.Schema(
     city: { type: String, required: true },
     introductionID: { type: String, required: true },
     channelPartnerID: { type: String, required: true },
-    userName: { type: String, required: true },
+    // userName: { type: String, required: true },
     name: { type: String },
     address1: { type: String },
     address2: { type: String },

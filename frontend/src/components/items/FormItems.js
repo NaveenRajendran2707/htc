@@ -32,7 +32,7 @@ const FormItems = ({
 }) => {
   const getDynamicLabel = (field, value) => {
     if (field === "blocked") {
-      return value ? "Inactive" : "Active";
+      return value ? "Active" : "Inactive";
     }
     return field;
   };

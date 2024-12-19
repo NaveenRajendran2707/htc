@@ -12,17 +12,21 @@ import {
   dynamicInputSelect,
   inputMultipleCheckBoxGroups,
   inputMultipleCheckBox,
-  staticInputSelectState
+  staticInputSelectState,
 } from "../../utils/dynamicForm";
 
 const methodConversion = (methodName) => {
-  switch(methodName){
-    case 'GET': return 'List';
-    case 'POST': return 'Add';
-    case 'PUT': return 'Edit';
-    case 'DELETE': return 'Delete';
-  }  
-}
+  switch (methodName) {
+    case "GET":
+      return "List";
+    case "POST":
+      return "Add";
+    case "PUT":
+      return "Edit";
+    case "DELETE":
+      return "Delete";
+  }
+};
 
 export const FormEmployees = ({
   edit,
@@ -44,15 +48,15 @@ export const FormEmployees = ({
   cityData,
   setIsModalOpen,
   permissionData,
-  menuData,  
-  nextSequenceNumber
+  menuData,
+  nextSequenceNumber,
 }) => {
   const getDynamicLabel = (field, value) => {
     if (field === "confirmed") {
-      return value ? "Unapproved" : "Approved";
+      return value ? "Approved" : "Unapproved";
     }
     if (field === "blocked") {
-      return value ? "Inactive" : "Active";
+      return value ? "Active" : "Inactive";
     }
     return field;
   };
@@ -63,6 +67,19 @@ export const FormEmployees = ({
   }, [watch("permission")]);
   const [city, setCity] = useState([]);
   const [getTrue, setTrue] = useState(false);
+  const [getDepTrue, setDepTrue] = useState(false);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [filteredDesignations, setFilteredDesignations] = useState([]);
+  const handleDepartmentChange = (e) => {
+    setDepTrue(true);
+    const selectedDept = e.target.value;
+    setSelectedDepartment(selectedDept);
+    const filtered = designationData.filter(
+      (designation) => designation.department._id === selectedDept
+    );
+    setFilteredDesignations(filtered);
+  };
+
   const handleStateChange = (e) => {
     setTrue(true);
     const id = e.target.selectedOptions[0].dataset.id;
@@ -112,18 +129,28 @@ export const FormEmployees = ({
             label: "",
             name: "userID",
             placeholder: "User ID",
-            value: "USR"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "USR" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
-          })} 
+          })}
           {inputText({
             register,
             errors,
             label: "Employee ID",
             name: "employeeID",
             placeholder: "Employee ID",
-            value: "EMP"+String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(5, '0'),
+            value:
+              "EMP" +
+              String(nextSequenceNumber > 0 ? nextSequenceNumber : 1).padStart(
+                5,
+                "0"
+              ),
             readOnly: true,
-          })}          
+          })}
           {dynamicInputSelect({
             register,
             errors,
@@ -133,6 +160,7 @@ export const FormEmployees = ({
             isRequired: false,
             data: departmentData && departmentData,
             value: "department",
+            onChange: handleDepartmentChange,
             readOnly: view,
           })}
           {dynamicInputSelect({
@@ -142,7 +170,12 @@ export const FormEmployees = ({
             name: "designation",
             placeholder: "Designation",
             isRequired: false,
-            data: designationData && designationData,
+            data:
+              edit && !getDepTrue
+                ? designationData && designationData
+                : filteredDesignations.length > 0
+                ? filteredDesignations
+                : [],
             value: "designation",
             readOnly: view,
           })}
@@ -186,7 +219,7 @@ export const FormEmployees = ({
             placeholder: "Block no. , Area Name",
             readOnly: view,
           })}
-           {staticInputSelectState({
+          {staticInputSelectState({
             register,
             errors,
             label: "State",
@@ -195,10 +228,10 @@ export const FormEmployees = ({
             isRequired: false,
             data:
               stateData &&
-              stateData.map((item) => ({
-                name: item.stateName,
-                _id: item._id,
-              })),
+                stateData.map((item) => ({
+                  name: item.stateName,
+                  _id: item._id,
+                })),
             onChange: handleStateChange,
             readOnly: view,
             wrapperClass: "col-span-4",
@@ -214,28 +247,6 @@ export const FormEmployees = ({
             readOnly: view,
             wrapperClass: "col-span-4",
           })}
-          {/* {dynamicInputSelect({
-            register,
-            errors,
-            label: "State",
-            name: "state",
-            placeholder: "State",
-            isRequired: false,            
-            data: stateData && stateData,
-            value: "stateName",
-            readOnly: view,
-          })}
-          {dynamicInputSelect({
-            register,
-            errors,
-            label: "City",
-            name: "city",
-            placeholder: "City",
-            isRequired: false,            
-            data: cityData && cityData,
-            value: "cityName",
-            readOnly: view,
-          })} */}
           {inputText({
             register,
             errors,
@@ -243,7 +254,7 @@ export const FormEmployees = ({
             name: "pincode",
             placeholder: "600 078",
             readOnly: view,
-          })}          
+          })}
           {inputText({
             register,
             errors,
@@ -302,7 +313,7 @@ export const FormEmployees = ({
             data: [{ name: "Weekly" }, { name: "Monthly" }],
             readOnly: view,
           })}
-          {view || edit ? <div></div> : <div>
+          {/* {view || edit ? <div></div> : <div>
             {inputPassword({
               register,
               errors,
@@ -326,8 +337,8 @@ export const FormEmployees = ({
               readOnly: view,
             })}
             </div>
-          }
-           {inputSwitch({
+          } */}
+          {inputSwitch({
             register,
             errors,
             watch,
@@ -348,7 +359,7 @@ export const FormEmployees = ({
             readOnly: view,
           })}
 
-          {view || edit ? 
+          {view || edit ? (
             <>
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
                 <h4 className="font-medium text-base mb-3">Permissions</h4>
@@ -359,12 +370,14 @@ export const FormEmployees = ({
                   name: "permission",
                   placeholder: "Permission",
                   data:
-                    permissionData &&                
-                    permissionData.filter(item => item.show).map((item) => ({                  
+                    permissionData &&
+                    permissionData
+                      .filter((item) => item.show)
+                      .map((item) => ({
                         name: `${item.name}`,
                         method: methodConversion(item.method),
                         _id: item._id,
-                    })),
+                      })),
                   isRequired: false,
                   readOnly: view,
                   checkedValues: checkedPermissions,
@@ -372,27 +385,30 @@ export const FormEmployees = ({
               </div>
 
               <div className="mb-3 p-3 border border-gray-400 rounded-md">
-              <h4 className="font-medium text-base mb-3">Menus</h4>
-              {inputMultipleCheckBox({
-                register,
-                errors,
-                label: "Menu",
-                name: "menu",
-                placeholder: "Menu",
-                data:
-                  menuData &&
-                  menuData.map((item) => ({
-                    name: `${item.menu} - ${item.path}`,
-                    _id: item._id,
-                  })),
-                isRequired: false,
-              })}
+                <h4 className="font-medium text-base mb-3">Menus</h4>
+                {inputMultipleCheckBox({
+                  register,
+                  errors,
+                  label: "Menu",
+                  name: "menu",
+                  placeholder: "Menu",
+                  data:
+                    menuData &&
+                    menuData.map((item) => ({
+                      name: `${item.menu} - ${item.path}`,
+                      _id: item._id,
+                    })),
+                  isRequired: false,
+                })}
               </div>
             </>
-          : ""
-          }
+          ) : (
+            ""
+          )}
 
-          {view ? "" :
+          {view ? (
+            ""
+          ) : (
             <div className="flex gap-3">
               <button
                 type="submit"
@@ -408,9 +424,7 @@ export const FormEmployees = ({
                     <span className="sr-only">Loading...</span>
                   </span>
                 ) : (
-                  <span>
-                    {edit ? 'Update' : 'Save' }
-                  </span>
+                  <span>{edit ? "Update" : "Save"}</span>
                 )}
               </button>
               <button
@@ -424,7 +438,7 @@ export const FormEmployees = ({
                 Cancel
               </button>
             </div>
-          }
+          )}
         </form>
       )}
     </>

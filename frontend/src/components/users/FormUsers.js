@@ -53,10 +53,10 @@ export const FormUsers = ({
 }) => {
   const getDynamicLabel = (field, value) => {
     if (field === "confirmed") {
-      return value ? "Unapproved" : "Approved";
+      return value ? "Approved" : "Unapproved";
     }
     if (field === "blocked") {
-      return value ? "Inactive" : "Active";
+      return value ? "Active" : "Inactive";
     }
     return field;
   };
@@ -239,30 +239,6 @@ export const FormUsers = ({
             readOnly: view,
             wrapperClass: "col-span-4",
           })}
-            {/* {dynamicInputSelect({
-              register,
-              errors,
-              label: "State",
-              name: "state",
-              placeholder: "State",
-              isRequired: false,
-              data: stateData && stateData,
-              value: "stateName",
-              readOnly: view,
-              wrapperClass: "col-span-4",
-            })}
-            {dynamicInputSelect({
-              register,
-              errors,
-              label: "City",
-              name: "city",
-              placeholder: "City",
-              isRequired: false,
-              data: cityData && cityData,
-              value: "cityName",
-              readOnly: view,
-              wrapperClass: "col-span-4",
-            })} */}
             {inputText({
               register,
               errors,
@@ -301,7 +277,7 @@ export const FormUsers = ({
             placeholder: "AAAAA1234Z",
             readOnly: view,
           })}
-          {view || edit ? (
+          {/* {view || edit ? (
             <div></div>
           ) : (
             <div>
@@ -328,7 +304,7 @@ export const FormUsers = ({
                 readOnly: view,
               })}
             </div>
-          )}
+          )} */}
           {inputSwitch({
             register,
             errors,

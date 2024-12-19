@@ -38,7 +38,7 @@ export const FormBranches = ({
 }) => {
   const getDynamicLabel = (field, value) => {
     if (field === "blocked") {
-      return value ? "Inactive" : "Active";
+      return value ? "Active" : "Inactive";
     }
     return field;
   };
@@ -109,19 +109,7 @@ export const FormBranches = ({
         console.error("Event data:", error);
       });
   };
-  const generateIntroductionID = () => {
-    if (stateShortName && cityShortName && sequenceNumber > 0) {
-      const formattedSequenceNumber = String(sequenceNumber).padStart(5, "0");
-      const newCompanyID = `${stateShortName}${cityShortName}${formattedSequenceNumber}CB`;
-      setCompanyID(newCompanyID);
-      setSequenceNumber(sequenceNumber + 1);
-    }
-  };
-  useEffect(() => {
-    if (stateShortName && cityShortName) {
-      generateIntroductionID();
-    }
-  }, [stateShortName, cityShortName]);
+
   return (
     <>
       {isLoading ? (
@@ -187,7 +175,7 @@ export const FormBranches = ({
             label: "State",
             name: "state",
             placeholder: "State",
-            isRequired: false,
+            isRequired: true,
             data:
               states &&
               states.map((item) => ({
@@ -208,16 +196,37 @@ export const FormBranches = ({
             data: edit && !getTrue ? [{ name: watch("city") }] : city && city,
             onChange: handleCityChange,
             readOnly: view,
-          })}
-          {inputText({
-            register,
-            errors,
-            label: "Branch ID",
-            name: "branchID",
-            value: companyID || "TNCHN12345CO",
-            placeholder: "TNCHN12345CO",
-            readOnly: true,
-          })}
+          })}{" "}
+          {view || edit ? (
+            <>
+              {inputText({
+                register,
+                errors,
+                label: "Branch ID",
+                name: "branchID",
+                isRequired: false,
+                readOnly: true,
+              })}
+            </>
+          ) : (
+            <>
+              {inputText({
+                register,
+                errors,
+                label: "Branch ID",
+                name: "branchID",
+                // value: companyID || "TNCHN12345CO",
+                value:
+                  `${stateShortName}${cityShortName}` +
+                  String(
+                    nextSequenceNumber > 0 ? nextSequenceNumber : 1
+                  ).padStart(5, "0") +
+                  "CB",
+                placeholder: "TNCHN12345CO",
+                readOnly: true,
+              })}
+            </>
+          )}
           {/* {inputText({
             register,
             errors,

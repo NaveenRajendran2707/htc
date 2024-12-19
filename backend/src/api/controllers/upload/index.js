@@ -59,6 +59,7 @@ export const postUpload = async (req, res) => {
     const fileName = `${baseName}-${Date.now()}${fileExtension}`
 
     const filePath = path.join(__dirname, '/uploads', fileName)
+    console.log('filePath', filePath)
 
     file.mv(filePath, (err) => {
       if (err) return res.status(500).json({ error: err })

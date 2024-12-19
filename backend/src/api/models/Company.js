@@ -1,25 +1,25 @@
-import crypto from 'crypto'
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
+import crypto from "crypto";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const companyScheme = mongoose.Schema(
   {
     sequenceNumber: { type: Number, unique: true },
-    companySerialNo: { type: String },
-    registrationDate: { type: String },
-    introductionID: { type: String },
-    companyID: { type: String },
-    typeofService: { type: String },
+    companySerialNo: { type: String, required: true },
+    registrationDate: { type: String, required: true },
+    introductionID: { type: String, required: true },
+    companyID: { type: String, required: true },
+    typeofService: { type: String, required: true },
     companyType: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
       unique: true,
     },
     employee: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Employee',
+      ref: "Employee",
       required: true,
       unique: true,
     },
@@ -32,16 +32,16 @@ const companyScheme = mongoose.Schema(
     address3: { type: String },
     // city: { type: String },
     pincode: { type: String },
-    mobile: { type: String },
+    mobile: { type: String, required: true },
     mobileNumber2: { type: String },
     phoneNumber: { type: String },
-    email: { type: String },
+    email: { type: String, required: true },
     logo: { type: String },
-    watermark: { type: String },    
+    watermark: { type: String },
     blocked: { type: Boolean, default: false },
   },
   { timestamps: true }
-)
+);
 
 // companyScheme.methods.matchPassword = async function (enteredPassword) {
 //   return await bcrypt.compare(enteredPassword, this.password)
@@ -74,5 +74,5 @@ const companyScheme = mongoose.Schema(
 //   return resetToken
 // }
 
-const Company = mongoose.model('Company', companyScheme)
-export default Company
+const Company = mongoose.model("Company", companyScheme);
+export default Company;
