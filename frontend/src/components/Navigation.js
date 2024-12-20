@@ -74,7 +74,7 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
 
   //   return { uniqueDropdowns, menuItems };
   // };
-
+  const userType = auth?.userInfo?.userType;
   const menus = () => {
     const userMenuIds = auth?.userInfo?.menu || [];
     const menuItems =
@@ -220,7 +220,6 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
                 </li>
               )
           )}
-
         {menus() &&
           menus()
             .uniqueDropdowns?.sort((a, b) => {
@@ -236,22 +235,31 @@ const Navigation = ({ toggleSidebar, isSidebarOpen, menu }) => {
               ];
               return dropdownOrder.indexOf(a) - dropdownOrder.indexOf(b);
             })
+            .filter(
+              (item) =>
+                userType !== "Employee" ||
+                (item !== "configurations" && item !== "master")
+            )
             .map((item) => (
               <Disclosure as="li" key={item}>
                 {(panel) => {
                   const { open, close } = panel;
+                  if (
+                    userType === "Employee" &&
+                    ["users", "roles", "permissions", "user roles"].includes(
+                      item
+                    )
+                  ) {
+                    return null;
+                  }
                   return (
                     <>
                       <DisclosureButton
                         className="group relative flex justify-between items-center gap-2 w-full rounded p-2 text-slate-200 duration-200 ease hover:bg-slate-700 dark:hover:bg-slate-600 data-[open]:bg-slate-700"
                         onClick={() => {
                           if (!open) {
-                            // On the first click, the panel is opened but the "open" prop's value is still false. Therefore the falsey verification
-                            // This will make so the panel close itself when we click it while open
                             close();
                           }
-
-                          // Now we call the function to close the other opened panels (if any)
                           togglePanels({ ...panel, key: item });
                         }}
                       >
